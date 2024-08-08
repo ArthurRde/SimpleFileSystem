@@ -13,52 +13,49 @@ enum BlockStatus {
     BLOCK_OCCUPIED
 };
 
-struct BsCluster {
+struct Cluster {
     int blockIndex;
-    struct BsCluster* next;
-    struct BsCluster* prev;
+    struct Cluster *next;
+    struct Cluster *prev;
 };
 
-struct BsFile{
+struct File {
     char name[12];
     int size;
-    BsCluster* clusterList;
+    Cluster *clusterList;
 
 };
 
-struct BsFat{
-    BlockStatus* blockStatus;
+struct Fat {
+    BlockStatus *blockStatus;
     int totalBlocks;
     int blockSize;
-    BsFile* files[MAX_FILES];
+    File *files[MAX_FILES];
 };
 
-BsFat* createBsFat(int diskSize, int blockSize) {
-    BsFat* pFat = new BsFat;
+Fat *createFat(int diskSize, int blockSize) {
+    Fat *pFat = new Fat;
     pFat->blockStatus = new BlockStatus;
     pFat->totalBlocks = diskSize / blockSize;
     pFat->blockSize = blockSize;
-    for (int i = 0; i < blockSize; i++)
-    {
+    for (int i = 0; i < blockSize; i++) {
         pFat->blockStatus[i] = BLOCK_FREE;
     }
     for (int i = 0; i < MAX_FILES; i++) {
-        pFat->files[i] = NULL;
+        pFat->files[i] = nullptr;
     }
     return pFat;
 }
 
-// Aufgabe 3
-BsCluster* createCluster(int blockIndex) {
-    BsCluster* cluster = new BsCluster;
+Cluster *createCluster(int blockIndex) {
+    auto *cluster = new Cluster;
     cluster->blockIndex = blockIndex;
-    cluster->next = NULL;
-    cluster->prev = NULL;
+    cluster->next = nullptr;
+    cluster->prev = nullptr;
     return cluster;
 }
 
-// Aufgabe 5
-int getFreeDiskSpace(BsFat* pFat) {
+int getFreeDiskSpace(Fat *pFat) {
     int freeBlocks = 0;
     for (int i = 0; i < pFat->totalBlocks; i++) {
         if (pFat->blockStatus[i] == BLOCK_FREE) {
@@ -68,31 +65,30 @@ int getFreeDiskSpace(BsFat* pFat) {
     return freeBlocks * pFat->blockSize;
 }
 
-// Aufgabe 6
-BsFile* createFile(BsFat* pFat, int szFile, const char* fileName) {
+File *createFile(Fat *pFat, int szFile, const char *fileName) {
     if (strlen(fileName) > 11) {
         cout << "Name zu lang" << endl;
-        return NULL;
+        return nullptr;
     }
     int requiredBlocks = szFile / pFat->blockSize;
     if (requiredBlocks > getFreeDiskSpace(pFat) / pFat->blockSize) {
-        cout <<"Nicht genug Platz" << endl;
-        return NULL;
+        cout << "Nicht genug Platz" << endl;
+        return nullptr;
     }
-    BsFile* newFile = new BsFile;
+    File *newFile = new File;
     strncpy(newFile->name, fileName, 11);
     newFile->name[11] = '\0';
     newFile->size = szFile;
-    newFile->clusterList = NULL;
+    newFile->clusterList = nullptr;
 
-    BsCluster* lastCluster = NULL;
+    Cluster *lastCluster = nullptr;
     int allocatedBlocks = 0;
     for (int i = 0; i < pFat->totalBlocks && allocatedBlocks < requiredBlocks; i++) {
         if (pFat->blockStatus[i] == BLOCK_FREE) {
             pFat->blockStatus[i] = BLOCK_OCCUPIED;
 
-            BsCluster* cluster = createCluster(i);
-            if (newFile->clusterList == NULL) {
+            Cluster *cluster = createCluster(i);
+            if (newFile->clusterList == nullptr) {
                 newFile->clusterList = cluster;
             } else {
                 lastCluster->next = cluster;
@@ -103,43 +99,71 @@ BsFile* createFile(BsFat* pFat, int szFile, const char* fileName) {
         }
     }
     for (int i = 0; i < MAX_FILES; i++) {
-        if (pFat->files[i] == NULL) {
+        if (pFat->files[i] == nullptr) {
             pFat->files[i] = newFile;
             return newFile;
         }
     }
-    cout <<"Zu viele Dateien" << endl;
+    cout << "Zu viele Dateien" << endl;
     free(newFile);
-    return NULL;
+    return nullptr;
 }
 
-void deleteFile(BsFat* pFat, const char* fileName) {
+void deleteFile(Fat *pFat, const char *fileName) {
     for (int i = 0; i < MAX_FILES; i++) {
-        if (pFat->files[i] != NULL && strcmp(pFat->files[i]->name, fileName) == 0) {
-            BsFile* fileToDelete = pFat->files[i];
-            BsCluster* cluster = fileToDelete->clusterList;
+        if (pFat->files[i] != nullptr && strcmp(pFat->files[i]->name, fileName) == 0) {
+            File *fileToDelete = pFat->files[i];
+            Cluster *cluster = fileToDelete->clusterList;
 
-            while (cluster != NULL) {
+            while (cluster != nullptr) {
                 pFat->blockStatus[cluster->blockIndex] = BLOCK_FREE;
-                BsCluster* clusterToBeDeleted = cluster;
+                Cluster *clusterToBeDeleted = cluster;
                 cluster = cluster->next;
                 free(clusterToBeDeleted);
             }
 
             free(fileToDelete);
-            pFat->files[i] = NULL;
+            pFat->files[i] = nullptr;
             return;
         }
     }
-    cout <<"Datei nicht gefunden" << endl;
+    cout << "Datei nicht gefunden" << endl;
 }
 
+void showFat(Fat *pFat) {
+    for (int i = 0; i < pFat->totalBlocks; i++) {
+        switch (pFat->blockStatus[i]) {
+            case BLOCK_RESERVED:
+                cout << "R";
+                break;
+            case BLOCK_DEFECT:
+                cout << "D";
+                break;
+            case BLOCK_FREE:
+                cout << "F";
+                break;
+            case BLOCK_OCCUPIED:
 
+                for (int j = 0; j < MAX_FILES; j++) {
+                    if (pFat->files[j] != nullptr) {
+                        Cluster *cluster = pFat->files[j]->clusterList;
+                        while (cluster != nullptr) {
+                            if (cluster->blockIndex == i) {
+                                cout << j;
+                                break;
+                            }
+                            cluster = cluster->next;
+                        }
+                    }
+                }
+                break;
+        }
+        cout << " ";
+    }
+    cout << endl;
+}
 
-
-
-float getFragmentation(BsFat* pFat) {
-
+float getFragmentation(Fat *pFat) {
 /**
         Fragmentierung:
             -Fileindex ändert sich +1
@@ -151,17 +175,15 @@ float getFragmentation(BsFat* pFat) {
 
     for (int i = 0; i < pFat->totalBlocks - 1; i++) {
 
-        if (pFat->blockStatus[i] == BLOCK_OCCUPIED) {
-
-
+        if (pFat->blockStatus[i] == BLOCK_OCCUPIED)
             if (pFat->blockStatus[i + 1] == BLOCK_FREE) {
                 fragmentedBlocks++;
             } else if (pFat->blockStatus[i + 1] == BLOCK_OCCUPIED) {
                 int fileNum = 0;
                 for (int j = 0; j < MAX_FILES; j++) {
-                    if (pFat->files[j] != NULL) {
-                        BsCluster* cluster = pFat->files[j]->clusterList;
-                        while (cluster != NULL) {
+                    if (pFat->files[j] != nullptr) {
+                        Cluster *cluster = pFat->files[j]->clusterList;
+                        while (cluster != nullptr) {
                             if (cluster->blockIndex == i) {
                                 fileNum = j;
                                 break;
@@ -172,44 +194,46 @@ float getFragmentation(BsFat* pFat) {
                 }
                 int nextFileNum = 0;
                 for (int j = 0; j < MAX_FILES; j++) {
-                    if (pFat->files[j] != NULL) {
-                        BsCluster* cluster = pFat->files[j]->clusterList;
-                        while (cluster != NULL) {
-                            if (cluster->blockIndex == i+1) {
-                                nextFileNum=j;
+                    if (pFat->files[j] != nullptr) {
+                        Cluster *cluster = pFat->files[j]->clusterList;
+                        while (cluster != nullptr) {
+                            if (cluster->blockIndex == i + 1) {
+                                nextFileNum = j;
                                 break;
                             }
                             cluster = cluster->next;
                         }
                     }
                 }
-                if(nextFileNum != fileNum){
+                if (nextFileNum != fileNum) {
                     fragmentedBlocks++;
 
                 }
 
             }
-        }
 
-        if(pFat->blockStatus[i] == BLOCK_FREE){
-            if (pFat->blockStatus[i+1] == BLOCK_OCCUPIED) {
+
+        if (pFat->blockStatus[i] == BLOCK_FREE) {
+            if (pFat->blockStatus[i + 1] == BLOCK_OCCUPIED) {
                 fragmentedBlocks++;
             }
         }
-
-
     }
 
-    if ((pFat->blockStatus[pFat->totalBlocks-2] == BLOCK_OCCUPIED &&  pFat->blockStatus[pFat->totalBlocks-1] == BLOCK_FREE) || (pFat->blockStatus[pFat->totalBlocks-1] == BLOCK_OCCUPIED &&  pFat->blockStatus[pFat->totalBlocks-2] == BLOCK_FREE)) {
+
+    if ((pFat->blockStatus[pFat->totalBlocks - 2] == BLOCK_OCCUPIED &&
+         pFat->blockStatus[pFat->totalBlocks - 1] == BLOCK_FREE) ||
+        (pFat->blockStatus[pFat->totalBlocks - 1] == BLOCK_OCCUPIED &&
+         pFat->blockStatus[pFat->totalBlocks - 2] == BLOCK_FREE)) {
 
         fragmentedBlocks++;
-    } else{
+    } else {
         int fileNum = 0;
         for (int j = 0; j < MAX_FILES; j++) {
-            if (pFat->files[j] != NULL) {
-                BsCluster* cluster = pFat->files[j]->clusterList;
-                while (cluster != NULL) {
-                    if (cluster->blockIndex == pFat->totalBlocks-1) {
+            if (pFat->files[j] != nullptr) {
+                Cluster *cluster = pFat->files[j]->clusterList;
+                while (cluster != nullptr) {
+                    if (cluster->blockIndex == pFat->totalBlocks - 1) {
                         fileNum = j;
                         break;
                     }
@@ -219,99 +243,39 @@ float getFragmentation(BsFat* pFat) {
         }
         int nextFileNum = 0;
         for (int j = 0; j < MAX_FILES; j++) {
-            if (pFat->files[j] != NULL) {
-                BsCluster* cluster = pFat->files[j]->clusterList;
-                while (cluster != NULL) {
+            if (pFat->files[j] != nullptr) {
+                Cluster *cluster = pFat->files[j]->clusterList;
+                while (cluster != nullptr) {
                     if (cluster->blockIndex == pFat->totalBlocks) {
-                        nextFileNum=j;
+                        nextFileNum = j;
                         break;
                     }
                     cluster = cluster->next;
                 }
             }
         }
-        if(nextFileNum != fileNum){
+        if (nextFileNum != fileNum) {
             fragmentedBlocks++;
 
         }
 
 
     }
-    return ((float)fragmentedBlocks / (float) pFat->totalBlocks )* 100.0f;
+    return ((float) fragmentedBlocks / (float) pFat->totalBlocks) * 100.0f;
 }
 
 
-
-// Aufgabe 9
-void showFat(BsFat* pFat) {
-    for (int i = 0; i < pFat->totalBlocks; i++) {
-        switch (pFat->blockStatus[i]) {
-            case BLOCK_RESERVED:
-                cout <<"R";
-                break;
-            case BLOCK_DEFECT:
-                cout <<"D";
-                break;
-            case BLOCK_FREE:
-                cout <<"F";
-                break;
-            case BLOCK_OCCUPIED:
-
-                for (int j = 0; j < MAX_FILES; j++) {
-                    if (pFat->files[j] != NULL) {
-                        BsCluster* cluster = pFat->files[j]->clusterList;
-                        while (cluster != NULL) {
-                            if (cluster->blockIndex == i) {
-                                cout<<j;
-                                break;
-                            }
-                            cluster = cluster->next;
-                        }
-                    }
-                }
-                break;
-        }
-        cout << " ";
-    }
-    cout <<endl;
-}
-
-// Aufgabe 10
-
-void defragDisk1(BsFat* pFat) {
-    cout <<"Defrag" << endl;
-    for (int fileIdx = 0; fileIdx < MAX_FILES; fileIdx++) {
-
-        if (pFat->files[fileIdx] != NULL) {
-            BsFile* file = pFat->files[fileIdx];
-            BsCluster* cluster = file->clusterList;
-            int blockIndex = 0;
-            while (cluster != NULL) {
-
-                while (blockIndex < pFat->totalBlocks && pFat->blockStatus[blockIndex] != BLOCK_FREE) {
-                    blockIndex++;
-                }
-                pFat->blockStatus[cluster->blockIndex] = BLOCK_FREE;
-                cluster->blockIndex = blockIndex;
-                pFat->blockStatus[blockIndex] = BLOCK_OCCUPIED;
-                cluster = cluster->next;
-            }
-        }
-    }
-    cout <<"Defrag fertig" << endl;
-}
-
-void defragDisk(BsFat* pFat) {
+void defragDisk(Fat *pFat) {
     cout << "Starting defragmentation..." << endl;
 
     int blockIndex = 0; // Reset block index at the beginning
 
     for (int fileIdx = 0; fileIdx < MAX_FILES; fileIdx++) {
-        if (pFat->files[fileIdx] != NULL) {
-            BsFile* file = pFat->files[fileIdx];
-            BsCluster* cluster = file->clusterList;
+        if (pFat->files[fileIdx] != nullptr) {
+            File *file = pFat->files[fileIdx];
+            Cluster *cluster = file->clusterList;
 
-            while (cluster != NULL) {
+            while (cluster != nullptr) {
                 // Find the first free block to move the cluster
                 while (blockIndex < pFat->totalBlocks && pFat->blockStatus[blockIndex] != BLOCK_FREE) {
                     blockIndex++;
@@ -331,3 +295,28 @@ void defragDisk(BsFat* pFat) {
 
     cout << "Defragmentation completed." << endl;
 }
+
+// INFO: Legacy code
+//
+//void defragDisk(Fat* pFat) {
+//    cout <<"Defrag" << endl;
+//    for (int fileIdx = 0; fileIdx < MAX_FILES; fileIdx++) {
+//
+//        if (pFat->files[fileIdx] != nullptr) {
+//            File* file = pFat->files[fileIdx];
+//            Cluster* cluster = file->clusterList;
+//            int blockIndex = 0;
+//            while (cluster != nullptr) {
+//
+//                while (blockIndex < pFat->totalBlocks && pFat->blockStatus[blockIndex] != BLOCK_FREE) {
+//                    blockIndex++;
+//                }
+//                pFat->blockStatus[cluster->blockIndex] = BLOCK_FREE;
+//                cluster->blockIndex = blockIndex;
+//                pFat->blockStatus[blockIndex] = BLOCK_OCCUPIED;
+//                cluster = cluster->next;
+//            }
+//        }
+//    }
+//    cout <<"Defrag fertig" << endl;
+//}

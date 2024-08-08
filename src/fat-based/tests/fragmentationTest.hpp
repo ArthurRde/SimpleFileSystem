@@ -1,7 +1,7 @@
 #include "../fat.hpp"
 
 bool calculateFragmentation(){
-    BsFat* pFat = createBsFat(8 * 1024, 512);
+    Fat* pFat = createFat(8 * 1024, 512);
 
     pFat->blockStatus[0] = BLOCK_RESERVED;
     pFat->blockStatus[1] = BLOCK_RESERVED;
@@ -11,7 +11,7 @@ bool calculateFragmentation(){
     pFat->blockStatus[9] = BLOCK_DEFECT;
 
     createFile(pFat,1024,"file1.txt");
-    createFile(pFat,512,"BSY-P5.pdf");
+    createFile(pFat,512,"Y-P5.pdf");
     createFile(pFat,2048,"MatheII.txt");
     deleteFile(pFat, "file1.txt");
     createFile(pFat, 1024, "hello");
@@ -21,7 +21,7 @@ bool calculateFragmentation(){
 }
 
 bool calculateFragmentationAllBlocksFree(){
-    BsFat* pFat = createBsFat(8 * 1024, 512);
+    Fat* pFat = createFat(8 * 1024, 512);
 
     for (int i = 0; i < pFat->totalBlocks; i++) {
         pFat->blockStatus[i] = BLOCK_FREE;
