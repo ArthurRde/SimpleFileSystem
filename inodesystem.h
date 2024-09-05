@@ -6,8 +6,8 @@
 #include <map>
 #include <QDate>
 #include "disk.h"
-
 #include <string>
+
 using namespace std;
 
 #define BLOCKSIZE 512
@@ -31,32 +31,42 @@ struct INode {
 };
 
 
+class INODESYSTEM {
 
-class INODESYSTEM
-{
-
-    map<int, INode*> nodes;
+    map<int, INode *> nodes;
     Disk *disk;
 
-    vector<BlockStatus2> blockStatus;
+    vector <BlockStatus2> blockStatus;
     int totalBlocks;
 public:
 
     INODESYSTEM(int diskSpace, Disk *disk_);
+
     void showFat();
-    void deleteFile(  string fileName);
-    int findFile( string fileName);
+
+    void deleteFile(string fileName);
+
+    int findFile(string fileName);
+
     int findFile(int num);
-    void createFile( string name_, string author_,  string data, string parentName ,bool isFolder = false);
+
+    void createFile(string name_, string author_, string data, string parentName, bool isFolder = false);
+
     int findLowestNumber();
+
     int findLowestNumber2();
+
     int getFreeDiskSpace();
 
 
     map<int, INode *> getNodes() const;
+
     void setNodes(const map<int, INode *> &newNodes);
+
     Disk *getDisk() const;
+
     void setDisk(Disk *newDisk);
+
     int editData(int fileToBeEditedId, string data);
 };
 
