@@ -1,39 +1,17 @@
+#include "fatSystem.h"
+
+
+
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
-
-#define MAX_FILES 10
-
 using namespace std;
+FATSYSTEM::FATSYSTEM()
+{
 
-enum BlockStatus {
-    BLOCK_RESERVED,
-    BLOCK_DEFECT,
-    BLOCK_FREE,
-    BLOCK_OCCUPIED
-};
+}
 
-struct Cluster {
-    int blockIndex;
-    struct Cluster *next;
-    struct Cluster *prev;
-};
-
-struct File {
-    char name[12];
-    int size;
-    Cluster *clusterList;
-
-};
-
-struct Fat {
-    BlockStatus *blockStatus;
-    int totalBlocks;
-    int blockSize;
-    File *files[MAX_FILES];
-};
-
-Fat *createFat(int diskSize, int blockSize) {
+Fat *FATSYSTEM::createFat(int diskSize, int blockSize){
     Fat *pFat = new Fat;
     pFat->blockStatus = new BlockStatus;
     pFat->totalBlocks = diskSize / blockSize;
@@ -47,7 +25,7 @@ Fat *createFat(int diskSize, int blockSize) {
     return pFat;
 }
 
-Cluster *createCluster(int blockIndex) {
+Cluster *FATSYSTEM::createCluster(int blockIndex) {
     auto *cluster = new Cluster;
     cluster->blockIndex = blockIndex;
     cluster->next = nullptr;
@@ -55,7 +33,7 @@ Cluster *createCluster(int blockIndex) {
     return cluster;
 }
 
-int getFreeDiskSpace(Fat *pFat) {
+int FATSYSTEM::getFreeDiskSpace(Fat *pFat) {
     int freeBlocks = 0;
     for (int i = 0; i < pFat->totalBlocks; i++) {
         if (pFat->blockStatus[i] == BLOCK_FREE) {
@@ -65,7 +43,7 @@ int getFreeDiskSpace(Fat *pFat) {
     return freeBlocks * pFat->blockSize;
 }
 
-File *createFile(Fat *pFat, int szFile, const char *fileName) {
+File *FATSYSTEM::createFile(Fat *pFat, int szFile, const char *fileName) {
     if (strlen(fileName) > 11) {
         cout << "Name zu lang" << endl;
         return nullptr;
@@ -109,7 +87,7 @@ File *createFile(Fat *pFat, int szFile, const char *fileName) {
     return nullptr;
 }
 
-void deleteFile(Fat *pFat, const char *fileName) {
+void FATSYSTEM::deleteFile(Fat *pFat, const char *fileName) {
     for (int i = 0; i < MAX_FILES; i++) {
         if (pFat->files[i] != nullptr && strcmp(pFat->files[i]->name, fileName) == 0) {
             File *fileToDelete = pFat->files[i];
@@ -130,41 +108,41 @@ void deleteFile(Fat *pFat, const char *fileName) {
     cout << "Datei nicht gefunden" << endl;
 }
 
-void showFat(Fat *pFat) {
+void FATSYSTEM::showFat(Fat *pFat) {
     for (int i = 0; i < pFat->totalBlocks; i++) {
         switch (pFat->blockStatus[i]) {
-            case BLOCK_RESERVED:
-                cout << "R";
-                break;
-            case BLOCK_DEFECT:
-                cout << "D";
-                break;
-            case BLOCK_FREE:
-                cout << "F";
-                break;
-            case BLOCK_OCCUPIED:
+        case BLOCK_RESERVED:
+            cout << "R";
+            break;
+        case BLOCK_DEFECT:
+            cout << "D";
+            break;
+        case BLOCK_FREE:
+            cout << "F";
+            break;
+        case BLOCK_OCCUPIED:
 
-                for (int j = 0; j < MAX_FILES; j++) {
-                    if (pFat->files[j] != nullptr) {
-                        Cluster *cluster = pFat->files[j]->clusterList;
-                        while (cluster != nullptr) {
-                            if (cluster->blockIndex == i) {
-                                cout << j;
-                                break;
-                            }
-                            cluster = cluster->next;
+            for (int j = 0; j < MAX_FILES; j++) {
+                if (pFat->files[j] != nullptr) {
+                    Cluster *cluster = pFat->files[j]->clusterList;
+                    while (cluster != nullptr) {
+                        if (cluster->blockIndex == i) {
+                            cout << j;
+                            break;
                         }
+                        cluster = cluster->next;
                     }
                 }
-                break;
+            }
+            break;
         }
         cout << " ";
     }
     cout << endl;
 }
 
-float getFragmentation(Fat *pFat) {
-/**
+float FATSYSTEM::getFragmentation(Fat *pFat) {
+    /**
         Fragmentierung:
             -Fileindex ändert sich +1
             -Free auf occ / occ auf free +1
@@ -265,7 +243,7 @@ float getFragmentation(Fat *pFat) {
 }
 
 
-void defragDisk(Fat *pFat) {
+void FATSYSTEM::defragDisk(Fat *pFat) {
     cout << "Starting defragmentation..." << endl;
 
     int blockIndex = 0; // Reset block index at the beginning
@@ -320,3 +298,6 @@ void defragDisk(Fat *pFat) {
 //    }
 //    cout <<"Defrag fertig" << endl;
 //}
+
+
+
