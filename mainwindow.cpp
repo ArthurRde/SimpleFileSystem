@@ -18,6 +18,26 @@ void MainWindow::setSlotSelected(int newSlotSelected)
     slotSelected = newSlotSelected;
 }
 
+INode* MainWindow::getClipboardFileNode() const
+{
+    return clipboardFileNode;
+}
+
+void MainWindow::setClipboardFileNode(INode *newClipboardFileNode)
+{
+    clipboardFileNode = newClipboardFileNode;
+}
+
+bool MainWindow::getClipboardNodeCopied() const
+{
+    return clipboardNodeCopied;
+}
+
+void MainWindow::setClipboardNodeCopied(bool newClipboardNodeCopied)
+{
+    clipboardNodeCopied = newClipboardNodeCopied;
+}
+
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
@@ -41,7 +61,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->pushButton_2->setEnabled(false);
-
+    ui->pushButton_3->setEnabled(false);
+    ui->pushButton_4->setEnabled(false);
 
     // Setup for Demo
     int rootId = stoi(diskD->getBlocks().at(0));
@@ -289,13 +310,13 @@ void MainWindow::on_pushButton_5_clicked()
         }
 
     }
-    qDebug() << "createFile finished";
+
     int rootId = stoi(diskD->getBlocks().at(0));
-    qDebug() << "root id ";
+
     showAllFolder(sys, rootId);
-    qDebug() << "showAllFolder";
+
     showFilesInFolder(sys, currentFolder);
-    qDebug() << "showFilesinFolder";
+
 }
 
 
@@ -310,14 +331,17 @@ void MainWindow::on_tableWidget_itemSelectionChanged()
 
 
             ui->pushButton_2->setEnabled(true);
+            ui->pushButton_3->setEnabled(true);
             slotSelected = selectedRows[0].row();
         } else {
             // No line selected
             ui->pushButton_2->setEnabled(false);
+            ui->pushButton_3->setEnabled(false);
         }
     } else {
         // No line sel
         ui->pushButton_2->setEnabled(false);
+        ui->pushButton_3->setEnabled(false);
     }
 }
 
@@ -325,6 +349,26 @@ void MainWindow::on_tableWidget_itemSelectionChanged()
 void MainWindow::on_pushButton_2_clicked()
 {
     sys->deleteFile(ui->tableWidget->item(slotSelected, 1)->text().toStdString());
+    showFilesInFolder(sys, currentFolder);
+    showAllFolder(sys, stoi(diskD->getBlocks().at(0)));
+}
+
+
+void MainWindow::on_pushButton_3_clicked()
+{
+
+    qDebug() << "file";
+    ui->pushButton_4->setEnabled(true);
+    clipboardNodeCopied = true;
+    clipboardFileNode = sys->getNodes()[sys->findFile(ui->tableWidget->item(slotSelected, 1)->text().toStdString())];
+    qDebug() << "Coppied File" << clipboardFileNode->name;
+}
+
+
+void MainWindow::on_pushButton_4_clicked()
+{
+
+    sys->copyFile(clipboardFileNode->name,currentFolder);
     showFilesInFolder(sys, currentFolder);
     showAllFolder(sys, stoi(diskD->getBlocks().at(0)));
 }

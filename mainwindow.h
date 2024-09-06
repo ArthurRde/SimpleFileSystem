@@ -20,6 +20,9 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
     int slotSelected;
+    INode* clipboardFileNode;
+    bool clipboardNodeCopied = false;
+
 public:
     MainWindow(QWidget *parent = nullptr);
 
@@ -45,6 +48,12 @@ public:
     int getSlotSelected() const;
     void setSlotSelected(int newSlotSelected);
 
+    INode* getClipboardFileNode() const;
+    void setClipboardFileNode( INode *newClipboardFileNode);
+
+    bool getClipboardNodeCopied() const;
+    void setClipboardNodeCopied(bool newClipboardNodeCopied);
+
 private
     slots:
             void on_treeWidget_DiskD_itemClicked(QTreeWidgetItem *item, int column);
@@ -58,6 +67,10 @@ private
             void on_tableWidget_itemSelectionChanged();
 
             void on_pushButton_2_clicked();
+
+            void on_pushButton_3_clicked();
+
+            void on_pushButton_4_clicked();
 
         private:
     Ui::MainWindow *ui;

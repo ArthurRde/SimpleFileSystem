@@ -38,6 +38,7 @@ class INODESYSTEM {
     Disk *disk;
     vector <BlockStatus2> blockStatus;
     int totalBlocks;
+
 public:
 
     INODESYSTEM(int diskSize,Disk *disk_);
@@ -74,6 +75,12 @@ public:
     QList<INode *> getFilesInFolder(string folderName);
     vector<int> splitStringIntoInts(string inputString);
     void deleteFolder(string fileName);
+
+    bool existFileInFolder(string fileName, string folderName);
+    string getDataOfFile(string fileName);
+    string createUniqueName(string fileName, string uniqueText = "-C");
+    void copyFile(string fileName, string folderName);
+    bool existFile(string fileName);
 };
 
 #endif // INODESYSTEM_H

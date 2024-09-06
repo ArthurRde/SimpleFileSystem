@@ -29,6 +29,8 @@ void INODESYSTEM::setDisk(Disk *newDisk)
     disk = newDisk;
 }
 
+
+
 INODESYSTEM::INODESYSTEM(int diskSpace, Disk *disk_): disk(disk_){
     totalBlocks = diskSpace/BLOCKSIZE;
     for (int i = 0; i < totalBlocks ; i++)
@@ -77,10 +79,43 @@ int INODESYSTEM::findLowestNumber(){
 }
 
 
+bool INODESYSTEM::existFileInFolder(string fileName, string folderName){
+    bool ex = false;
+    QList<INode*> node = getFilesInFolder(folderName);
+    for(int i = 0; i < node.size(); i++){
+        if(node[i]->name == fileName){
+            ex = true;
+        }
+    }
+    return ex;
+}
+bool INODESYSTEM::existFile(string fileName){
+    bool ex = false;
+
+    for(int i = 0; i < getNodes().size(); i++){
+
+        if(getNodes()[i] != NULL){
+        if(getNodes()[i]->name == fileName){
+            ex = true;
+        }
+        }
+
+    }
+
+    return ex;
+}
+
+
+
 void INODESYSTEM::createFile(string name_, string author_, string data,string parentName, bool isFolder){ //add string parent
     int num =findLowestNumber();
     INode *node = new INode();
     node->name = name_;
+    if(parentName != "isRoot"){
+        if(existFile(name_)){
+            node->name = createUniqueName(name_,"-D");
+        }
+    }
     node->author = author_;
 
     node->date = QDateTime::currentDateTime();
@@ -98,6 +133,8 @@ void INODESYSTEM::createFile(string name_, string author_, string data,string pa
         dataChunks.push_back(data.substr(i, chunk_size));
         requiredBlocks++;
     }
+
+    qDebug() << "requiered Blocks " << requiredBlocks;
     node->size = length;
     //parent id
     int parentId = findFile(parentName);
@@ -444,4 +481,69 @@ vector<int> INODESYSTEM::splitStringIntoInts(string inputString) {
 }
 
 
+string INODESYSTEM::getDataOfFile(string fileName){
+    int num = findFile(fileName);
+    string data="";
+    for(int i = 0; i< getNodes()[num]->blockList.size(); i++){
+        data = data + disk->getBlocks()[getNodes()[num]->blockList[i]];
+    }
+    return data;
+}
 
+string INODESYSTEM::createUniqueName(string fileName, string uniqueText){
+    qDebug() << "test 1" << fileName;
+    string name = fileName;
+    bool ex = existFile(name);
+    qDebug() << "test 1.1";
+    while(ex){
+
+        stringstream ss(name);
+        string token;
+        vector <string> tokens;
+        qDebug() << "test 1.2";
+        char delimiter = '.';
+        if (name != " ") {
+            while (getline(ss, token, delimiter)) {
+                if ((token != " ")) {
+                    if(!token.empty()){
+                        tokens.push_back(token);
+
+                    }
+                }
+            }
+        }
+        qDebug() << "test 2";
+        tokens[0] = tokens[0]+uniqueText;
+        name = tokens[0];
+        for(int i = 1; i< tokens.size(); i++){
+            name = name+ "."+tokens[i];
+        }
+        ex = existFile(name);
+    }
+    qDebug() << "test 3";
+    return name;
+}
+
+void INODESYSTEM::copyFile(string fileName, string folderName){
+    int fileNum = findFile(fileName);
+    string name = createUniqueName(getNodes()[fileNum]->name);
+
+    if(!getNodes()[fileNum]->isFolder){
+        bool ex = existFile(getNodes()[fileNum]->name);
+       createFile(name,getNodes()[fileNum]->author,getDataOfFile(getNodes()[fileNum]->name),folderName);
+
+    } else{
+        createFile(name,getNodes()[fileNum]->author," ",folderName,true);
+        editData(findFile(name), " ");
+        vector<int> nums = splitStringIntoInts(getDataOfFile(getNodes()[fileNum]->name));
+        for(int i = 0; i < nums.size(); i++){
+
+        }
+        //neuen nummers
+        for(int i = 0; i < nums.size(); i++ ){
+            copyFile(getNodes()[nums[i]]->name,getNodes()[findFile(name)]->name);
+        }
+
+
+    }
+}
