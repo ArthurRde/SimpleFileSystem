@@ -161,7 +161,11 @@ int INODESYSTEM::editData(int fileToBeEditedId, string data){
     //node select am index filestobeedited
 
     //wenn data mehr blocks benötigt
-
+    //qDebug() << "test 1 " << data;
+    bool isEmpty = false;
+    if(data.empty()){
+        isEmpty = true;
+    }
     vector<string> dataChunks;
     size_t chunk_size = BLOCKSIZE;
     size_t length = data.length();
@@ -172,13 +176,16 @@ int INODESYSTEM::editData(int fileToBeEditedId, string data){
         requiredBlocks++;
     }
 
+
+    //qDebug() << "test 2";
     if(nodes[fileToBeEditedId]->blockList.size() < requiredBlocks){
 
         if (requiredBlocks > getFreeDiskSpace() / BLOCKSIZE) {
             qDebug() <<"Nicht genug Platz" ;
             return -1;
-        }
 
+        }
+     //qDebug() << "test 3";
         requiredBlocks = requiredBlocks - nodes[fileToBeEditedId]->blockList.size();
         int allocatedBlocks = 0;
         int pos = 0;
@@ -196,10 +203,23 @@ int INODESYSTEM::editData(int fileToBeEditedId, string data){
         }
     }
 
+     //qDebug() << "test 4";
+    int size = nodes[fileToBeEditedId]->blockList.size();
+     //qDebug() << "test 4.2";
+        for(int i = 0; i < size; i++){
+          //  qDebug() << "test 5";
 
-    for(int i = 0; i < nodes[fileToBeEditedId]->blockList.size(); i++){
-        disk->addDataToBlock(nodes[fileToBeEditedId]->blockList[i], dataChunks[i]);
+            //qDebug() << "test 5.2 " << isEmpty;
+         if(!isEmpty){
+            //qDebug() << "full";
+            disk->addDataToBlock(nodes[fileToBeEditedId]->blockList[i], dataChunks[i]);
+         } else {
+             //qDebug() << "empty";
+             disk->addDataToBlock(nodes[fileToBeEditedId]->blockList[i], " ");
+         }
+
     }
+     //qDebug() << "test 6";
     return 0;
 }
 
@@ -220,18 +240,100 @@ int INODESYSTEM::findFile( string fileName){
     return -1;
 }
 
-void INODESYSTEM::deleteFile( string fileName){
-    int num = findFile(fileName);
-    if(num != -1){
-        for(int i = 0; i < nodes[num]->blockList.size(); i++){
-            blockStatus[nodes[num]->blockList[i]] = BLOCK_FREE2;
+string INODESYSTEM::findFolderofFile(string fileName){
+    for(int i = 0; i < getNodes().size(); i++){
+        if(getNodes()[i] != NULL){
+        if(getNodes()[i]->isFolder){
+            QList<INode *> nodes = getFilesInFolder(getNodes()[i]->name);
+            if(nodes.contains(getNodes()[findFile(fileName)])){
+                return getNodes()[i]->name;
+            }
         }
-        INode *nodeToDelete =nodes[num];
-        nodes.erase(num);
-        delete nodeToDelete;
+        }
     }
+    return "";
 }
 
+void INODESYSTEM::deleteFile( string fileName,bool deleteFolderInFolder, bool ignoreFolderTyp){
+    qDebug() << "fileToDelete" << fileName;
+    int num = findFile(fileName);
+
+    if((!getNodes()[num]->isFolder) || ignoreFolderTyp){
+       // qDebug() << "here";
+        if(num != -1){
+            for(int i = 0; i < nodes[num]->blockList.size(); i++){
+              //  qDebug() << "here1";
+                blockStatus[nodes[num]->blockList[i]] = BLOCK_FREE2;
+                disk->getBlocks()[nodes[num]->blockList[i]] = " ";
+            }
+            //qDebug() << "here2";
+            string folderName = findFolderofFile(fileName);
+            //qDebug() << "here3" << folderName;
+            int folderId = findFile(folderName);
+            //qDebug() << "here4";
+            string folderData = "";
+            for(int i = 0; i < nodes[folderId]->blockList.size(); i++){
+                folderData = folderData+disk->getBlocks()[nodes[folderId]->blockList[i]];
+            }
+            //qDebug() << "here5" << folderData;
+            string newFolderData = "";
+            //qDebug() << "here5" << folderData;
+            vector<int> folderNums =splitStringIntoInts(folderData);
+            //qDebug() << "here6";
+            for(int i = 0; i< folderNums.size(); i++){
+                if(folderNums[i] != num){
+                    newFolderData = newFolderData + ", " + to_string(folderNums[i]);
+                }
+            }
+            //qDebug() << "here7";
+            editData(folderId,newFolderData);
+            //qDebug() << "here8";
+            INode *nodeToDelete =nodes[num];
+            nodes.erase(num);
+            delete nodeToDelete;
+
+        }
+    } else {
+
+        if(!deleteFolderInFolder){
+
+        QMessageBox msgBox;
+        msgBox.setIcon(QMessageBox::Critical);
+
+        msgBox.setWindowTitle("Attention");
+        msgBox.setText("You try to delete a folder! Do you want to continue?");
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+
+        if (msgBox.exec() == QMessageBox::Yes) {
+            //yes
+            //qDebug() << "yes";
+            deleteFolder(fileName);
+
+            }
+
+        } else {
+            deleteFolder(fileName);
+        }
+
+
+    }
+
+   // showFat();
+}
+
+
+void INODESYSTEM::deleteFolder(string fileName){
+    QList<INode *> node = getFilesInFolder(fileName);
+
+    for(int i = 0; i < node.size(); i++){
+        if(!node[i]->isFolder){
+            deleteFile(node[i]->name);
+        } else {
+            deleteFile(node[i]->name, true);
+        }
+    }
+    deleteFile(fileName, false, true);
+}
 void INODESYSTEM::showFat() {
     for (int i = 0; i < totalBlocks; i++) {
         switch (blockStatus[i]) {
@@ -273,6 +375,73 @@ void INODESYSTEM::renameFile(string fileName, string newName)
 }
 
 
+
+QList<INode *> INODESYSTEM::getFoldersInFolder( string folderName) {
+    //qDebug() << "folFol " << "start " << folderName;
+
+
+    // qDebug() << "folfol sy s id" << sys->findFile(folderName);
+    INode *folder = getNodes()[findFile(folderName)];
+    //qDebug() << "folFol " << "folder inode" << folder->name;
+    string data;
+
+
+    for (int i = 0; i < folder->blockList.size(); i++) {
+        //  qDebug() << "folFol datazusammen" << data;
+        data = data + getDisk()->getBlocks()[folder->blockList[i]];
+    }
+    // qDebug() << "folFol Daten" << data;
+    vector<int> nums = splitStringIntoInts(data);
+    //qDebug() << "folFol " << "daten";
+    QList < INode * > node;
+    for (int i = 0; i < nums.size(); i++) {
+        if (getNodes()[nums[i]]->isFolder) {
+            node.append(getNodes()[nums[i]]);
+        }
+    }
+    return node;
+}
+
+QList<INode *> INODESYSTEM::getFilesInFolder( string folderName) {
+    INode *folder = getNodes()[findFile(folderName)];
+
+    string data;
+    for (int i = 0; i < folder->blockList.size(); i++) {
+
+        data = data + getDisk()->getBlocks()[folder->blockList[i]];
+    }
+
+    vector<int> nums = splitStringIntoInts(data);
+
+    QList < INode * > node;
+    for (int i = 0; i < nums.size(); i++) {
+        node.append(getNodes()[nums[i]]);
+    }
+    return node;
+}
+
+
+
+vector<int> INODESYSTEM::splitStringIntoInts(string inputString) {
+    //qDebug() << "splitt " << inputString;
+    stringstream ss(inputString);
+    string token;
+    vector <string> tokens;
+    vector<int> nums;
+    char delimiter = ',';
+    if (inputString != " ") {
+        while (getline(ss, token, delimiter)) {
+            if ((token != " ")) {
+                if(!token.empty()){
+                tokens.push_back(token);
+                //qDebug() << "splitStringIntoInts: token -> " << token;
+                nums.push_back(stoi(token));
+                }
+            }
+        }
+    }
+    return nums;
+}
 
 
 

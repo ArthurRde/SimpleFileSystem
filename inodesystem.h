@@ -7,7 +7,9 @@
 #include <QDate>
 #include "disk.h"
 #include <string>
-
+#include <string.h>
+#include <sstream>
+#include <QMessageBox>
 using namespace std;
 
 #define BLOCKSIZE 512
@@ -42,7 +44,7 @@ public:
 
     void showFat();
 
-    void deleteFile(string fileName);
+    void deleteFile(string fileName,bool deleteFolderInFolder = false,bool ignoreFolderTyp  =false);
 
     int findFile(string fileName);
 
@@ -67,6 +69,11 @@ public:
     void setDisk(Disk *newDisk);
 
     int editData(int fileToBeEditedId, string data);
+    string findFolderofFile(string fileName);
+    QList<INode *> getFoldersInFolder(string folderName);
+    QList<INode *> getFilesInFolder(string folderName);
+    vector<int> splitStringIntoInts(string inputString);
+    void deleteFolder(string fileName);
 };
 
 #endif // INODESYSTEM_H

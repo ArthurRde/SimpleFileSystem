@@ -4,11 +4,11 @@
 #include <QMainWindow>
 #include "inodesystem.h"
 #include "fatSystem.h"
-#include <string.h>
-#include <sstream>
+
 #include <QTreeWidgetItem>
 
 #include "dialogcreatefile.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,6 +19,7 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
+    int slotSelected;
 public:
     MainWindow(QWidget *parent = nullptr);
 
@@ -30,17 +31,20 @@ public:
 
     void showFilesInFolder(INODESYSTEM *sys, string folderName);
 
-    vector<int> splitStringIntoInts(string inputString);
+
 
     QTreeWidgetItem *setTreeWidgetChild(QTreeWidgetItem *rootItem, string name);
 
-    QList<INode *> getFilesInFolder(INODESYSTEM *sys, string folderName);
 
-    QList<INode *> getFoldersInFolder(INODESYSTEM *sys, string folderName);
 
     void setTreeWidgetChildRec(INODESYSTEM *sys, int rootId, QTreeWidgetItem *rootItem);
 
     string currentFolder = "root";
+    void showPath(INODESYSTEM *sys, int rootId);
+    QString findFolderPath(INODESYSTEM *sys, int rootId, string foldername);
+    int getSlotSelected() const;
+    void setSlotSelected(int newSlotSelected);
+
 private
     slots:
             void on_treeWidget_DiskD_itemClicked(QTreeWidgetItem *item, int column);
@@ -50,6 +54,10 @@ private
             void on_pushButton_clicked();
 
             void on_pushButton_5_clicked();
+
+            void on_tableWidget_itemSelectionChanged();
+
+            void on_pushButton_2_clicked();
 
         private:
     Ui::MainWindow *ui;

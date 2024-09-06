@@ -8,6 +8,16 @@ Disk *diskC = new Disk(64, 512);
 INODESYSTEM *sys = new INODESYSTEM(diskD->getSize(), diskD);
 FATSYSTEM *fSys = new FATSYSTEM(diskC->getBlocks().size(),diskC->getBlockSize());
 
+int MainWindow::getSlotSelected() const
+{
+    return slotSelected;
+}
+
+void MainWindow::setSlotSelected(int newSlotSelected)
+{
+    slotSelected = newSlotSelected;
+}
+
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
@@ -30,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->pushButton_2->setEnabled(false);
+
 
     // Setup for Demo
     int rootId = stoi(diskD->getBlocks().at(0));
@@ -93,8 +105,39 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow() {
     delete ui;
 }
+QString MainWindow::findFolderPath(INODESYSTEM *sys, int rootId, string foldername) {
+    QString path;
+    QList < INode * > children = sys->getFoldersInFolder( sys->getNodes()[rootId]->name);
+    if(children.contains(sys->getNodes()[sys->findFile(foldername)])){
+        return QString::fromStdString(sys->getNodes()[rootId]->name + "/" + foldername );
+    }
+    for (int i = 0; i < children.size(); i++) {
 
+        QList < INode * > newChild = sys->getFoldersInFolder( children[i]->name);
 
+        if (newChild.size() > 0) {
+            QString returnValue = findFolderPath(sys,sys->findFile(children[i]->name) , foldername);
+            if(returnValue != "notFound"){
+
+                path = QString::fromStdString(sys->getNodes()[rootId]->name)+ "/"   +returnValue;
+
+                return path;
+            }
+        } else {
+            return "notFound";
+        }
+    }
+    return "notFound";
+}
+
+void MainWindow::showPath(INODESYSTEM *sys, int rootId){
+    QString val = findFolderPath(sys, rootId, currentFolder);
+    if(val == "notFound"){
+    ui->label_3->setText("Path: ~/");
+    } else {
+        ui->label_3->setText("Path: "+val);
+    }
+}
 
 
 void MainWindow::createTableFileRows(QList<INode *> node) {
@@ -149,12 +192,12 @@ QTreeWidgetItem *MainWindow::setTreeWidgetChild(QTreeWidgetItem *rootItem, strin
 
 void MainWindow::setTreeWidgetChildRec(INODESYSTEM *sys, int rootId, QTreeWidgetItem *rootItem) {
     //qDebug() << "show all Folder " << "rec start ";
-    QList < INode * > children = getFoldersInFolder(sys, sys->getNodes()[rootId]->name);
+    QList < INode * > children = sys->getFoldersInFolder( sys->getNodes()[rootId]->name);
     //qDebug() << "show all Folder " << "children";
     for (int i = 0; i < children.size(); i++) {
         QTreeWidgetItem *item = setTreeWidgetChild(rootItem, children[i]->name);
         //qDebug() << "show all Folder " << "setChild";
-        QList < INode * > newChild = getFoldersInFolder(sys, children[i]->name);
+        QList < INode * > newChild = sys->getFoldersInFolder( children[i]->name);
         //qDebug() << "show all Folder " << "newChild";
         if (newChild.size() > 0) {
             //qDebug() << "show all Folder " << "newRec";
@@ -196,79 +239,18 @@ void MainWindow::showAllFolder(INODESYSTEM *sys, int rootId) {
 
 
 
-
-
-QList<INode *> MainWindow::getFoldersInFolder(INODESYSTEM *sys, string folderName) {
-    //qDebug() << "folFol " << "start " << folderName;
-
-
-   // qDebug() << "folfol sy s id" << sys->findFile(folderName);
-    INode *folder = sys->getNodes()[sys->findFile(folderName)];
-    //qDebug() << "folFol " << "folder inode" << folder->name;
-    string data;
-
-
-    for (int i = 0; i < folder->blockList.size(); i++) {
-      //  qDebug() << "folFol datazusammen" << data;
-        data = data + sys->getDisk()->getBlocks()[folder->blockList[i]];
-    }
-   // qDebug() << "folFol Daten" << data;
-    vector<int> nums = splitStringIntoInts(data);
-    //qDebug() << "folFol " << "daten";
-    QList < INode * > node;
-    for (int i = 0; i < nums.size(); i++) {
-        if (sys->getNodes()[nums[i]]->isFolder) {
-            node.append(sys->getNodes()[nums[i]]);
-        }
-    }
-    return node;
-}
-
-QList<INode *> MainWindow::getFilesInFolder(INODESYSTEM *sys, string folderName) {
-    INode *folder = sys->getNodes()[sys->findFile(folderName)];
-
-    string data;
-    for (int i = 0; i < folder->blockList.size(); i++) {
-
-        data = data + sys->getDisk()->getBlocks()[folder->blockList[i]];
-    }
-
-    vector<int> nums = splitStringIntoInts(data);
-
-    QList < INode * > node;
-    for (int i = 0; i < nums.size(); i++) {
-        node.append(sys->getNodes()[nums[i]]);
-    }
-    return node;
-}
-
 void MainWindow::showFilesInFolder(INODESYSTEM *sys, string folderName) {
     int fileId = sys->findFile(folderName);
 
     if (sys->getNodes()[fileId]->isFolder) {
         currentFolder = folderName;
-       // qDebug() << "FolderName" << currentFolder;
-        createTableFileRows(getFilesInFolder(sys, folderName));
+        // qDebug() << "FolderName" << currentFolder;
+        createTableFileRows(sys->getFilesInFolder( folderName));
+        showPath(sys, stoi(diskD->getBlocks().at(0)));
     }
 }
 
-vector<int> MainWindow::splitStringIntoInts(string inputString) {
-    stringstream ss(inputString);
-    string token;
-    vector <string> tokens;
-    vector<int> nums;
-    char delimiter = ',';
-    if (inputString != " ") {
-        while (getline(ss, token, delimiter)) {
-            if (token != " ") {
-                tokens.push_back(token);
-                //qDebug() << "splitStringIntoInts: token -> " << token;
-                nums.push_back(stoi(token));
-            }
-        }
-    }
-    return nums;
-}
+
 
 void MainWindow::on_treeWidget_DiskD_itemClicked(QTreeWidgetItem *item, int column) {
     showFilesInFolder(sys, item->text(column).toStdString());
@@ -314,5 +296,36 @@ void MainWindow::on_pushButton_5_clicked()
     qDebug() << "showAllFolder";
     showFilesInFolder(sys, currentFolder);
     qDebug() << "showFilesinFolder";
+}
+
+
+void MainWindow::on_tableWidget_itemSelectionChanged()
+{
+    QItemSelectionModel *selectionModel = ui->tableWidget->selectionModel();
+
+    if (selectionModel->hasSelection()) {
+        QModelIndexList selectedRows = selectionModel->selectedRows();
+        if (!selectedRows.isEmpty()) {
+            // Line Selec
+
+
+            ui->pushButton_2->setEnabled(true);
+            slotSelected = selectedRows[0].row();
+        } else {
+            // No line selected
+            ui->pushButton_2->setEnabled(false);
+        }
+    } else {
+        // No line sel
+        ui->pushButton_2->setEnabled(false);
+    }
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    sys->deleteFile(ui->tableWidget->item(slotSelected, 1)->text().toStdString());
+    showFilesInFolder(sys, currentFolder);
+    showAllFolder(sys, stoi(diskD->getBlocks().at(0)));
 }
 
