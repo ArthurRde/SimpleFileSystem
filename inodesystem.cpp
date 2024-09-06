@@ -208,13 +208,17 @@ int INODESYSTEM::editData(int fileToBeEditedId, string data){
     size_t length = data.length();
     int requiredBlocks = 0;
 
+
+
+
     for (size_t i = 0; i < length; i += chunk_size) {
+      //  qDebug() << "test for";
         dataChunks.push_back(data.substr(i, chunk_size));
         requiredBlocks++;
     }
 
 
-    //qDebug() << "test 2";
+    //qDebug() << "test 2" << requiredBlocks << "schon " << nodes[fileToBeEditedId]->blockList.size();
     if(nodes[fileToBeEditedId]->blockList.size() < requiredBlocks){
 
         if (requiredBlocks > getFreeDiskSpace() / BLOCKSIZE) {
@@ -222,7 +226,8 @@ int INODESYSTEM::editData(int fileToBeEditedId, string data){
             return -1;
 
         }
-     //qDebug() << "test 3";
+        //qDebug() << "test 3";
+        nodes[fileToBeEditedId]->size = length;
         requiredBlocks = requiredBlocks - nodes[fileToBeEditedId]->blockList.size();
         int allocatedBlocks = 0;
         int pos = 0;
@@ -230,10 +235,9 @@ int INODESYSTEM::editData(int fileToBeEditedId, string data){
             if (blockStatus[i] == BLOCK_FREE2) {
 
                 blockStatus[i] = BLOCK_OCCUPIED2;
-
                 pos++;
                 allocatedBlocks++;
-                nodes[allocatedBlocks]->blockList.push_back(i);
+                nodes[fileToBeEditedId]->blockList.push_back(i);
 
 
             }
@@ -242,9 +246,9 @@ int INODESYSTEM::editData(int fileToBeEditedId, string data){
 
      //qDebug() << "test 4";
     int size = nodes[fileToBeEditedId]->blockList.size();
-     //qDebug() << "test 4.2";
+    //qDebug() << "test 4.2" << size;
         for(int i = 0; i < size; i++){
-          //  qDebug() << "test 5";
+      //    qDebug() << "test 5";
 
             //qDebug() << "test 5.2 " << isEmpty;
          if(!isEmpty){

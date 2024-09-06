@@ -63,27 +63,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->pushButton_2->setEnabled(false);
     ui->pushButton_3->setEnabled(false);
     ui->pushButton_4->setEnabled(false);
+    connect(ui->actionCreate_demofiles, &QAction::triggered, this, &MainWindow::createDemoFiles);
+    // Setup
 
-    // Setup for Demo
-    int rootId = stoi(diskD->getBlocks().at(0));
-     qDebug() << "create demo 1 ";
-    sys->createFile("documents", "author", " ", "root", true);
-       qDebug() << "create demo 2 ";
-    sys->createFile("home.txt", "author", "data", "root");
-         qDebug() << "create demo 3 ";
-    sys->createFile("bath.txt", "author", "data", "documents");
-           qDebug() << "create demo 4 ";
-    sys->createFile("downloads", "author", " ", "root", true);
-             qDebug() << "create demo 5 ";
-    sys->createFile("file.pdf", "author", "data", "downloads");
-               qDebug() << "create demo 6 ";
-    sys->createFile("photos", "author", " ", "documents", true);
-                 qDebug() << "create demo 7 ";
-    sys->createFile("file.png", "author", "data", "photos");
-
-    qDebug() << "demofiles created";
     ui->treeWidget_DiskD->setColumnCount(1);
     ui->treeWidget_DiskD->setHeaderLabels(QStringList() << "Folders");
+    int rootId = stoi(diskD->getBlocks().at(0));
     showAllFolder(sys, rootId);
     showFilesInFolder(sys, "root");
 
@@ -279,10 +264,30 @@ void MainWindow::on_treeWidget_DiskD_itemClicked(QTreeWidgetItem *item, int colu
 
 
 void MainWindow::on_tableWidget_cellDoubleClicked(int row) {
-    string folderName = ui->tableWidget->item(row, 1)->text().toStdString();
-    showFilesInFolder(sys, folderName);
+    string fileName = ui->tableWidget->item(row, 1)->text().toStdString();
+    showFilesInFolder(sys, fileName);
+    showDataOfFile(sys, fileName);
 }
 
+
+void MainWindow::showDataOfFile(INODESYSTEM *sys, string fileName){
+    qDebug() << "show file 1";
+    int fileId = sys->findFile(fileName);
+    qDebug() << "show file 2";
+    if (!sys->getNodes()[fileId]->isFolder) {
+        qDebug() << "show file 3";
+        DialogShowFile dlg(sys->getNodes()[fileId]->name, sys->getNodes()[fileId]->author, sys->getNodes()[fileId]->date,sys->getNodes()[fileId]->size, sys->getDataOfFile(fileName));
+        dlg.setWindowTitle("File information");
+        if(dlg.exec() == QDialog::Accepted){
+            sys->editData(fileId, dlg.getDataText());
+        }
+
+        qDebug() << "show file 4";
+    }
+    int rootId = stoi(diskD->getBlocks().at(0));
+    showAllFolder(sys, rootId);
+    showFilesInFolder(sys, currentFolder);
+}
 void MainWindow::on_pushButton_clicked()
 {
     //TODO: add new window to write new filename into
@@ -295,6 +300,7 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_pushButton_5_clicked()
 {
     DialogCreateFile dlg;
+    dlg.setWindowTitle("Create a File");
     dlg.show();
     if(dlg.exec() == QDialog::Accepted) {
 
@@ -373,3 +379,25 @@ void MainWindow::on_pushButton_4_clicked()
     showAllFolder(sys, stoi(diskD->getBlocks().at(0)));
 }
 
+void MainWindow::createDemoFiles(){
+    int rootId = stoi(diskD->getBlocks().at(0));
+
+    sys->createFile("documents", "user", " ", "root", true);
+
+    sys->createFile("downloads", "system", " ", "root", true);
+
+    sys->createFile("keyAccess.closed", "KeyCode.exe", "Passkeys: ecampus - passwort1234", "root");
+
+    sys->createFile("poem.txt", "author", "Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit.", "documents");
+
+    sys->createFile("examSolutions.pdf", "anonymus", "Frage: Erklären Sie das OSI-Modell und nennen Sie die sieben Schichten.solution: Das OSI-Modell (Open Systems Interconnection Model) ist ein Referenzmodell für die Kommunikation in Netzwerken. Es besteht aus sieben Schichten:Physikalische Schicht (Physical Layer)Sicherungsschicht (Data Link Layer)Netzwerkschicht (Network Layer)Transportschicht (Transport Layer)Sitzungsschicht (Session Layer)Darstellungsschicht (Presentation Layer)Anwendungsschicht (Application Layer)", "downloads");
+
+    sys->createFile("photos", "system", " ", "documents", true);
+
+    sys->createFile("summer.png", "apple", "A beautiful summer, A beautiful summer", "photos");
+
+    qDebug() << "demofiles created";
+
+    showAllFolder(sys, rootId);
+    showFilesInFolder(sys, "root");
+}

@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     dialogcreatefile.cpp \
+    dialogshowfile.cpp \
     disk.cpp \
     fatSystem.cpp \
     inodesystem.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     dialogcreatefile.h \
+    dialogshowfile.h \
     disk.h \
     fatSystem.h \
     inodesystem.h \
@@ -25,6 +27,7 @@ HEADERS += \
 
 FORMS += \
     dialogcreatefile.ui \
+    dialogshowfile.ui \
     mainwindow.ui
 
 # Default rules for deployment.

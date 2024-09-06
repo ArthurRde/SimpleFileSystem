@@ -172,7 +172,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -225,8 +225,15 @@
     </property>
     <addaction name="actionDefragmentieren"/>
    </widget>
+   <widget class="QMenu" name="menuDemo">
+    <property name="title">
+     <string>Demo</string>
+    </property>
+    <addaction name="actionCreate_demofiles"/>
+   </widget>
    <addaction name="menuCD"/>
    <addaction name="menuDefrag"/>
+   <addaction name="menuDemo"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionSchreiben">
@@ -242,6 +249,11 @@
   <action name="actionDefragmentieren">
    <property name="text">
     <string>Defragmentieren</string>
+   </property>
+  </action>
+  <action name="actionCreate_demofiles">
+   <property name="text">
+    <string>Create demofiles</string>
    </property>
   </action>
  </widget>

@@ -8,6 +8,7 @@
 #include <QTreeWidgetItem>
 
 #include "dialogcreatefile.h"
+#include "dialogshowfile.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -54,6 +55,9 @@ public:
     bool getClipboardNodeCopied() const;
     void setClipboardNodeCopied(bool newClipboardNodeCopied);
 
+    void showDataOfFile(INODESYSTEM *sys, string fileName);
+public slots:
+    void createDemoFiles();
 private
     slots:
             void on_treeWidget_DiskD_itemClicked(QTreeWidgetItem *item, int column);
