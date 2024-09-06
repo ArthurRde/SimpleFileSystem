@@ -41,20 +41,20 @@ int FATSYSTEM::getFreeDiskSpace() {
     return freeBlocks * fat->blockSize;
 }
 
-File *FATSYSTEM::createFile(int szFile, const char *fileName) {
-    if (strlen(fileName) > 11) {
+File *FATSYSTEM::createFile(int fileSize, const char *fileName) {
+    if (strlen(fileName) > 31) {
         cout << "Name zu lang" << endl;
         return nullptr;
     }
-    int requiredBlocks = szFile / fat->blockSize;
+    int requiredBlocks = fileSize / fat->blockSize;
     if (requiredBlocks > getFreeDiskSpace() / fat->blockSize) {
         cout << "Nicht genug Platz" << endl;
         return nullptr;
     }
     File *newFile = new File;
-    strncpy(newFile->name, fileName, 11);
-    newFile->name[11] = '\0';
-    newFile->size = szFile;
+    strncpy(newFile->name, fileName, 31);
+    newFile->name[31] = '\0';
+    newFile->size = fileSize;
     newFile->clusterList = nullptr;
 
     Cluster *lastCluster = nullptr;

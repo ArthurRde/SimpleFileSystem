@@ -32,10 +32,8 @@ struct INode {
 
 
 class INODESYSTEM {
-
     map<int, INode *> nodes;
     Disk *disk;
-
     vector <BlockStatus2> blockStatus;
     int totalBlocks;
 public:
@@ -58,6 +56,7 @@ public:
 
     int getFreeDiskSpace();
 
+    void renameFile(string fileName, string newName);
 
     map<int, INode *> getNodes() const;
 

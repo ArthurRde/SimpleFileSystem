@@ -18,7 +18,7 @@ struct Cluster {
 };
 
 struct File {
-    char name[12];
+    char name[32];
     int size;
     Cluster *clusterList;
 

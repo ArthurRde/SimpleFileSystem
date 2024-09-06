@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
         ui->tableWidget->horizontalHeader()->setSectionResizeMode(c, QHeaderView::Stretch);
     }
 
-    //fSys->createFile()
+    fSys->createFile(512,"helloWorld.txt");
 
     ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -248,5 +248,13 @@ void MainWindow::on_treeWidget_DiskD_itemClicked(QTreeWidgetItem *item, int colu
 void MainWindow::on_tableWidget_cellDoubleClicked(int row) {
     string folderName = ui->tableWidget->item(row, 1)->text().toStdString();
     showFilesInFolder(sys, folderName);
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    //TODO: add new window to write new filename into
+    sys->renameFile("root","rooot"); //TODO: add selected row filename and new filename from input
+    int rootId = stoi(diskD->getBlocks().at(0));
+    showAllFolder(sys,rootId);
 }
 

@@ -30,7 +30,6 @@ void INODESYSTEM::setDisk(Disk *newDisk)
 }
 
 INODESYSTEM::INODESYSTEM(int diskSpace, Disk *disk_): disk(disk_){
-
     totalBlocks = diskSpace/BLOCKSIZE;
     for (int i = 0; i < totalBlocks ; i++)
     {
@@ -86,7 +85,7 @@ void INODESYSTEM::createFile(string name_, string author_, string data,string pa
 
     node->iNodeNum = num;
     nodes[num] = node;
-    nodes[num]->name[11] = '\0';
+    nodes[num]->name[31] = '\0';
     node->isFolder = isFolder;
 
     vector<string> dataChunks;
@@ -265,6 +264,11 @@ void INODESYSTEM::showFat() {
     cout <<endl;
 }
 
+void INODESYSTEM::renameFile(string fileName, string newName)
+{
+    int id = findFile(fileName);
+    nodes[id]->name = newName;
+}
 
 
 

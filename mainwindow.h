@@ -44,6 +44,8 @@ private
 
             void on_tableWidget_cellDoubleClicked(int row);
 
+            void on_pushButton_clicked();
+
         private:
     Ui::MainWindow *ui;
 };
