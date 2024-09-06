@@ -8,6 +8,8 @@
 #include <sstream>
 #include <QTreeWidgetItem>
 
+#include "dialogcreatefile.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
     class MainWindow;
@@ -38,6 +40,7 @@ public:
 
     void setTreeWidgetChildRec(INODESYSTEM *sys, int rootId, QTreeWidgetItem *rootItem);
 
+    string currentFolder = "root";
 private
     slots:
             void on_treeWidget_DiskD_itemClicked(QTreeWidgetItem *item, int column);
@@ -45,6 +48,8 @@ private
             void on_tableWidget_cellDoubleClicked(int row);
 
             void on_pushButton_clicked();
+
+            void on_pushButton_5_clicked();
 
         private:
     Ui::MainWindow *ui;

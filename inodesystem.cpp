@@ -7,7 +7,7 @@
 using namespace std;
 
 #define BLOCKSIZE 512
-#define MAX_FILES 10
+
 
 map<int, INode *> INODESYSTEM::getNodes() const
 {
@@ -38,7 +38,9 @@ INODESYSTEM::INODESYSTEM(int diskSpace, Disk *disk_): disk(disk_){
 
     blockStatus[0] = BLOCK_RESERVED2;
     createFile("root", "system", " ", "isRoot", true);
+    qDebug() << "create root 1 ";
     int ind = findFile("root");
+     qDebug() << "create root 2 ";
     disk->addDataToBlock(0, to_string(ind));
 }
 
@@ -115,7 +117,7 @@ void INODESYSTEM::createFile(string name_, string author_, string data,string pa
 
 
 
-    if(parentData == ""){
+        if(parentData.empty()){
 
         result = editData(parentId, to_string(num));
 
@@ -205,16 +207,16 @@ int INODESYSTEM::findFile(int num) {
     if (nodes.find(num) != nodes.end()) {
         return num;
     }
-    cout << "cant find File";
+    //cout << "cant find File";
     return NULL;
 }
 int INODESYSTEM::findFile( string fileName){
-    for (int i = 0; i < MAX_FILES; i++) {
+    for (int i = 0; i < getNodes().size(); i++) {
         if (nodes[i] != NULL && nodes[i]->name == fileName) {
             return i;
         }
     }
-    cout << "cant find File";
+    cout << "cant find File inode";
     return -1;
 }
 

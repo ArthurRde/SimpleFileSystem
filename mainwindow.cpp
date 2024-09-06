@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "ui_dialogcreatefile.h"
 #include "ui_mainwindow.h"
 
 
@@ -25,22 +26,29 @@ MainWindow::MainWindow(QWidget *parent)
         ui->tableWidget->horizontalHeader()->setSectionResizeMode(c, QHeaderView::Stretch);
     }
 
-    fSys->createFile(512,"helloWorld.txt");
+    //fSys->createFile(512,"helloWorld.txt");
 
     ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     // Setup for Demo
     int rootId = stoi(diskD->getBlocks().at(0));
+     qDebug() << "create demo 1 ";
     sys->createFile("documents", "author", " ", "root", true);
+       qDebug() << "create demo 2 ";
     sys->createFile("home.txt", "author", "data", "root");
+         qDebug() << "create demo 3 ";
     sys->createFile("bath.txt", "author", "data", "documents");
+           qDebug() << "create demo 4 ";
     sys->createFile("downloads", "author", " ", "root", true);
+             qDebug() << "create demo 5 ";
     sys->createFile("file.pdf", "author", "data", "downloads");
+               qDebug() << "create demo 6 ";
     sys->createFile("photos", "author", " ", "documents", true);
+                 qDebug() << "create demo 7 ";
     sys->createFile("file.png", "author", "data", "photos");
 
-
+    qDebug() << "demofiles created";
     ui->treeWidget_DiskD->setColumnCount(1);
     ui->treeWidget_DiskD->setHeaderLabels(QStringList() << "Folders");
     showAllFolder(sys, rootId);
@@ -85,6 +93,9 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow() {
     delete ui;
 }
+
+
+
 
 void MainWindow::createTableFileRows(QList<INode *> node) {
     ui->tableWidget->clear();
@@ -137,13 +148,18 @@ QTreeWidgetItem *MainWindow::setTreeWidgetChild(QTreeWidgetItem *rootItem, strin
 }
 
 void MainWindow::setTreeWidgetChildRec(INODESYSTEM *sys, int rootId, QTreeWidgetItem *rootItem) {
+    //qDebug() << "show all Folder " << "rec start ";
     QList < INode * > children = getFoldersInFolder(sys, sys->getNodes()[rootId]->name);
-
+    //qDebug() << "show all Folder " << "children";
     for (int i = 0; i < children.size(); i++) {
         QTreeWidgetItem *item = setTreeWidgetChild(rootItem, children[i]->name);
+        //qDebug() << "show all Folder " << "setChild";
         QList < INode * > newChild = getFoldersInFolder(sys, children[i]->name);
+        //qDebug() << "show all Folder " << "newChild";
         if (newChild.size() > 0) {
+            //qDebug() << "show all Folder " << "newRec";
             setTreeWidgetChildRec(sys, sys->findFile(children[i]->name), item);
+           // qDebug() << "show all Folder " << "Rec finished";
         }
     }
 }
@@ -152,9 +168,10 @@ void MainWindow::setTreeWidgetChildRec(INODESYSTEM *sys, int rootId, QTreeWidget
 void MainWindow::showAllFolder(INODESYSTEM *sys, int rootId) {
     ui->treeWidget_DiskD->clear();
     //root folder anzeigen
+    //qDebug() << "show all Folder " << "clear";
     QTreeWidgetItem *rootItem = new QTreeWidgetItem(ui->treeWidget_DiskD);
     rootItem->setText(0, QString::fromStdString(sys->getNodes()[rootId]->name));
-
+   // qDebug() << "show all Folder " << "root";
     setTreeWidgetChildRec(sys, rootId, rootItem);
 
 
@@ -176,17 +193,28 @@ void MainWindow::showAllFolder(INODESYSTEM *sys, int rootId) {
 
 }
 
+
+
+
+
+
 QList<INode *> MainWindow::getFoldersInFolder(INODESYSTEM *sys, string folderName) {
+    //qDebug() << "folFol " << "start " << folderName;
+
+
+   // qDebug() << "folfol sy s id" << sys->findFile(folderName);
     INode *folder = sys->getNodes()[sys->findFile(folderName)];
-
+    //qDebug() << "folFol " << "folder inode" << folder->name;
     string data;
-    for (int i = 0; i < folder->blockList.size(); i++) {
 
+
+    for (int i = 0; i < folder->blockList.size(); i++) {
+      //  qDebug() << "folFol datazusammen" << data;
         data = data + sys->getDisk()->getBlocks()[folder->blockList[i]];
     }
-
+   // qDebug() << "folFol Daten" << data;
     vector<int> nums = splitStringIntoInts(data);
-
+    //qDebug() << "folFol " << "daten";
     QList < INode * > node;
     for (int i = 0; i < nums.size(); i++) {
         if (sys->getNodes()[nums[i]]->isFolder) {
@@ -218,6 +246,8 @@ void MainWindow::showFilesInFolder(INODESYSTEM *sys, string folderName) {
     int fileId = sys->findFile(folderName);
 
     if (sys->getNodes()[fileId]->isFolder) {
+        currentFolder = folderName;
+       // qDebug() << "FolderName" << currentFolder;
         createTableFileRows(getFilesInFolder(sys, folderName));
     }
 }
@@ -256,5 +286,33 @@ void MainWindow::on_pushButton_clicked()
     sys->renameFile("root","rooot"); //TODO: add selected row filename and new filename from input
     int rootId = stoi(diskD->getBlocks().at(0));
     showAllFolder(sys,rootId);
+}
+
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    DialogCreateFile dlg;
+    dlg.show();
+    if(dlg.exec() == QDialog::Accepted) {
+
+        if(dlg.getUi()->comboBox->currentText() == "Folder"){
+            sys->createFile(dlg.getUi()->lineEdit->text().toStdString(),dlg.getUi()->lineEdit_2->text().toStdString()," ",currentFolder,true);
+        } else {
+            if(dlg.getUi()->comboBox->currentText() != "custom"){
+                string name = dlg.getUi()->lineEdit->text().toStdString() + "." + dlg.getUi()->comboBox->currentText().toStdString();
+                sys->createFile(name,dlg.getUi()->lineEdit_2->text().toStdString(),dlg.getUi()->lineEdit_3->text().toStdString(),currentFolder);
+            } else {
+                sys->createFile(dlg.getUi()->lineEdit->text().toStdString(),dlg.getUi()->lineEdit_2->text().toStdString(),dlg.getUi()->lineEdit_3->text().toStdString(),currentFolder);
+            }
+        }
+
+    }
+    qDebug() << "createFile finished";
+    int rootId = stoi(diskD->getBlocks().at(0));
+    qDebug() << "root id ";
+    showAllFolder(sys, rootId);
+    qDebug() << "showAllFolder";
+    showFilesInFolder(sys, currentFolder);
+    qDebug() << "showFilesinFolder";
 }
 
