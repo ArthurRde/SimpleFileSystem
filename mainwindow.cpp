@@ -2,11 +2,10 @@
 #include "ui_mainwindow.h"
 
 
-Disk *diskD = new Disk(16);
-Disk *diskC = new Disk(16);
+Disk *diskD = new Disk(64, 512);
+Disk *diskC = new Disk(64, 512);
 INODESYSTEM *sys = new INODESYSTEM(diskD->getSize(), diskD);
-//FATSYSTEM *fSys = new FATSYSTEM();
-
+FATSYSTEM *fSys = new FATSYSTEM(diskC->getBlocks().size(),diskC->getBlockSize());
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -26,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent)
         ui->tableWidget->horizontalHeader()->setSectionResizeMode(c, QHeaderView::Stretch);
     }
 
+    //fSys->createFile()
+
     ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
 
@@ -39,7 +40,6 @@ MainWindow::MainWindow(QWidget *parent)
     sys->createFile("photos", "author", " ", "documents", true);
     sys->createFile("file.png", "author", "data", "photos");
 
-    //fSys->createFat(diskC->getBlocks().size(),diskC->getBlockSize());
 
     ui->treeWidget_DiskD->setColumnCount(1);
     ui->treeWidget_DiskD->setHeaderLabels(QStringList() << "Folders");

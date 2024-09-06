@@ -40,7 +40,7 @@ class INODESYSTEM {
     int totalBlocks;
 public:
 
-    INODESYSTEM(int diskSpace, Disk *disk_);
+    INODESYSTEM(int diskSize,Disk *disk_);
 
     void showFat();
 

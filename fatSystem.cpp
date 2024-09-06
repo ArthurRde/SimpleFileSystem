@@ -1,17 +1,11 @@
 #include "fatSystem.h"
-
-
-
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+
 using namespace std;
-FATSYSTEM::FATSYSTEM()
-{
 
-}
-
-Fat *FATSYSTEM::createFat(int diskSize, int blockSize){
+FATSYSTEM::FATSYSTEM(int diskSize, int blockSize) {
     Fat *pFat = new Fat;
     pFat->blockStatus = new BlockStatus;
     pFat->totalBlocks = diskSize / blockSize;
@@ -22,7 +16,11 @@ Fat *FATSYSTEM::createFat(int diskSize, int blockSize){
     for (int i = 0; i < MAX_FILES; i++) {
         pFat->files[i] = nullptr;
     }
-    return pFat;
+    fat = pFat;
+}
+
+FATSYSTEM::~FATSYSTEM(){
+    delete fat;
 }
 
 Cluster *FATSYSTEM::createCluster(int blockIndex) {
@@ -33,23 +31,23 @@ Cluster *FATSYSTEM::createCluster(int blockIndex) {
     return cluster;
 }
 
-int FATSYSTEM::getFreeDiskSpace(Fat *pFat) {
+int FATSYSTEM::getFreeDiskSpace() {
     int freeBlocks = 0;
-    for (int i = 0; i < pFat->totalBlocks; i++) {
-        if (pFat->blockStatus[i] == BLOCK_FREE) {
+    for (int i = 0; i < fat->totalBlocks; i++) {
+        if (fat->blockStatus[i] == BLOCK_FREE) {
             freeBlocks++;
         }
     }
-    return freeBlocks * pFat->blockSize;
+    return freeBlocks * fat->blockSize;
 }
 
-File *FATSYSTEM::createFile(Fat *pFat, int szFile, const char *fileName) {
+File *FATSYSTEM::createFile(int szFile, const char *fileName) {
     if (strlen(fileName) > 11) {
         cout << "Name zu lang" << endl;
         return nullptr;
     }
-    int requiredBlocks = szFile / pFat->blockSize;
-    if (requiredBlocks > getFreeDiskSpace(pFat) / pFat->blockSize) {
+    int requiredBlocks = szFile / fat->blockSize;
+    if (requiredBlocks > getFreeDiskSpace() / fat->blockSize) {
         cout << "Nicht genug Platz" << endl;
         return nullptr;
     }
@@ -61,9 +59,9 @@ File *FATSYSTEM::createFile(Fat *pFat, int szFile, const char *fileName) {
 
     Cluster *lastCluster = nullptr;
     int allocatedBlocks = 0;
-    for (int i = 0; i < pFat->totalBlocks && allocatedBlocks < requiredBlocks; i++) {
-        if (pFat->blockStatus[i] == BLOCK_FREE) {
-            pFat->blockStatus[i] = BLOCK_OCCUPIED;
+    for (int i = 0; i < fat->totalBlocks && allocatedBlocks < requiredBlocks; i++) {
+        if (fat->blockStatus[i] == BLOCK_FREE) {
+            fat->blockStatus[i] = BLOCK_OCCUPIED;
 
             Cluster *cluster = createCluster(i);
             if (newFile->clusterList == nullptr) {
@@ -77,8 +75,8 @@ File *FATSYSTEM::createFile(Fat *pFat, int szFile, const char *fileName) {
         }
     }
     for (int i = 0; i < MAX_FILES; i++) {
-        if (pFat->files[i] == nullptr) {
-            pFat->files[i] = newFile;
+        if (fat->files[i] == nullptr) {
+            fat->files[i] = newFile;
             return newFile;
         }
     }
@@ -87,61 +85,61 @@ File *FATSYSTEM::createFile(Fat *pFat, int szFile, const char *fileName) {
     return nullptr;
 }
 
-void FATSYSTEM::deleteFile(Fat *pFat, const char *fileName) {
+void FATSYSTEM::deleteFile(const char *fileName) {
     for (int i = 0; i < MAX_FILES; i++) {
-        if (pFat->files[i] != nullptr && strcmp(pFat->files[i]->name, fileName) == 0) {
-            File *fileToDelete = pFat->files[i];
+        if (fat->files[i] != nullptr && strcmp(fat->files[i]->name, fileName) == 0) {
+            File *fileToDelete = fat->files[i];
             Cluster *cluster = fileToDelete->clusterList;
 
             while (cluster != nullptr) {
-                pFat->blockStatus[cluster->blockIndex] = BLOCK_FREE;
+                fat->blockStatus[cluster->blockIndex] = BLOCK_FREE;
                 Cluster *clusterToBeDeleted = cluster;
                 cluster = cluster->next;
                 free(clusterToBeDeleted);
             }
 
             free(fileToDelete);
-            pFat->files[i] = nullptr;
+            fat->files[i] = nullptr;
             return;
         }
     }
     cout << "Datei nicht gefunden" << endl;
 }
 
-void FATSYSTEM::showFat(Fat *pFat) {
-    for (int i = 0; i < pFat->totalBlocks; i++) {
-        switch (pFat->blockStatus[i]) {
-        case BLOCK_RESERVED:
-            cout << "R";
-            break;
-        case BLOCK_DEFECT:
-            cout << "D";
-            break;
-        case BLOCK_FREE:
-            cout << "F";
-            break;
-        case BLOCK_OCCUPIED:
+void FATSYSTEM::showFat() {
+    for (int i = 0; i < fat->totalBlocks; i++) {
+        switch (fat->blockStatus[i]) {
+            case BLOCK_RESERVED:
+                cout << "R";
+                break;
+            case BLOCK_DEFECT:
+                cout << "D";
+                break;
+            case BLOCK_FREE:
+                cout << "F";
+                break;
+            case BLOCK_OCCUPIED:
 
-            for (int j = 0; j < MAX_FILES; j++) {
-                if (pFat->files[j] != nullptr) {
-                    Cluster *cluster = pFat->files[j]->clusterList;
-                    while (cluster != nullptr) {
-                        if (cluster->blockIndex == i) {
-                            cout << j;
-                            break;
+                for (int j = 0; j < MAX_FILES; j++) {
+                    if (fat->files[j] != nullptr) {
+                        Cluster *cluster = fat->files[j]->clusterList;
+                        while (cluster != nullptr) {
+                            if (cluster->blockIndex == i) {
+                                cout << j;
+                                break;
+                            }
+                            cluster = cluster->next;
                         }
-                        cluster = cluster->next;
                     }
                 }
-            }
-            break;
+                break;
         }
         cout << " ";
     }
     cout << endl;
 }
 
-float FATSYSTEM::getFragmentation(Fat *pFat) {
+float FATSYSTEM::getFragmentation() {
     /**
         Fragmentierung:
             -Fileindex ändert sich +1
@@ -151,16 +149,16 @@ float FATSYSTEM::getFragmentation(Fat *pFat) {
  */
     int fragmentedBlocks = 0;
 
-    for (int i = 0; i < pFat->totalBlocks - 1; i++) {
+    for (int i = 0; i < fat->totalBlocks - 1; i++) {
 
-        if (pFat->blockStatus[i] == BLOCK_OCCUPIED)
-            if (pFat->blockStatus[i + 1] == BLOCK_FREE) {
+        if (fat->blockStatus[i] == BLOCK_OCCUPIED)
+            if (fat->blockStatus[i + 1] == BLOCK_FREE) {
                 fragmentedBlocks++;
-            } else if (pFat->blockStatus[i + 1] == BLOCK_OCCUPIED) {
+            } else if (fat->blockStatus[i + 1] == BLOCK_OCCUPIED) {
                 int fileNum = 0;
                 for (int j = 0; j < MAX_FILES; j++) {
-                    if (pFat->files[j] != nullptr) {
-                        Cluster *cluster = pFat->files[j]->clusterList;
+                    if (fat->files[j] != nullptr) {
+                        Cluster *cluster = fat->files[j]->clusterList;
                         while (cluster != nullptr) {
                             if (cluster->blockIndex == i) {
                                 fileNum = j;
@@ -172,8 +170,8 @@ float FATSYSTEM::getFragmentation(Fat *pFat) {
                 }
                 int nextFileNum = 0;
                 for (int j = 0; j < MAX_FILES; j++) {
-                    if (pFat->files[j] != nullptr) {
-                        Cluster *cluster = pFat->files[j]->clusterList;
+                    if (fat->files[j] != nullptr) {
+                        Cluster *cluster = fat->files[j]->clusterList;
                         while (cluster != nullptr) {
                             if (cluster->blockIndex == i + 1) {
                                 nextFileNum = j;
@@ -191,27 +189,27 @@ float FATSYSTEM::getFragmentation(Fat *pFat) {
             }
 
 
-        if (pFat->blockStatus[i] == BLOCK_FREE) {
-            if (pFat->blockStatus[i + 1] == BLOCK_OCCUPIED) {
+        if (fat->blockStatus[i] == BLOCK_FREE) {
+            if (fat->blockStatus[i + 1] == BLOCK_OCCUPIED) {
                 fragmentedBlocks++;
             }
         }
     }
 
 
-    if ((pFat->blockStatus[pFat->totalBlocks - 2] == BLOCK_OCCUPIED &&
-         pFat->blockStatus[pFat->totalBlocks - 1] == BLOCK_FREE) ||
-        (pFat->blockStatus[pFat->totalBlocks - 1] == BLOCK_OCCUPIED &&
-         pFat->blockStatus[pFat->totalBlocks - 2] == BLOCK_FREE)) {
+    if ((fat->blockStatus[fat->totalBlocks - 2] == BLOCK_OCCUPIED &&
+         fat->blockStatus[fat->totalBlocks - 1] == BLOCK_FREE) ||
+        (fat->blockStatus[fat->totalBlocks - 1] == BLOCK_OCCUPIED &&
+         fat->blockStatus[fat->totalBlocks - 2] == BLOCK_FREE)) {
 
         fragmentedBlocks++;
     } else {
         int fileNum = 0;
         for (int j = 0; j < MAX_FILES; j++) {
-            if (pFat->files[j] != nullptr) {
-                Cluster *cluster = pFat->files[j]->clusterList;
+            if (fat->files[j] != nullptr) {
+                Cluster *cluster = fat->files[j]->clusterList;
                 while (cluster != nullptr) {
-                    if (cluster->blockIndex == pFat->totalBlocks - 1) {
+                    if (cluster->blockIndex == fat->totalBlocks - 1) {
                         fileNum = j;
                         break;
                     }
@@ -221,10 +219,10 @@ float FATSYSTEM::getFragmentation(Fat *pFat) {
         }
         int nextFileNum = 0;
         for (int j = 0; j < MAX_FILES; j++) {
-            if (pFat->files[j] != nullptr) {
-                Cluster *cluster = pFat->files[j]->clusterList;
+            if (fat->files[j] != nullptr) {
+                Cluster *cluster = fat->files[j]->clusterList;
                 while (cluster != nullptr) {
-                    if (cluster->blockIndex == pFat->totalBlocks) {
+                    if (cluster->blockIndex == fat->totalBlocks) {
                         nextFileNum = j;
                         break;
                     }
@@ -239,30 +237,30 @@ float FATSYSTEM::getFragmentation(Fat *pFat) {
 
 
     }
-    return ((float) fragmentedBlocks / (float) pFat->totalBlocks) * 100.0f;
+    return ((float) fragmentedBlocks / (float) fat->totalBlocks) * 100.0f;
 }
 
 
-void FATSYSTEM::defragDisk(Fat *pFat) {
+void FATSYSTEM::defragDisk() {
     cout << "Starting defragmentation..." << endl;
 
     int blockIndex = 0; // Reset block index at the beginning
 
     for (int fileIdx = 0; fileIdx < MAX_FILES; fileIdx++) {
-        if (pFat->files[fileIdx] != nullptr) {
-            File *file = pFat->files[fileIdx];
+        if (fat->files[fileIdx] != nullptr) {
+            File *file = fat->files[fileIdx];
             Cluster *cluster = file->clusterList;
 
             while (cluster != nullptr) {
                 // Find the first free block to move the cluster
-                while (blockIndex < pFat->totalBlocks && pFat->blockStatus[blockIndex] != BLOCK_FREE) {
+                while (blockIndex < fat->totalBlocks && fat->blockStatus[blockIndex] != BLOCK_FREE) {
                     blockIndex++;
                 }
 
-                if (blockIndex < pFat->totalBlocks) {
-                    pFat->blockStatus[cluster->blockIndex] = BLOCK_FREE; // Free the old block
+                if (blockIndex < fat->totalBlocks) {
+                    fat->blockStatus[cluster->blockIndex] = BLOCK_FREE; // Free the old block
                     cluster->blockIndex = blockIndex; // Move to new block
-                    pFat->blockStatus[blockIndex] = BLOCK_OCCUPIED; // Occupy the new block
+                    fat->blockStatus[blockIndex] = BLOCK_OCCUPIED; // Occupy the new block
                     blockIndex++;
                 }
 

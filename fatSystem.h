@@ -2,7 +2,6 @@
 #define FATSYSTEM_H
 
 
-
 #define MAX_FILES 10
 
 enum BlockStatus {
@@ -30,21 +29,27 @@ struct Fat {
     int totalBlocks;
     int blockSize;
     File *files[MAX_FILES];
-
 };
 
-class FATSYSTEM
-{
+class FATSYSTEM {
+    Fat * fat;
 public:
-    FATSYSTEM();
-    Fat *createFat(int diskSize, int blockSize);
+    FATSYSTEM(int diskSize, int blockSize);
+    ~FATSYSTEM();
+
     Cluster *createCluster(int blockIndex);
-    int getFreeDiskSpace(Fat *pFat);
-    File *createFile(Fat *pFat, int szFile, const char *fileName);
-    void deleteFile(Fat *pFat, const char *fileName);
-    void showFat(Fat *pFat);
-    float getFragmentation(Fat *pFat);
-    void defragDisk(Fat *pFat);
+
+    int getFreeDiskSpace();
+
+    File *createFile(int szFile, const char *fileName);
+
+    void deleteFile(const char *fileName);
+
+    void showFat();
+
+    float getFragmentation();
+
+    void defragDisk();
 };
 
 #endif // FATSYSTEM_H
