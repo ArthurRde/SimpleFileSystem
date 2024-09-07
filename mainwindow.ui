@@ -102,7 +102,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QTreeWidget" name="treeWidget">
+      <widget class="QTreeWidget" name="treeWidget_DiskC">
        <column>
         <property name="text">
          <string notr="true">1</string>

@@ -69,6 +69,7 @@ public:
     vector<string> splitStringIntoParts(string inputString);
     QList<File*> getFilesInFolder(char *folderName);
     File *findFile(const char *fileName);
+    QList<File *> getFoldersInFolder(char *folderName);
 };
 
 #endif // FATSYSTEM_H

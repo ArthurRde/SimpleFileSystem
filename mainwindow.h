@@ -27,6 +27,8 @@ class MainWindow : public QMainWindow {
     INode* clipboardFileNode;
     bool clipboardNodeCopied = false;
 
+    int showedSystem = 0; //1 = Inode, 2 = Fat
+
 public:
     MainWindow(QWidget *parent = nullptr);
 
@@ -61,6 +63,8 @@ public:
     void showDataOfFile(INODESYSTEM *sys, string fileName);
     void showFilesInFolder(FATSYSTEM *sys, string folderName);
     void createTableFileRows(QList<File *> files);
+    void showAllFolder(FATSYSTEM *sys, char* rootName);
+    void setTreeWidgetChildRec(FATSYSTEM *sys, char* rootName, QTreeWidgetItem *rootItem);
 public slots:
     void createDemoFiles();
 private
@@ -80,6 +84,8 @@ private
             void on_pushButton_3_clicked();
 
             void on_pushButton_4_clicked();
+
+            void on_treeWidget_DiskC_itemClicked(QTreeWidgetItem *item, int column);
 
         private:
     Ui::MainWindow *ui;

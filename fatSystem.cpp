@@ -87,6 +87,8 @@ File *FATSYSTEM::createFile(char* name_, char* author_, string data,char* parent
     newFile->name[31] = '\0';
     newFile->size = length;
     newFile->clusterList = nullptr;
+    newFile->isFolder = isFolder;
+    newFile->date = QDateTime::currentDateTime();
     qDebug() << "create File 4";
     string parentData = "";
     int result = 0;
@@ -381,6 +383,29 @@ Cluster* FATSYSTEM::getLastClusterOfFile(char* fileName){
     }
     return cluster;
 }
+
+QList<File*> FATSYSTEM::getFoldersInFolder( char* folderName) {
+    qDebug() << "folFol " << "start " << folderName;
+
+
+    // qDebug() << "folfol sy s id" << sys->findFile(folderName);
+    File *folder = findFile(folderName);
+    qDebug() << "folFol " << "folder inode" << folder->name;
+    string data;
+
+
+    string folderData = getDataOfFile(folderName);
+    vector<string> parts = splitStringIntoParts(folderData);
+    QList < File * > foldersIn;
+    for (int i = 0; i < parts.size(); i++) {
+
+        if (findFile(parts[i].c_str())->isFolder) {
+            foldersIn.append(findFile(parts[i].c_str()));
+        }
+    }
+    return foldersIn;
+}
+
 
 
 void FATSYSTEM::deleteFile(const char *fileName) {

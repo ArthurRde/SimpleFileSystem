@@ -277,6 +277,54 @@ void MainWindow::showAllFolder(INODESYSTEM *sys, int rootId) {
 
 
 
+void MainWindow::setTreeWidgetChildRec(FATSYSTEM *sys, char* rootName, QTreeWidgetItem *rootItem) {
+    qDebug() << "show all Folder " << "rec start ";
+    QList < File*> children = sys->getFoldersInFolder( sys->findFile(rootName)->name);
+    qDebug() << "show all Folder " << "children" << children.size();
+    for (int i = 0; i < children.size(); i++) {
+        QTreeWidgetItem *item = setTreeWidgetChild(rootItem, children[i]->name);
+        qDebug() << "show all Folder " << "setChild";
+        QList < File * > newChild = sys->getFoldersInFolder( children[i]->name);
+        qDebug() << "show all Folder " << "newChild";
+        if (newChild.size() > 0) {
+            qDebug() << "show all Folder " << "newRec";
+            setTreeWidgetChildRec(sys, children[i]->name, item);
+            qDebug() << "show all Folder " << "Rec finished";
+        }
+    }
+}
+
+
+void MainWindow::showAllFolder(FATSYSTEM *sys, char* rootName) {
+    ui->treeWidget_DiskC->clear();
+    //root folder anzeigen
+    //qDebug() << "show all Folder " << "clear";
+    QTreeWidgetItem *rootItem = new QTreeWidgetItem(ui->treeWidget_DiskC);
+    rootItem->setText(0, QString::fromStdString(sys->findFile("root")->name));
+    // qDebug() << "show all Folder " << "root";
+    setTreeWidgetChildRec(sys, rootName, rootItem);
+
+
+    //liste mit folders
+
+    //root
+    //  documents
+    //      photos
+
+    /**QList<INode*> node;
+    for(int i = 0; i< sys->getNodes().size()+1; i++){
+        if(sys->getNodes()[i] != NULL){
+            if(sys->getNodes()[i]->isFolder){
+                node.append(sys->getNodes()[i]);
+            }
+        }
+    }*/
+
+
+}
+
+
+
 void MainWindow::showFilesInFolder(INODESYSTEM *sys, string folderName) {
     int fileId = sys->findFile(folderName);
 
@@ -285,16 +333,20 @@ void MainWindow::showFilesInFolder(INODESYSTEM *sys, string folderName) {
         // qDebug() << "FolderName" << currentFolder;
         createTableFileRows(sys->getFilesInFolder( folderName));
         showPath(sys, stoi(diskD->getBlocks().at(0)));
+        showedSystem = 1;
     }
 }
 
 void MainWindow::showFilesInFolder(FATSYSTEM *sys, string folderName) {
+    if(sys->findFile(folderName.c_str())->isFolder){
     QList <File> files;
     char c[folderName.length() + 1];
     char* c_folder = c;
     strcpy(c_folder, folderName.c_str());
     qDebug() << "showFiles" << c_folder;
     createTableFileRows(sys->getFilesInFolder(c_folder));
+    showedSystem = 2;
+    }
 }
 
 
@@ -306,8 +358,14 @@ void MainWindow::on_treeWidget_DiskD_itemClicked(QTreeWidgetItem *item, int colu
 
 void MainWindow::on_tableWidget_cellDoubleClicked(int row) {
     string fileName = ui->tableWidget->item(row, 1)->text().toStdString();
+    if(showedSystem == 1){
     showFilesInFolder(sys, fileName);
     showDataOfFile(sys, fileName);
+    } else {
+        showFilesInFolder(fSys,fileName);
+
+
+    }
 }
 
 
@@ -434,7 +492,7 @@ void MainWindow::on_pushButton_4_clicked()
 }
 
 void MainWindow::createDemoFiles(){
-   /** int rootId = stoi(diskD->getBlocks().at(0));
+    int rootId = stoi(diskD->getBlocks().at(0));
 
     sys->createFile("documents", "user", " ", "root", true);
 
@@ -453,11 +511,19 @@ void MainWindow::createDemoFiles(){
     qDebug() << "demofiles created";
 
     showAllFolder(sys, rootId);
-    showFilesInFolder(sys, "root"); */
+    showFilesInFolder(sys, "root");
 
     fSys->createFile("root", "user", " ", "isRoot", true);
     fSys->createFile("documents", "user", " ", "root", true);
     fSys->createFile("hello.txt", "sys", "data", "root");
+    fSys->createFile("photos", "sys", " ", "documents",true);
     showFilesInFolder(fSys, "root");
+    showAllFolder(fSys,"root");
 
 }
+
+void MainWindow::on_treeWidget_DiskC_itemClicked(QTreeWidgetItem *item, int column)
+{
+    showFilesInFolder(fSys, item->text(column).toStdString());
+}
+
