@@ -108,7 +108,7 @@ bool INODESYSTEM::existFile(string fileName){
 
 
 
-void INODESYSTEM::createFile(string name_, string author_, string data,string parentName, bool isFolder){ //add string parent
+string INODESYSTEM::createFile(string name_, string author_, string data,string parentName, bool isFolder){ //add string parent
     int num =findLowestNumber();
     INode *node = new INode();
     node->name = name_;
@@ -174,7 +174,7 @@ void INODESYSTEM::createFile(string name_, string author_, string data,string pa
     if (requiredBlocks > getFreeDiskSpace() / BLOCKSIZE) {
         editData(parentId, parentData);
         qDebug() <<"Nicht genug Platz" ;
-        return;
+        return "";
     }
 
     int allocatedBlocks = 0;
@@ -193,6 +193,8 @@ void INODESYSTEM::createFile(string name_, string author_, string data,string pa
     }
 
     }
+
+    return node->name;
 }
 
 int INODESYSTEM::editData(int fileToBeEditedId, string data){

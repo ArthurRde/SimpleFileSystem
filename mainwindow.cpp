@@ -417,7 +417,7 @@ void MainWindow::on_tableWidget_cellDoubleClicked(int row) {
     showDataOfFile(Isys, fileName);
     } else {
     showFilesInFolder(fSys,fileName);
-
+        showDataOfFile(fSys,const_cast<char*>(fileName.c_str()));
 
     }
 }
@@ -439,6 +439,25 @@ void MainWindow::showDataOfFile(INODESYSTEM *sys, string fileName){
     }
     int rootId = stoi(diskD->getBlocks().at(0));
     showAllFolder(sys, rootId);
+    showFilesInFolder(sys, currentFolder);
+}
+
+void MainWindow::showDataOfFile(FATSYSTEM *sys, char* fileName){
+    //qDebug() << "show file 1";
+
+    // qDebug() << "show file 2";
+    if (!sys->findFile(fileName)->isFolder) {
+        // qDebug() << "show file 3";
+        DialogShowFile dlg(sys->findFile(fileName)->name, sys->findFile(fileName)->author, sys->findFile(fileName)->date,sys->findFile(fileName)->size, sys->getDataOfFile(fileName));
+        dlg.setWindowTitle("File information");
+        if(dlg.exec() == QDialog::Accepted){
+            sys->editData( fileName, dlg.getDataText());
+        }
+
+        //  qDebug() << "show file 4";
+    }
+
+    showAllFolder(sys, "root");
     showFilesInFolder(sys, currentFolder);
 }
 
@@ -524,17 +543,20 @@ void MainWindow::on_pushButton_5_clicked()
             } else {
                 if(dlg.getUi()->comboBox->currentText() != "custom"){
 
-                    char cN[currentFolder.length() + 1];
-                    char* c_name = cN;
-                    strcpy(c_name, (dlg.getUi()->lineEdit->text().toStdString()+"."+dlg.getUi()->comboBox->currentText().toStdString()).c_str());
 
-                    char cA[currentFolder.length() + 1];
-                    char* c_author = cA;
-                    strcpy(c_name,dlg.getUi()->lineEdit_2->text().toStdString().c_str());
+                    char* c_name = stringToCharArray(fSys->createUniqueName(const_cast<char*>((dlg.getUi()->lineEdit->text().toStdString()+"."+dlg.getUi()->comboBox->currentText().toStdString()).c_str()),"-D"));
 
-                    char c[currentFolder.length() + 1];
-                    char* c_folder = c;
-                    strcpy(c_folder, currentFolder.c_str());
+
+                    qDebug() << "name of file " << c_name;
+
+
+
+                    char* c_author = stringToCharArray(dlg.getUi()->lineEdit_2->text().toStdString());
+
+
+
+                    char* c_folder = stringToCharArray(currentFolder);
+
 
 
                    fSys->createFile(c_name,c_author,dlg.getUi()->lineEdit_3->text().toStdString(),c_folder);
@@ -637,14 +659,95 @@ void MainWindow::on_pushButton_3_clicked()
 
 void MainWindow::on_pushButton_4_clicked()
 {
-    if(false){
-    Isys->copyFile(clipboardFileNode->name,currentFolder);
-    showFilesInFolder(Isys, currentFolder);
-    showAllFolder(Isys, stoi(diskD->getBlocks().at(0)));
+    if(clipboardNodeCopied){
+
+
+    if(showedSystem == 1){
+
+        Isys->copyFile(clipboardFileNode->name,currentFolder);
+        showFilesInFolder(Isys, currentFolder);
+        showAllFolder(Isys, stoi(diskD->getBlocks().at(0)));
     } else {
-        fSys->copyFile(clipboardFileFat->name,stringToCharArray(currentFolder));
+        if(!clipboardFileNode->isFolder){
+        fSys->createFile(const_cast<char*>(clipboardFileNode->name.c_str()),const_cast<char*>(clipboardFileNode->author.c_str()),Isys->getDataOfFile(clipboardFileNode->name),const_cast<char*>(currentFolder.c_str()));
         showFilesInFolder(fSys,currentFolder);
         showAllFolder(fSys,"root");
+        } else {
+            qDebug() << "here 1";
+
+            char* name = const_cast<char*>(fSys->createUniqueName(const_cast<char*>(clipboardFileNode->name.c_str())).c_str());
+            string name2 = fSys->createFile(name,const_cast<char*>(clipboardFileNode->author.c_str())," ",const_cast<char*>(currentFolder.c_str()),true)->name;
+            qDebug() << "here 2 --------------00000000000000000000000000" << name2;
+
+            createAllFilesOfFolder(Isys, fSys, clipboardFileNode->name, name);
+            qDebug() << "here 3";
+            showFilesInFolder(fSys,currentFolder);
+            showAllFolder(fSys,"root");
+        }
+    }
+
+
+
+    } else {
+
+
+        if(showedSystem == 1){
+            //qDebug()<< "Daten erhalten; " << fSys->getDataOfFile(clipboardFileFat->name);
+            if(!clipboardFileFat->isFolder){
+
+            Isys->createFile(clipboardFileFat->name,clipboardFileFat->author,fSys->getDataOfFile(clipboardFileFat->name),currentFolder);
+            showFilesInFolder(Isys, currentFolder);
+            showAllFolder(Isys, stoi(diskD->getBlocks().at(0)));
+            } else {
+                string name = Isys->createFile(clipboardFileFat->name,clipboardFileFat->author," ",currentFolder,true);
+                createAllFilesOfFolder(fSys,Isys, clipboardFileFat->name, name);
+                showFilesInFolder(Isys, currentFolder);
+                showAllFolder(Isys, stoi(diskD->getBlocks().at(0)));
+            }
+
+
+
+        } else {
+
+                fSys->copyFile(clipboardFileFat->name,stringToCharArray(currentFolder));
+                showFilesInFolder(fSys,currentFolder);
+                showAllFolder(fSys,"root");
+
+        }
+    }
+}
+
+void MainWindow::createAllFilesOfFolder(FATSYSTEM* srcSys, INODESYSTEM* desSys, string srcFolderName, string desFolderName){
+    qDebug() << "here 1";
+    QList<File*> files = srcSys->getFilesInFolder(const_cast<char*>(srcFolderName.c_str()));
+    qDebug() << "here 2" << files.size();
+    for(int i = 0; i< files.size(); i++){
+        qDebug() << "here 3";
+        if(!files[i]->isFolder){
+            qDebug() << "here 4";
+            desSys->createFile(files[i]->name,files[i]->author,srcSys->getDataOfFile(files[i]->name),desFolderName);
+        } else {
+            qDebug() << "here 5";
+            desSys->createFile(files[i]->name,files[i]->author," ",desFolderName,true);
+            createAllFilesOfFolder(srcSys,desSys,files[i]->name,files[i]->name);
+        }
+    }
+}
+
+void MainWindow::createAllFilesOfFolder(INODESYSTEM* srcSys, FATSYSTEM* desSys, string srcFolderName, string desFolderName){
+    qDebug() << "here 1 ------------------------------" << desFolderName;
+    QList<INode*> files = srcSys->getFilesInFolder(const_cast<char*>(srcFolderName.c_str()));
+    qDebug() << "here 2" << files.size();
+    for(int i = 0; i< files.size(); i++){
+        qDebug() << "here 3";
+        if(!files[i]->isFolder){
+            qDebug() << "here 4";
+            desSys->createFile(const_cast<char*>(files[i]->name.c_str()),const_cast<char*>(files[i]->author.c_str()),srcSys->getDataOfFile(files[i]->name),const_cast<char*>(desFolderName.c_str()));
+        } else {
+            qDebug() << "here 5";
+            desSys->createFile(const_cast<char*>(files[i]->name.c_str()),const_cast<char*>(files[i]->author.c_str())," ",const_cast<char*>(desFolderName.c_str()),true);
+            createAllFilesOfFolder(srcSys,desSys,files[i]->name,files[i]->name);
+        }
     }
 }
 

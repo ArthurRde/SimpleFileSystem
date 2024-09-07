@@ -61,13 +61,16 @@ public:
     bool getClipboardNodeCopied() const;
     void setClipboardNodeCopied(bool newClipboardNodeCopied);
 
-    void showDataOfFile(INODESYSTEM *sys, string fileName);
+    void showDataOfFile(FATSYSTEM *sys, char *fileName);
     void showFilesInFolder(FATSYSTEM *sys, string folderName);
     void createTableFileRows(QList<File *> files);
     void showAllFolder(FATSYSTEM *sys, char* rootName);
     void setTreeWidgetChildRec(FATSYSTEM *sys, char* rootName, QTreeWidgetItem *rootItem);
     QString findFolderPath(FATSYSTEM *sys, char *rootName, char *foldername);
     void showPath(FATSYSTEM *sys, char *rootName);
+    void showDataOfFile(INODESYSTEM *sys, string fileName);
+    void createAllFilesOfFolder(FATSYSTEM *srcSys, INODESYSTEM *desSys, string srcFolderName, string desFolderName);
+    void createAllFilesOfFolder(INODESYSTEM *srcSys, FATSYSTEM *desSys, string srcFolderName, string desFolderName);
 public slots:
     void createDemoFiles();
 private

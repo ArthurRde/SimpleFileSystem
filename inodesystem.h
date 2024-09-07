@@ -46,7 +46,7 @@ public:
 
     int findFile(int num);
 
-    void createFile(string name_, string author_, string data, string parentName, bool isFolder = false);
+    string createFile(string name_, string author_, string data, string parentName, bool isFolder = false);
 
     int findLowestNumber();
 
