@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     cdrom.cpp \
     dialogcreatefile.cpp \
+    dialogrename.cpp \
     dialogshowfile.cpp \
     disk.cpp \
     fatSystem.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
 HEADERS += \
     cdrom.h \
     dialogcreatefile.h \
+    dialogrename.h \
     dialogshowfile.h \
     disk.h \
     fatSystem.h \
@@ -29,6 +31,7 @@ HEADERS += \
 
 FORMS += \
     dialogcreatefile.ui \
+    dialogrename.ui \
     dialogshowfile.ui \
     mainwindow.ui
 

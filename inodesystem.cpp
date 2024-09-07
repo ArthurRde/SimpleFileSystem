@@ -411,8 +411,11 @@ void INODESYSTEM::showFat() {
 
 void INODESYSTEM::renameFile(string fileName, string newName)
 {
+    qDebug() << "rename 1";
     int id = findFile(fileName);
+    qDebug() << "rename 2";
     nodes[id]->name = newName;
+    qDebug() << "rename 3";
 }
 
 

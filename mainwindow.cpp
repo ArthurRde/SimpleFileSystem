@@ -63,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->pushButton_2->setEnabled(false);
     ui->pushButton_3->setEnabled(false);
     ui->pushButton_4->setEnabled(false);
+    ui->pushButton->setEnabled(false);
     connect(ui->actionCreate_demofiles, &QAction::triggered, this, &MainWindow::createDemoFiles);
     // Setup
 
@@ -291,9 +292,20 @@ void MainWindow::showDataOfFile(INODESYSTEM *sys, string fileName){
 void MainWindow::on_pushButton_clicked()
 {
     //TODO: add new window to write new filename into
-    sys->renameFile("root","rooot"); //TODO: add selected row filename and new filename from input
+
+
+    DialogRename dlg(ui->tableWidget->item(slotSelected, 1)->text().toStdString());
+    dlg.setWindowTitle("Rename a File");
+    dlg.show();
+
+    if(dlg.exec() == QDialog::Accepted){
+        sys->renameFile(ui->tableWidget->item(slotSelected, 1)->text().toStdString(), dlg.getName());
+    }
+
     int rootId = stoi(diskD->getBlocks().at(0));
     showAllFolder(sys,rootId);
+    showFilesInFolder(sys, currentFolder);
+
 }
 
 
@@ -338,16 +350,19 @@ void MainWindow::on_tableWidget_itemSelectionChanged()
 
             ui->pushButton_2->setEnabled(true);
             ui->pushButton_3->setEnabled(true);
+            ui->pushButton->setEnabled(true);
             slotSelected = selectedRows[0].row();
         } else {
             // No line selected
             ui->pushButton_2->setEnabled(false);
             ui->pushButton_3->setEnabled(false);
+            ui->pushButton->setEnabled(false);
         }
     } else {
         // No line sel
         ui->pushButton_2->setEnabled(false);
         ui->pushButton_3->setEnabled(false);
+        ui->pushButton->setEnabled(false);
     }
 }
 
@@ -386,7 +401,7 @@ void MainWindow::createDemoFiles(){
 
     sys->createFile("downloads", "system", " ", "root", true);
 
-    sys->createFile("keyAccess.closed", "KeyCode.exe", "Passkeys: ecampus - passwort1234", "root");
+    sys->createFile("keyAccess.closed", "KeyCode.exe", "bearer237746643698892388734794378478979847942794279842978974821", "root");
 
     sys->createFile("poem.txt", "author", "Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit.", "documents");
 

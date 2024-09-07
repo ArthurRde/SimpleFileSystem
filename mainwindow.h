@@ -9,6 +9,7 @@
 
 #include "dialogcreatefile.h"
 #include "dialogshowfile.h"
+#include "dialogrename.h"
 
 
 QT_BEGIN_NAMESPACE
