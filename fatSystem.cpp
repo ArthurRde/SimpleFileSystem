@@ -28,15 +28,18 @@ void FATSYSTEM::setFat(Fat *newFat)
 FATSYSTEM::FATSYSTEM(int diskSpace, Disk *disk_) {
     Fat *pFat = new Fat;
     disk = disk_;
-    pFat->blockStatus = new BlockStatus;
+
     pFat->totalBlocks = diskSpace / disk_->getBlockSize();
     pFat->blockSize = disk_->getBlockSize();
     for (int i = 0; i < pFat->totalBlocks; i++) {
-        pFat->blockStatus[i] = BLOCK_FREE;
+        qDebug() << "hereee";
+        pFat->blockStatus.push_back(BLOCK_FREE);
         disk->getBlocks()[i] = " ";
     }
 
     fat = pFat;
+    createFile("root", "system", " ", "isRoot", true);
+
 }
 
 FATSYSTEM::~FATSYSTEM(){
@@ -62,93 +65,77 @@ int FATSYSTEM::getFreeDiskSpace() {
 }
 
 File *FATSYSTEM::createFile(char* name_, char* author_, string data,char* parentName, bool isFolder) {
+    //showFat();
+    qDebug() << "free disk" << getFreeDiskSpace();
     if (strlen(name_) > 31) {
         cout << "Name zu lang" << endl;
         return nullptr;
     }
-    qDebug() << "create File 1" << name_;
+   // qDebug() << "create File 1" << name_;
     vector<string> dataChunks;
     size_t chunk_size = disk->getBlockSize();
     size_t length = data.length();
     int requiredBlocks = 0;
-    qDebug() << "create File 2";
+    //qDebug() << "create File 2";
     for (size_t i = 0; i < length; i += chunk_size) {
         dataChunks.push_back(data.substr(i, chunk_size));
         requiredBlocks++;
     }
 
-    qDebug() << "create File 3";
+    //qDebug() << "create File 3";
     if (requiredBlocks > getFreeDiskSpace() / fat->blockSize) {
         cout << "Nicht genug Platz" << endl;
         return nullptr;
     }
     File *newFile = new File;
     strncpy(newFile->name, name_, 31);
+    if(existFile(name_)){
+        strncpy(newFile->name, createUniqueName(name_,"-D").c_str(), 31);
+    }
+
     newFile->name[31] = '\0';
     newFile->size = length;
     newFile->clusterList = nullptr;
     newFile->isFolder = isFolder;
     newFile->date = QDateTime::currentDateTime();
-    qDebug() << "create File 4";
+    //qDebug() << "create File 4";
     string parentData = "";
     int result = 0;
     if(parentName != "isRoot"){
+        result = addFileToFolder(parentName, name_);
 
-        File *fileToRead= findFile(parentName);
-        Cluster *cluster = fileToRead->clusterList;
-
-        while (cluster != nullptr) {
-
-            parentData = parentData +disk->getBlocks()[cluster->blockIndex];
-            qDebug() << "load parent data" << parentData;
-            cluster = cluster->next;
-
-        }
-        qDebug() << "create File with parent" << parentData;
-
-        if(parentData.empty()){
-
-            result = editData(parentName, name_);
-
-        }else {
-
-            string dataString = parentData+","+name_;
-
-            result = editData(parentName, dataString);
-
-        }
     }
-    qDebug() << "create File 5";
+    //qDebug() << "create File 5";
     if(result == 0){ // error handling
         //schauen ob genug platz da
 
 
         if (requiredBlocks > getFreeDiskSpace() / fat->blockSize) {
             editData(parentName, parentData);
-            qDebug() <<"Nicht genug Platz" ;
+     //       qDebug() <<"Nicht genug Platz" ;
             return NULL;
         }
     }
 
 
-    qDebug() << "create File 6";
+   // qDebug() << "create File 6";
 
     Cluster *lastCluster = nullptr;
     int allocatedBlocks = 0;
     for (int i = 0; i < fat->totalBlocks && allocatedBlocks < requiredBlocks; i++) {
         if (fat->blockStatus[i] == BLOCK_FREE) {
             fat->blockStatus[i] = BLOCK_OCCUPIED;
-              qDebug() << "create File 6.1";
+          //    qDebug() << "create File 6.1";
             Cluster *cluster = createCluster(i);
-              qDebug() << "create File 6.2";
+        //      qDebug() << "create File 6.2";
             if (newFile->clusterList == nullptr) {
                 newFile->clusterList = cluster;
             } else {
                 lastCluster->next = cluster;
                 cluster->prev = lastCluster;
             }
-            qDebug() << "create File 6.3";
-            qDebug() << "Cluster" << cluster->blockIndex;
+            //qDebug() << "create File 6.3";
+           // qDebug() << "Cluster" << cluster->blockIndex;
 
             lastCluster = cluster;
             allocatedBlocks++;
@@ -156,7 +143,7 @@ File *FATSYSTEM::createFile(char* name_, char* author_, string data,char* parent
     }
     fat->files.push_back(newFile);
     showCluster(name_);
-    qDebug() << "create File 7" << getNumberOfBlocks("root");
+    qDebug() << "create File 7" << newFile->name;
 
 
     return NULL;
@@ -164,13 +151,13 @@ File *FATSYSTEM::createFile(char* name_, char* author_, string data,char* parent
 
 void FATSYSTEM::showCluster(char* fileName){
 
-    qDebug() << "showCluster";
+   // qDebug() << "showCluster";
 
     Cluster *cluster = findFile(fileName)->clusterList;
-    qDebug() << "showCluster 3";
+    //qDebug() << "showCluster 3";
     while (cluster != nullptr) {
-        qDebug() << "showCluster 3";
-        qDebug() << "show Cluster " << cluster->blockIndex;
+      //  qDebug() << "showCluster 3";
+        //qDebug() << "show Cluster " << cluster->blockIndex;
         cluster = cluster->next;
 
     }
@@ -188,35 +175,147 @@ string FATSYSTEM::getDataOfFile(char* fileName){
         cluster = cluster->next;
 
     }
-    qDebug() << "data Found" << data;
+    //qDebug() << "data Found" << data;
     return data;
 }
 
 QList<File*> FATSYSTEM::getFilesInFolder(char* folderName) {
     QList<File*> filesInFolder;
-    qDebug() << "files in " <<folderName;
+    //qDebug() << "files in " <<folderName;
 
     string data = getDataOfFile(folderName);
 
-    qDebug() << "files in 1" << data;
+    //qDebug() << "files in 1" << data;
     vector<string> names = splitStringIntoParts(data);
-    qDebug() << "files in 2" << names.size() ;
-    for(int i = 0; i < names.size(); i++){
-         qDebug() << "files in " << names[i];
-     }
+    //qDebug() << "files in 2" << names.size() ;
+
     QList < File * > files;
     for (int i = 0; i < names.size(); i++) {
 
         filesInFolder.append(findFile(names[i].c_str()));
-        qDebug() << "findFile";
+      //  qDebug() << "findFile";
     }
-     qDebug() << "files in 3" ;
+     //qDebug() << "files in 3" ;
     return filesInFolder;
+}
+
+string FATSYSTEM::createUniqueName(char* fileName, char* uniqueText){
+    qDebug() << "test 1" << fileName;
+    char* nameChar = NULL;
+    bool ex = existFile(fileName);
+    string str = "";
+    qDebug() << "test 1.1";
+    while(ex){
+
+        for(int i = 0; i < fat->files.size(); i++){
+            qDebug() << "file names" << fat->files[i]->name;
+        }
+        qDebug() << "Ende der Ausgabe 1";
+        stringstream ss(fileName);
+        string token;
+        vector <string> tokens;
+        qDebug() << "test 1.2";
+        char delimiter = '.';
+        if (str != " ") {
+            while (getline(ss, token, delimiter)) {
+                if ((token != " ")) {
+                    if(!token.empty()){
+                        tokens.push_back(token);
+
+                    }
+                }
+            }
+        }
+        qDebug() << "test 2";
+        tokens[0] = tokens[0]+uniqueText;
+        for(int i = 0; i < fat->files.size(); i++){
+            qDebug() << "file names" << fat->files[i]->name;
+        }
+        qDebug() << "Ende der Ausgabe2";
+
+
+        str = "";
+
+        str = str + tokens[0].c_str();
+        for(int i = 1; i< tokens.size(); i++){
+
+            str = str +"."+tokens[i];
+        }
+        qDebug() << "here" << str;
+
+        qDebug() << "new Name " << nameChar <<fat->files.size() ;
+
+        for(int i = 0; i < fat->files.size(); i++){
+            qDebug() << "file names" << fat->files[i]->name;
+        }
+        qDebug() << "Ende der Ausgabe";
+        ex = existFile(const_cast<char*>(str.c_str()));
+    }
+    qDebug() << "test 3";
+    return str.c_str();
+}
+
+void FATSYSTEM::copyFile(char* fileName, char* folderName){
+
+    char* name = const_cast<char*>(createUniqueName(fileName).c_str());
+
+    if(!findFile(fileName)->isFolder){
+        bool ex = existFile(findFile(fileName)->name);
+        createFile(name,findFile(fileName)->author,getDataOfFile(findFile(fileName)->name),folderName);
+
+    } else{
+        qDebug() << "folder paste";
+        createFile(name,findFile(fileName)->author," ",folderName,true);
+
+
+        vector<string> names = splitStringIntoParts(getDataOfFile(fileName));
+        editData(fileName, " ");
+        //neuen nummers
+        for(int i = 0; i < names.size(); i++ ){
+
+
+            copyFile(findFile(names[i].c_str())->name,name);
+        }
+
+
+    }
+}
+
+bool FATSYSTEM::existFile(char* fileName){
+    bool ex = false;
+
+    for(int i = 0; i < fat->files.size(); i++){
+
+        if(fat->files[i] != NULL){
+            qDebug() << "test if exist" << fileName << " mit " << fat->files[i]->name << strcmp(fileName , fat->files[i]->name);
+            if(strcmp(fileName , fat->files[i]->name) == 0){
+                qDebug() << "exist " << fileName;
+                ex = true;
+            }
+        }
+
+    }
+
+    return ex;
+}
+
+char* FATSYSTEM::getFolderOfFile(char* fileName){
+
+    for(int i = 0; i < fat->files.size(); i++){
+        if(fat->files[i] != NULL){
+            if(fat->files[i]->isFolder){
+                if(getFilesInFolder(fat->files[i]->name).contains(findFile(fileName))){
+                    return fat->files[i]->name;
+                }
+            }
+        }
+    }
+    return " ";
 }
 
 vector<string> FATSYSTEM::splitStringIntoParts(string inputString){
     stringstream ss(inputString);
-    qDebug() << "split" << inputString;
+    //qDebug() << "split" << inputString;
     string token;
     vector <string> tokens;
 
@@ -226,7 +325,7 @@ vector<string> FATSYSTEM::splitStringIntoParts(string inputString){
         while (getline(ss, token, delimiter)) {
             if ((token != " ")) {
                 if(!token.empty()){
-                    qDebug() << "splitt" << token;
+      //              qDebug() << "splitt" << token;
                     tokens.push_back(token);
                     ;
                     //qDebug() << "splitStringIntoInts: token -> " << token;
@@ -238,13 +337,13 @@ vector<string> FATSYSTEM::splitStringIntoParts(string inputString){
     return tokens;
 }
 File* FATSYSTEM::findFile(char* fileName){
-    qDebug() << "return 0 ";
+   // qDebug() << "return 0 ";
     for(int i = 0; i < fat->files.size(); i++){
-        qDebug() << "return 1 ";
+     //   qDebug() << "return 1 ";
         if(fat->files[i] != nullptr){
-            qDebug() << "return 2 " << fat->files[i]->name;
+       //     qDebug() << "return 2 " << fat->files[i]->name;
             if(strcmp(fileName , fat->files[i]->name) == 0){
-            qDebug() << "return 3";
+         //   qDebug() << "return 3";
            return fat->files[i];
         }
         }
@@ -253,13 +352,13 @@ File* FATSYSTEM::findFile(char* fileName){
 }
 
 File* FATSYSTEM::findFile(const char* fileName){
-    qDebug() << "return 0 ";
+   // qDebug() << "return 0 ";
     for(int i = 0; i < fat->files.size(); i++){
-        qDebug() << "return 1 ";
+     //   qDebug() << "return 1 ";
         if(fat->files[i] != nullptr){
-            qDebug() << "return 2 " << fat->files[i]->name;
+       //     qDebug() << "return 2 " << fat->files[i]->name;
             if(strcmp(fileName , fat->files[i]->name) == 0){
-                qDebug() << "return 3";
+         //       qDebug() << "return 3";
                 return fat->files[i];
             }
         }
@@ -268,13 +367,13 @@ File* FATSYSTEM::findFile(const char* fileName){
 }
 
 int FATSYSTEM::editData(char* fileName ,string data){
-    qDebug() << "Edit Data 1" << data;
+   // qDebug() << "Edit Data 1" << data;
     File* file = findFile(fileName);
     bool isEmpty = false;
     if(data.empty()){
         isEmpty = true;
     }
-    qDebug() << "Edit Data 2";
+    //qDebug() << "Edit Data 2";
     vector<string> dataChunks;
     size_t chunk_size = fat->blockSize;
     size_t length = data.length();
@@ -282,31 +381,31 @@ int FATSYSTEM::editData(char* fileName ,string data){
 
 
 
-    qDebug() << "Edit Data 3";
+//    qDebug() << "Edit Data 3";
     for (size_t i = 0; i < length; i += chunk_size) {
         //  qDebug() << "test for";
         dataChunks.push_back(data.substr(i, chunk_size));
         requiredBlocks++;
     }
 
-    qDebug() << "Edit Data 4";
+  //  qDebug() << "Edit Data 4";
     //qDebug() << "test 2" << requiredBlocks << "schon " << nodes[fileToBeEditedId]->blockList.size();
     getNumberOfBlocks(fileName);
-    qDebug() << "Edit Data 4.11";
+    //qDebug() << "Edit Data 4.11";
     if(getNumberOfBlocks(fileName) < requiredBlocks){
 
         if (requiredBlocks > getFreeDiskSpace() / fat->blockSize) {
-            qDebug() <<"Nicht genug Platz" ;
+      //      qDebug() <<"Nicht genug Platz" ;
             return -1;
 
         }
         //qDebug() << "test 3";
         file->size = length;
         requiredBlocks = requiredBlocks - getNumberOfBlocks(fileName) ;
-        qDebug() << "Edit Data 4.1";
+        //qDebug() << "Edit Data 4.1";
         int allocatedBlocks = 0;
         Cluster* lastCluster = getLastClusterOfFile(fileName);
-        qDebug() << "Edit Data 4.2";
+        //qDebug() << "Edit Data 4.2";
         for (int i = 0; i < fat->totalBlocks && allocatedBlocks < requiredBlocks; i++) {
             if (fat->blockStatus[i] == BLOCK_FREE) {
 
@@ -327,7 +426,7 @@ int FATSYSTEM::editData(char* fileName ,string data){
             }
         }
     }
-    qDebug() << "Edit Data 5";
+    //qDebug() << "Edit Data 5";
     //qDebug() << "test 4";
 
     Cluster *cluster = file->clusterList;
@@ -335,10 +434,10 @@ int FATSYSTEM::editData(char* fileName ,string data){
     for (int i = 0; cluster != nullptr; i++) {
 
         if(!isEmpty){
-            qDebug() << "full";
+      //      qDebug() << "full";
             disk->addDataToBlock(cluster->blockIndex, dataChunks[i]);
         } else {
-            qDebug() << "empty";
+        //    qDebug() << "empty";
            disk->addDataToBlock(cluster->blockIndex, " ");
         }
 
@@ -346,27 +445,99 @@ int FATSYSTEM::editData(char* fileName ,string data){
 
 
     }
-    qDebug() << "Edit Data 6";
+    //qDebug() << "Edit Data 6";
 
     //qDebug() << "test 6";
     return 0;
 }
 
 int FATSYSTEM::getNumberOfBlocks(char* fileName){
-   /* File *file = findFile(fileName);
-    qDebug() << "GetNumBlocks 1";
+    File *file = findFile(fileName);
+
     Cluster *cluster = file->clusterList;
-    qDebug() << "GetNumBlocks 2";
+
     int blocks = 0;
     while (cluster != nullptr) {
-        qDebug() << "GetNumBlocks 3" << blocks;
+
         blocks++;
         cluster = cluster->next;
 
     }
-    qDebug() << "GetNumBlocks 4 " << blocks;
-    return blocks;*/
-    return 1;
+
+    return blocks;
+
+}
+
+void FATSYSTEM::renameFile(char* folder, char* fileName, char* newName)
+{
+
+    strcpy(findFile(fileName)->name, newName);
+    removeFileFromFolder(fileName, folder);
+    addFileToFolder(folder, newName);
+}
+
+int FATSYSTEM::addFileToFolder(char* parentName, char* name_){
+    int result;
+    string parentData;
+    File *fileToRead= findFile(parentName);
+    Cluster *cluster = fileToRead->clusterList;
+
+    while (cluster != nullptr) {
+
+        parentData = parentData +disk->getBlocks()[cluster->blockIndex];
+        //   qDebug() << "load parent data" << parentData;
+        cluster = cluster->next;
+
+    }
+    //  qDebug() << "create File with parent" << parentData;
+
+    if(parentData.empty()){
+
+        result = editData(parentName, name_);
+
+    }else {
+
+        string dataString = parentData+","+name_;
+
+        result = editData(parentName, dataString);
+
+    }
+    return result;
+}
+
+
+void FATSYSTEM::removeFileFromFolder(char* fileName, char* folderName){
+
+    File* folder = findFile(folderName);
+    vector<string> names = splitStringIntoParts(getDataOfFile(folderName));
+
+    string newData = "";
+    for(int i = 0; i < names.size(); i++){
+        char* char_array = new char[names[i].length() + 1];
+
+
+        strcpy(char_array, names[i].c_str());
+        if(strcmp(fileName, char_array) != 0){
+            newData = newData + names[i];
+        }
+        delete[] char_array;
+    }
+    editData(folderName, newData);
+}
+char* FATSYSTEM::findFolderOfFile(char* fileName){
+    File* file = findFile(fileName);
+    for(int i = 0; i < fat->files.size(); i++){
+        if(fat->files[i] != NULL){
+            if(fat->files[i]->isFolder){
+                if(getFilesInFolder(fat->files[i]->name).contains(file)){
+                    return fat->files[i]->name;
+                }
+            }
+        }
+    }
+
+    return "";
+
 }
 
 Cluster* FATSYSTEM::getLastClusterOfFile(char* fileName){
@@ -385,12 +556,12 @@ Cluster* FATSYSTEM::getLastClusterOfFile(char* fileName){
 }
 
 QList<File*> FATSYSTEM::getFoldersInFolder( char* folderName) {
-    qDebug() << "folFol " << "start " << folderName;
+  //  qDebug() << "folFol " << "start " << folderName;
 
 
     // qDebug() << "folfol sy s id" << sys->findFile(folderName);
     File *folder = findFile(folderName);
-    qDebug() << "folFol " << "folder inode" << folder->name;
+   // qDebug() << "folFol " << "folder inode" << folder->name;
     string data;
 
 
@@ -408,44 +579,104 @@ QList<File*> FATSYSTEM::getFoldersInFolder( char* folderName) {
 
 
 
-void FATSYSTEM::deleteFile(const char *fileName) {
-    for (int i = 0; i < MAX_FILES; i++) {
-        if (fat->files[i] != nullptr && strcmp(fat->files[i]->name, fileName) == 0) {
+void FATSYSTEM::deleteFile(const char *fileName ,bool deleteFolderInFolder,bool ignoreFolderTyp ) {
+    qDebug() << "delete 1" << fileName;
+    for (int i = 0; i < fat->files.size(); i++) {
+        //qDebug() << "delete 2";
+        if (fat->files[i] != nullptr){
+            if(strcmp(fat->files[i]->name, fileName) == 0){
+
+                if((!fat->files[i]->isFolder) || ignoreFolderTyp){
+
             File *fileToDelete = fat->files[i];
             Cluster *cluster = fileToDelete->clusterList;
-
+          //  qDebug() << "delete 3";
             while (cluster != nullptr) {
                 fat->blockStatus[cluster->blockIndex] = BLOCK_FREE;
+                disk->addDataToBlock(cluster->blockIndex, " ");
                 Cluster *clusterToBeDeleted = cluster;
                 cluster = cluster->next;
                 free(clusterToBeDeleted);
             }
+            //qDebug() << "delete 4";
+            char* char_array = const_cast<char*>(fileName);
 
-            free(fileToDelete);
+
+
+            //qDebug() << "delete 5";
+            removeFileFromFolder(char_array,getFolderOfFile(char_array));
+           // qDebug() << "delete 6";
+            delete fileToDelete;
+            //qDebug() << "delete 7";
             fat->files[i] = nullptr;
+            //qDebug() << "delete 8";
             return;
+
+                } else {
+
+
+                    if(!deleteFolderInFolder){
+                      //  qDebug() << "delete 3.2" << fileName;
+                        QMessageBox msgBox;
+                        msgBox.setIcon(QMessageBox::Critical);
+
+                        msgBox.setWindowTitle("Attention");
+                        msgBox.setText("You try to delete a folder! Do you want to continue?");
+                        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+
+                        if (msgBox.exec() == QMessageBox::Yes) {
+                            //yes
+                            //qDebug() << "yes";
+                            deleteFolder(fileName);
+
+                        }
+
+                    } else {
+                        qDebug() << "delete Folder act";
+                        deleteFolder(fileName);
+                    }
+
+                }
+
+            }
         }
     }
     cout << "Datei nicht gefunden" << endl;
+}
+
+void FATSYSTEM::deleteFolder(const char* fileName){
+    char* ncFileName = const_cast<char*>(fileName);
+    qDebug() << "size" << ncFileName;
+    QList<File *> file = getFilesInFolder(ncFileName);
+    qDebug() << "size" << file.size();
+    for(int i = 0; i < file.size(); i++){
+        qDebug() << "folder " << file[i]->name;
+        if(!file[i]->isFolder){
+            deleteFile(file[i]->name);
+        } else {
+            deleteFile(file[i]->name, true);
+        }
+    }
+    deleteFile(fileName, false, true);
 }
 
 void FATSYSTEM::showFat() {
     qDebug() << "showFat 1";
     for (int i = 0; i < fat->totalBlocks; i++) {
         qDebug() << "showFat 2";
-        switch (fat->blockStatus[i]) {
-            case BLOCK_RESERVED:
-                cout << "R";
-                break;
-            case BLOCK_DEFECT:
-                cout << "D";
-                break;
-            case BLOCK_FREE:
-                cout << "F";
-                break;
-            case BLOCK_OCCUPIED:
+        if (fat->blockStatus.at(i) == BLOCK_RESERVED) {
 
-                for (int j = 0; j < MAX_FILES; j++) {
+                cout << "R";
+        } else if (fat->blockStatus.at(i) == BLOCK_DEFECT){
+
+                cout << "D";
+
+        } else if(fat->blockStatus[i] == BLOCK_FREE){
+                cout << "F";
+
+        } else if(fat->blockStatus[i]== BLOCK_OCCUPIED){
+                cout << "O";
+               /* for (int j = 0; j < MAX_FILES; j++) {
                     if (fat->files[j] != nullptr) {
                         Cluster *cluster = fat->files[j]->clusterList;
                         while (cluster != nullptr) {
@@ -456,8 +687,8 @@ void FATSYSTEM::showFat() {
                             cluster = cluster->next;
                         }
                     }
-                }
-                break;
+                }*/
+
         }
         cout << " ";
     }

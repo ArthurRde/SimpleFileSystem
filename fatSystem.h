@@ -9,6 +9,7 @@
 #include "blockstatus.h"
 #include <string.h>
 #include <sstream>
+#include <QMessageBox>
 using namespace std;
 
 
@@ -29,7 +30,7 @@ struct File {
 };
 
 struct Fat {
-    BlockStatus *blockStatus;
+    vector<BlockStatus> blockStatus;
     int totalBlocks;
     int blockSize;
     vector<File*> files;
@@ -48,7 +49,7 @@ public:
 
     File *createFile(char* name_, char* author_, string data,char* parentName, bool isFolder = false);
 
-    void deleteFile(const char *fileName);
+    void deleteFile(const char *fileName ,bool deleteFolderInFolder = false,bool ignoreFolderTyp  =false);
 
     void showFat();
 
@@ -70,6 +71,15 @@ public:
     QList<File*> getFilesInFolder(char *folderName);
     File *findFile(const char *fileName);
     QList<File *> getFoldersInFolder(char *folderName);
+    void renameFile(char* folder, char* fileName, char* newName);
+    char *findFolderOfFile(char *fileName);
+    void removeFileFromFolder(char *fileName, char* folderName);
+    int addFileToFolder(char *parentName, char *name_);
+    char *getFolderOfFile(char *fileName);
+    void deleteFolder(const char *fileName);
+    string createUniqueName(char *fileName, char *uniqueText = "-C");
+    bool existFile(char *fileName);
+    void copyFile(char *fileName, char *folderName);
 };
 
 #endif // FATSYSTEM_H

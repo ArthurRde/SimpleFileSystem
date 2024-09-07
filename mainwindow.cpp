@@ -5,7 +5,7 @@
 using namespace std;
 Disk *diskD = new Disk(64, 512);
 Disk *diskC = new Disk(64, 512);
-INODESYSTEM *sys = new INODESYSTEM(diskD->getSize(), diskD);
+INODESYSTEM *Isys = new INODESYSTEM(diskD->getSize(), diskD);
 FATSYSTEM *fSys = new FATSYSTEM(diskC->getSize(), diskC);
 
 int MainWindow::getSlotSelected() const
@@ -70,9 +70,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->treeWidget_DiskD->setColumnCount(1);
     ui->treeWidget_DiskD->setHeaderLabels(QStringList() << "Folders");
     int rootId = stoi(diskD->getBlocks().at(0));
-    showAllFolder(sys, rootId);
-    showFilesInFolder(sys, "root");
-
+    showAllFolder(Isys, rootId);
+    showAllFolder(fSys,"root");
+    showFilesInFolder(Isys, "root");
+    showFilesInFolder(fSys,"root");
 
     //fSys->createFile("me.mp4", "tets", " ", " ");
     //fSys->createFile("file.pdf", "dud", "jkfjnjfsnjsjndsjnjnjndjndsjnd", " ");
@@ -150,6 +151,56 @@ void MainWindow::showPath(INODESYSTEM *sys, int rootId){
 }
 
 
+
+QString MainWindow::findFolderPath(FATSYSTEM *sys, char* rootName, char* foldername) {
+    QString path;
+    //qDebug() << "start show Path fat 1" << foldername;
+    QList < File * > children = sys->getFoldersInFolder( rootName);
+    //qDebug() << "start show Path fat 2" << children.size();
+    if(children.contains(sys->findFile(foldername))){
+        string str;
+        str.assign(rootName);
+         //qDebug() << "start show Path fat ret";
+        return QString::fromStdString(str + "/" + foldername );
+
+    }
+    for (int i = 0; i < children.size(); i++) {
+        // qDebug() << "start show Path fat 3";
+        QList < File * > newChild = sys->getFoldersInFolder( children[i]->name);
+
+        if (newChild.size() > 0) {
+          //   qDebug() << "start show Path fat 4";
+            QString returnValue = findFolderPath(sys,children[i]->name , foldername);
+            if(returnValue != "notFound"){
+                string str;
+                str.assign(rootName);
+                path = QString::fromStdString(str+ "/"   )+ returnValue;
+
+                return path;
+            }
+        } else {
+           // qDebug() << "not Found ";
+            return "notFound";
+        }
+    }
+     //qDebug() << "not Found";
+    return "notFound";
+}
+
+void MainWindow::showPath(FATSYSTEM *sys, char* rootName){
+    char c[currentFolder.length() + 1];
+    char* c_folder = c;
+    strcpy(c_folder, currentFolder.c_str());
+    //qDebug() << "start show Path fat" ;
+    QString val = findFolderPath(sys, rootName, c_folder);
+    if(val == "notFound"){
+        ui->label_3->setText("Path: ~/");
+    } else {
+        ui->label_3->setText("Path: "+val);
+    }
+}
+
+
 void MainWindow::createTableFileRows(QList<INode *> node) {
     ui->tableWidget->clear();
     ui->tableWidget->setRowCount(node.size());
@@ -214,7 +265,7 @@ QList<INode *> showAllFilesINode(INODESYSTEM *sys) {
     QList < INode * > node;
     for (int i = 0; i < sys->getNodes().size() + 1; i++) {
         if (sys->getNodes()[i] != NULL) {
-            qDebug() << sys->getNodes()[i]->name;
+           // qDebug() << sys->getNodes()[i]->name;
             node.append(sys->getNodes()[i]);
         }
     }
@@ -249,10 +300,10 @@ void MainWindow::setTreeWidgetChildRec(INODESYSTEM *sys, int rootId, QTreeWidget
 void MainWindow::showAllFolder(INODESYSTEM *sys, int rootId) {
     ui->treeWidget_DiskD->clear();
     //root folder anzeigen
-    //qDebug() << "show all Folder " << "clear";
+    qDebug() << "show all Folder " << "clear";
     QTreeWidgetItem *rootItem = new QTreeWidgetItem(ui->treeWidget_DiskD);
     rootItem->setText(0, QString::fromStdString(sys->getNodes()[rootId]->name));
-   // qDebug() << "show all Folder " << "root";
+    qDebug() << "show all Folder " << "root";
     setTreeWidgetChildRec(sys, rootId, rootItem);
 
 
@@ -278,18 +329,18 @@ void MainWindow::showAllFolder(INODESYSTEM *sys, int rootId) {
 
 
 void MainWindow::setTreeWidgetChildRec(FATSYSTEM *sys, char* rootName, QTreeWidgetItem *rootItem) {
-    qDebug() << "show all Folder " << "rec start ";
+  //  qDebug() << "show all Folder " << "rec start ";
     QList < File*> children = sys->getFoldersInFolder( sys->findFile(rootName)->name);
-    qDebug() << "show all Folder " << "children" << children.size();
+    //qDebug() << "show all Folder " << "children" << children.size();
     for (int i = 0; i < children.size(); i++) {
         QTreeWidgetItem *item = setTreeWidgetChild(rootItem, children[i]->name);
-        qDebug() << "show all Folder " << "setChild";
+      //  qDebug() << "show all Folder " << "setChild";
         QList < File * > newChild = sys->getFoldersInFolder( children[i]->name);
-        qDebug() << "show all Folder " << "newChild";
+        //qDebug() << "show all Folder " << "newChild";
         if (newChild.size() > 0) {
-            qDebug() << "show all Folder " << "newRec";
+          //  qDebug() << "show all Folder " << "newRec";
             setTreeWidgetChildRec(sys, children[i]->name, item);
-            qDebug() << "show all Folder " << "Rec finished";
+            //qDebug() << "show all Folder " << "Rec finished";
         }
     }
 }
@@ -339,11 +390,14 @@ void MainWindow::showFilesInFolder(INODESYSTEM *sys, string folderName) {
 
 void MainWindow::showFilesInFolder(FATSYSTEM *sys, string folderName) {
     if(sys->findFile(folderName.c_str())->isFolder){
+    currentFolder = folderName;
     QList <File> files;
     char c[folderName.length() + 1];
     char* c_folder = c;
     strcpy(c_folder, folderName.c_str());
     qDebug() << "showFiles" << c_folder;
+
+    showPath(sys,"root");
     createTableFileRows(sys->getFilesInFolder(c_folder));
     showedSystem = 2;
     }
@@ -352,17 +406,17 @@ void MainWindow::showFilesInFolder(FATSYSTEM *sys, string folderName) {
 
 
 void MainWindow::on_treeWidget_DiskD_itemClicked(QTreeWidgetItem *item, int column) {
-    showFilesInFolder(sys, item->text(column).toStdString());
+    showFilesInFolder(Isys, item->text(column).toStdString());
 }
 
 
 void MainWindow::on_tableWidget_cellDoubleClicked(int row) {
     string fileName = ui->tableWidget->item(row, 1)->text().toStdString();
     if(showedSystem == 1){
-    showFilesInFolder(sys, fileName);
-    showDataOfFile(sys, fileName);
+    showFilesInFolder(Isys, fileName);
+    showDataOfFile(Isys, fileName);
     } else {
-        showFilesInFolder(fSys,fileName);
+    showFilesInFolder(fSys,fileName);
 
 
     }
@@ -370,23 +424,34 @@ void MainWindow::on_tableWidget_cellDoubleClicked(int row) {
 
 
 void MainWindow::showDataOfFile(INODESYSTEM *sys, string fileName){
-    qDebug() << "show file 1";
+    //qDebug() << "show file 1";
     int fileId = sys->findFile(fileName);
-    qDebug() << "show file 2";
+   // qDebug() << "show file 2";
     if (!sys->getNodes()[fileId]->isFolder) {
-        qDebug() << "show file 3";
+       // qDebug() << "show file 3";
         DialogShowFile dlg(sys->getNodes()[fileId]->name, sys->getNodes()[fileId]->author, sys->getNodes()[fileId]->date,sys->getNodes()[fileId]->size, sys->getDataOfFile(fileName));
         dlg.setWindowTitle("File information");
         if(dlg.exec() == QDialog::Accepted){
             sys->editData(fileId, dlg.getDataText());
         }
 
-        qDebug() << "show file 4";
+      //  qDebug() << "show file 4";
     }
     int rootId = stoi(diskD->getBlocks().at(0));
     showAllFolder(sys, rootId);
     showFilesInFolder(sys, currentFolder);
 }
+
+char* stringToCharArray(const string& str) {
+
+    char* char_array = new char[str.length() + 1];
+
+
+    strcpy(char_array, str.c_str());
+    return char_array;
+}
+
+
 void MainWindow::on_pushButton_clicked()
 {
 
@@ -396,14 +461,24 @@ void MainWindow::on_pushButton_clicked()
     dlg.show();
 
     if(dlg.exec() == QDialog::Accepted){
-        sys->renameFile(ui->tableWidget->item(slotSelected, 1)->text().toStdString(), dlg.getName());
+        if(showedSystem == 1){
+        Isys->renameFile(ui->tableWidget->item(slotSelected, 1)->text().toStdString(), dlg.getName());
+             int rootId = stoi(diskD->getBlocks().at(0));
+            showAllFolder(Isys,rootId);
+            showFilesInFolder(Isys, currentFolder);
+        } else {
+            fSys->renameFile(stringToCharArray(currentFolder),stringToCharArray(ui->tableWidget->item(slotSelected, 1)->text().toStdString()), stringToCharArray(dlg.getName() ));
+            showAllFolder(fSys,"root");
+            showFilesInFolder(fSys,currentFolder);
+        }
     }
 
-    int rootId = stoi(diskD->getBlocks().at(0));
-    showAllFolder(sys,rootId);
-    showFilesInFolder(sys, currentFolder);
+
+
 
 }
+
+
 
 
 void MainWindow::on_pushButton_5_clicked()
@@ -412,25 +487,83 @@ void MainWindow::on_pushButton_5_clicked()
     dlg.setWindowTitle("Create a File");
     dlg.show();
     if(dlg.exec() == QDialog::Accepted) {
-
+        if(showedSystem == 1){
         if(dlg.getUi()->comboBox->currentText() == "Folder"){
-            sys->createFile(dlg.getUi()->lineEdit->text().toStdString(),dlg.getUi()->lineEdit_2->text().toStdString()," ",currentFolder,true);
+            Isys->createFile(dlg.getUi()->lineEdit->text().toStdString(),dlg.getUi()->lineEdit_2->text().toStdString()," ",currentFolder,true);
         } else {
             if(dlg.getUi()->comboBox->currentText() != "custom"){
                 string name = dlg.getUi()->lineEdit->text().toStdString() + "." + dlg.getUi()->comboBox->currentText().toStdString();
-                sys->createFile(name,dlg.getUi()->lineEdit_2->text().toStdString(),dlg.getUi()->lineEdit_3->text().toStdString(),currentFolder);
+                Isys->createFile(name,dlg.getUi()->lineEdit_2->text().toStdString(),dlg.getUi()->lineEdit_3->text().toStdString(),currentFolder);
             } else {
-                sys->createFile(dlg.getUi()->lineEdit->text().toStdString(),dlg.getUi()->lineEdit_2->text().toStdString(),dlg.getUi()->lineEdit_3->text().toStdString(),currentFolder);
+                Isys->createFile(dlg.getUi()->lineEdit->text().toStdString(),dlg.getUi()->lineEdit_2->text().toStdString(),dlg.getUi()->lineEdit_3->text().toStdString(),currentFolder);
             }
+        }
+
+        int rootId = stoi(diskD->getBlocks().at(0));
+
+        showAllFolder(Isys, rootId);
+
+        showFilesInFolder(Isys, currentFolder);
+        } else {
+            qDebug() << "Fat Create UI";
+            if(dlg.getUi()->comboBox->currentText() == "Folder"){
+            qDebug() << "Fat Create UI 2";
+
+                char* c_name = stringToCharArray(dlg.getUi()->lineEdit->text().toStdString());
+
+
+
+                char* c_author = stringToCharArray(dlg.getUi()->lineEdit_2->text().toStdString());
+
+
+
+                char* c_folder = stringToCharArray(currentFolder);
+
+                qDebug() << "Fat Create UI" << c_name << " " << c_author << " " << c_folder;
+                fSys->createFile(c_name,c_author," ",c_folder,true);
+            } else {
+                if(dlg.getUi()->comboBox->currentText() != "custom"){
+
+                    char cN[currentFolder.length() + 1];
+                    char* c_name = cN;
+                    strcpy(c_name, (dlg.getUi()->lineEdit->text().toStdString()+"."+dlg.getUi()->comboBox->currentText().toStdString()).c_str());
+
+                    char cA[currentFolder.length() + 1];
+                    char* c_author = cA;
+                    strcpy(c_name,dlg.getUi()->lineEdit_2->text().toStdString().c_str());
+
+                    char c[currentFolder.length() + 1];
+                    char* c_folder = c;
+                    strcpy(c_folder, currentFolder.c_str());
+
+
+                   fSys->createFile(c_name,c_author,dlg.getUi()->lineEdit_3->text().toStdString(),c_folder);
+                } else {
+
+                    char cN[currentFolder.length() + 1];
+                    char* c_name = cN;
+                    strcpy(c_name, dlg.getUi()->lineEdit->text().toStdString().c_str());
+
+                    char cA[currentFolder.length() + 1];
+                    char* c_author = cA;
+                    strcpy(c_name,dlg.getUi()->lineEdit_2->text().toStdString().c_str());
+
+                    char c[currentFolder.length() + 1];
+                    char* c_folder = c;
+                    strcpy(c_folder, currentFolder.c_str());
+
+                    fSys->createFile(c_name,c_author,dlg.getUi()->lineEdit_3->text().toStdString(),c_folder);
+                }
+            }
+
+            showAllFolder(fSys, "root");
+
+            showFilesInFolder(fSys, currentFolder);
         }
 
     }
 
-    int rootId = stoi(diskD->getBlocks().at(0));
 
-    showAllFolder(sys, rootId);
-
-    showFilesInFolder(sys, currentFolder);
 
 }
 
@@ -466,54 +599,77 @@ void MainWindow::on_tableWidget_itemSelectionChanged()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    sys->deleteFile(ui->tableWidget->item(slotSelected, 1)->text().toStdString());
-    showFilesInFolder(sys, currentFolder);
-    showAllFolder(sys, stoi(diskD->getBlocks().at(0)));
+    if(showedSystem == 1){
+    Isys->deleteFile(ui->tableWidget->item(slotSelected, 1)->text().toStdString());
+    showFilesInFolder(Isys, currentFolder);
+    showAllFolder(Isys, stoi(diskD->getBlocks().at(0)));
+    } else {
+        qDebug() << "delete conf 0" ;
+        fSys->deleteFile( stringToCharArray(ui->tableWidget->item(slotSelected, 1)->text().toStdString()));
+        qDebug() << "delete conf 1" ;
+        showFilesInFolder(fSys,stringToCharArray(currentFolder));
+        qDebug() << "delete conf 2" ;
+        showAllFolder(fSys, "root");
+        qDebug() << "delete conf 3" ;
+    }
 }
 
 
 void MainWindow::on_pushButton_3_clicked()
 {
 
-    qDebug() << "file";
+   // qDebug() << "file";
     ui->pushButton_4->setEnabled(true);
+   if(showedSystem == 1){
     clipboardNodeCopied = true;
-    clipboardFileNode = sys->getNodes()[sys->findFile(ui->tableWidget->item(slotSelected, 1)->text().toStdString())];
-    qDebug() << "Coppied File" << clipboardFileNode->name;
+    clipboardFatCopied = false;
+    clipboardFileFat = NULL;
+    clipboardFileNode = Isys->getNodes()[Isys->findFile(ui->tableWidget->item(slotSelected, 1)->text().toStdString())];
+   } else {
+       clipboardNodeCopied = false;
+       clipboardFatCopied = true;
+       clipboardFileNode = NULL;
+       clipboardFileFat = fSys->findFile(stringToCharArray(ui->tableWidget->item(slotSelected, 1)->text().toStdString()));
+   }
+    //qDebug() << "Coppied File" << clipboardFileNode->name;
 }
 
 
 void MainWindow::on_pushButton_4_clicked()
 {
-
-    sys->copyFile(clipboardFileNode->name,currentFolder);
-    showFilesInFolder(sys, currentFolder);
-    showAllFolder(sys, stoi(diskD->getBlocks().at(0)));
+    if(false){
+    Isys->copyFile(clipboardFileNode->name,currentFolder);
+    showFilesInFolder(Isys, currentFolder);
+    showAllFolder(Isys, stoi(diskD->getBlocks().at(0)));
+    } else {
+        fSys->copyFile(clipboardFileFat->name,stringToCharArray(currentFolder));
+        showFilesInFolder(fSys,currentFolder);
+        showAllFolder(fSys,"root");
+    }
 }
 
 void MainWindow::createDemoFiles(){
     int rootId = stoi(diskD->getBlocks().at(0));
 
-    sys->createFile("documents", "user", " ", "root", true);
+    Isys->createFile("documents", "user", " ", "root", true);
 
-    sys->createFile("downloads", "system", " ", "root", true);
+    Isys->createFile("downloads", "system", " ", "root", true);
 
-    sys->createFile("keyAccess.closed", "KeyCode.exe", "bearer237746643698892388734794378478979847942794279842978974821", "root");
+    Isys->createFile("keyAccess.closed", "KeyCode.exe", "bearer237746643698892388734794378478979847942794279842978974821", "root");
 
-    sys->createFile("poem.txt", "author", "Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit.", "documents");
+    Isys->createFile("poem.txt", "author", "Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit.", "documents");
 
-    sys->createFile("examSolutions.pdf", "anonymus", "Frage: Erklären Sie das OSI-Modell und nennen Sie die sieben Schichten.solution: Das OSI-Modell (Open Systems Interconnection Model) ist ein Referenzmodell für die Kommunikation in Netzwerken. Es besteht aus sieben Schichten:Physikalische Schicht (Physical Layer)Sicherungsschicht (Data Link Layer)Netzwerkschicht (Network Layer)Transportschicht (Transport Layer)Sitzungsschicht (Session Layer)Darstellungsschicht (Presentation Layer)Anwendungsschicht (Application Layer)", "downloads");
+    Isys->createFile("examSolutions.pdf", "anonymus", "Frage: Erklären Sie das OSI-Modell und nennen Sie die sieben Schichten.solution: Das OSI-Modell (Open Systems Interconnection Model) ist ein Referenzmodell für die Kommunikation in Netzwerken. Es besteht aus sieben Schichten:Physikalische Schicht (Physical Layer)Sicherungsschicht (Data Link Layer)Netzwerkschicht (Network Layer)Transportschicht (Transport Layer)Sitzungsschicht (Session Layer)Darstellungsschicht (Presentation Layer)Anwendungsschicht (Application Layer)", "downloads");
 
-    sys->createFile("photos", "system", " ", "documents", true);
+    Isys->createFile("photos", "system", " ", "documents", true);
 
-    sys->createFile("summer.png", "apple", "A beautiful summer, A beautiful summer", "photos");
+    Isys->createFile("summer.png", "apple", "A beautiful summer, A beautiful summer", "photos");
 
     qDebug() << "demofiles created";
 
-    showAllFolder(sys, rootId);
-    showFilesInFolder(sys, "root");
+    showAllFolder(Isys, rootId);
+    showFilesInFolder(Isys, "root");
 
-    fSys->createFile("root", "user", " ", "isRoot", true);
     fSys->createFile("documents", "user", " ", "root", true);
     fSys->createFile("hello.txt", "sys", "data", "root");
     fSys->createFile("photos", "sys", " ", "documents",true);

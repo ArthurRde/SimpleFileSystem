@@ -44,6 +44,7 @@ INODESYSTEM::INODESYSTEM(int diskSpace, Disk *disk_): disk(disk_){
     int ind = findFile("root");
      qDebug() << "create root 2 ";
     disk->addDataToBlock(0, to_string(ind));
+     qDebug() << "create root 3 ";
 }
 
 int INODESYSTEM::getFreeDiskSpace() {
@@ -411,11 +412,10 @@ void INODESYSTEM::showFat() {
 
 void INODESYSTEM::renameFile(string fileName, string newName)
 {
-    qDebug() << "rename 1";
+
     int id = findFile(fileName);
-    qDebug() << "rename 2";
+
     nodes[id]->name = newName;
-    qDebug() << "rename 3";
 }
 
 

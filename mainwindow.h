@@ -26,7 +26,8 @@ class MainWindow : public QMainWindow {
     int slotSelected;
     INode* clipboardFileNode;
     bool clipboardNodeCopied = false;
-
+    File* clipboardFileFat;
+    bool clipboardFatCopied = false;
     int showedSystem = 0; //1 = Inode, 2 = Fat
 
 public:
@@ -65,6 +66,8 @@ public:
     void createTableFileRows(QList<File *> files);
     void showAllFolder(FATSYSTEM *sys, char* rootName);
     void setTreeWidgetChildRec(FATSYSTEM *sys, char* rootName, QTreeWidgetItem *rootItem);
+    QString findFolderPath(FATSYSTEM *sys, char *rootName, char *foldername);
+    void showPath(FATSYSTEM *sys, char *rootName);
 public slots:
     void createDemoFiles();
 private
