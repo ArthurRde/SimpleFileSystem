@@ -2,7 +2,7 @@
 #include "ui_dialogcreatefile.h"
 #include "ui_mainwindow.h"
 
-
+using namespace std;
 Disk *diskD = new Disk(64, 512);
 Disk *diskC = new Disk(64, 512);
 INODESYSTEM *sys = new INODESYSTEM(diskD->getSize(), diskD);
@@ -74,9 +74,9 @@ MainWindow::MainWindow(QWidget *parent)
     showFilesInFolder(sys, "root");
 
 
-    fSys->createFile("me.mp4", "tets", " ", " ");
-    fSys->createFile("file.pdf", "dud", "jkfjnjfsnjsjndsjnjnjndjndsjnd", " ");
-    showFilesInFolder(fSys, " ");
+    //fSys->createFile("me.mp4", "tets", " ", " ");
+    //fSys->createFile("file.pdf", "dud", "jkfjnjfsnjsjndsjnjnjndjndsjnd", " ");
+    //showFilesInFolder(fSys, " ");
     /** ;
      ui->treeWidget_DiskD->setColumnCount(1);
      ui->treeWidget_DiskD->setHeaderLabels(QStringList() << "Name");
@@ -180,7 +180,7 @@ void MainWindow::createTableFileRows(QList<INode *> node) {
     }
 }
 
-void MainWindow::createTableFileRows(QList<File> files) {
+void MainWindow::createTableFileRows(QList<File*> files) {
     ui->tableWidget->clear();
     ui->tableWidget->setRowCount(files.size());
     ui->tableWidget->setColumnCount(4);
@@ -193,17 +193,17 @@ void MainWindow::createTableFileRows(QList<File> files) {
             ui->tableWidget->setItem(i, 0, iconItem);
 
             QTableWidgetItem *nameItem = new QTableWidgetItem;
-            nameItem->setText(QString::fromStdString(files.at(i).name));
+            nameItem->setText(QString::fromStdString(files.at(i)->name));
             nameItem->setFlags(nameItem->flags() & ~Qt::ItemIsEditable);
             ui->tableWidget->setItem(i, 1, nameItem);
 
             QTableWidgetItem *sizeItem = new QTableWidgetItem;
-            sizeItem->setText(QString::number(files.at(i).size / 1000) + " KB");
+            sizeItem->setText(QString::number(files.at(i)->size / 1000) + " KB");
             sizeItem->setFlags(sizeItem->flags() & ~Qt::ItemIsEditable);
             ui->tableWidget->setItem(i, 2, sizeItem);
 
             QTableWidgetItem *dateItem = new QTableWidgetItem;
-            dateItem->setText(files.at(i).date.toString("dd.MM.yyyy HH:mm:ss"));
+            dateItem->setText(files.at(i)->date.toString("dd.MM.yyyy HH:mm:ss"));
             dateItem->setFlags(dateItem->flags() & ~Qt::ItemIsEditable);
             ui->tableWidget->setItem(i, 3, dateItem);
 
@@ -290,10 +290,11 @@ void MainWindow::showFilesInFolder(INODESYSTEM *sys, string folderName) {
 
 void MainWindow::showFilesInFolder(FATSYSTEM *sys, string folderName) {
     QList <File> files;
-    for(int i = 0; i < sys->getFat()->files.size(); i++){
-        files.append(*sys->getFat()->files[i]);
-    }
-    createTableFileRows(files);
+    char c[folderName.length() + 1];
+    char* c_folder = c;
+    strcpy(c_folder, folderName.c_str());
+    qDebug() << "showFiles" << c_folder;
+    createTableFileRows(sys->getFilesInFolder(c_folder));
 }
 
 
@@ -433,7 +434,7 @@ void MainWindow::on_pushButton_4_clicked()
 }
 
 void MainWindow::createDemoFiles(){
-    int rootId = stoi(diskD->getBlocks().at(0));
+   /** int rootId = stoi(diskD->getBlocks().at(0));
 
     sys->createFile("documents", "user", " ", "root", true);
 
@@ -452,5 +453,11 @@ void MainWindow::createDemoFiles(){
     qDebug() << "demofiles created";
 
     showAllFolder(sys, rootId);
-    showFilesInFolder(sys, "root");
+    showFilesInFolder(sys, "root"); */
+
+    fSys->createFile("root", "user", " ", "isRoot", true);
+    fSys->createFile("documents", "user", " ", "root", true);
+    fSys->createFile("hello.txt", "sys", "data", "root");
+    showFilesInFolder(fSys, "root");
+
 }

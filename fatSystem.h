@@ -6,14 +6,11 @@
 #include <vector>
 #include "disk.h"
 #include <QDateTime>
-
+#include "blockstatus.h"
+#include <string.h>
+#include <sstream>
 using namespace std;
-enum BlockStatus {
-    BLOCK_RESERVED,
-    BLOCK_DEFECT,
-    BLOCK_FREE,
-    BLOCK_OCCUPIED
-};
+
 
 struct Cluster {
     int blockIndex;
@@ -63,6 +60,15 @@ public:
 
     Fat *getFat() const;
     void setFat(Fat *newFat);
+    File* findFile(char* fileName);
+    int editData(char *fileName, string data);
+    int getNumberOfBlocks(char *fileName);
+    Cluster *getLastClusterOfFile(char *fileName);
+    void showCluster(char *fileName);
+    string getDataOfFile(char *fileName);
+    vector<string> splitStringIntoParts(string inputString);
+    QList<File*> getFilesInFolder(char *folderName);
+    File *findFile(const char *fileName);
 };
 
 #endif // FATSYSTEM_H

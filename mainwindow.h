@@ -60,7 +60,7 @@ public:
 
     void showDataOfFile(INODESYSTEM *sys, string fileName);
     void showFilesInFolder(FATSYSTEM *sys, string folderName);
-    void createTableFileRows(QList<File> files);
+    void createTableFileRows(QList<File *> files);
 public slots:
     void createDemoFiles();
 private

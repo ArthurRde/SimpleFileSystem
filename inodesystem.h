@@ -10,17 +10,12 @@
 #include <string.h>
 #include <sstream>
 #include <QMessageBox>
+#include "blockstatus.h"
 using namespace std;
 
 #define BLOCKSIZE 512
 #define MAX_FILES 10
 
-enum BlockStatus2 {
-    BLOCK_RESERVED2,
-    BLOCK_DEFECT2,
-    BLOCK_FREE2,
-    BLOCK_OCCUPIED2
-};
 
 struct INode {
     int iNodeNum;
@@ -36,7 +31,7 @@ struct INode {
 class INODESYSTEM {
     map<int, INode *> nodes;
     Disk *disk;
-    vector <BlockStatus2> blockStatus;
+    vector <BlockStatus> blockStatus;
     int totalBlocks;
 
 public:

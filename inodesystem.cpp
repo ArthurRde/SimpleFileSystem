@@ -35,10 +35,10 @@ INODESYSTEM::INODESYSTEM(int diskSpace, Disk *disk_): disk(disk_){
     totalBlocks = diskSpace/BLOCKSIZE;
     for (int i = 0; i < totalBlocks ; i++)
     {
-        blockStatus.push_back(BLOCK_FREE2);
+        blockStatus.push_back(BLOCK_FREE);
     }
 
-    blockStatus[0] = BLOCK_RESERVED2;
+    blockStatus[0] = BLOCK_RESERVED;
     createFile("root", "system", " ", "isRoot", true);
     qDebug() << "create root 1 ";
     int ind = findFile("root");
@@ -49,7 +49,7 @@ INODESYSTEM::INODESYSTEM(int diskSpace, Disk *disk_): disk(disk_){
 int INODESYSTEM::getFreeDiskSpace() {
     int freeBlocks = 0;
     for (int i = 0; i < totalBlocks; i++) {
-        if (blockStatus[i] == BLOCK_FREE2) {
+        if (blockStatus[i] == BLOCK_FREE) {
             freeBlocks++;
         }
     }
@@ -179,9 +179,9 @@ void INODESYSTEM::createFile(string name_, string author_, string data,string pa
     int allocatedBlocks = 0;
     int pos = 0;
     for (int i = 0; i < totalBlocks && allocatedBlocks < requiredBlocks; i++) {
-        if (blockStatus[i] == BLOCK_FREE2) {
+        if (blockStatus[i] == BLOCK_FREE) {
 
-            blockStatus[i] = BLOCK_OCCUPIED2;
+            blockStatus[i] = BLOCK_OCCUPIED;
             disk->addDataToBlock(i, dataChunks[pos]);
             pos++;
             allocatedBlocks++;
@@ -232,9 +232,9 @@ int INODESYSTEM::editData(int fileToBeEditedId, string data){
         int allocatedBlocks = 0;
         int pos = 0;
         for (int i = 0; i < totalBlocks && allocatedBlocks < requiredBlocks; i++) {
-            if (blockStatus[i] == BLOCK_FREE2) {
+            if (blockStatus[i] == BLOCK_FREE) {
 
-                blockStatus[i] = BLOCK_OCCUPIED2;
+                blockStatus[i] = BLOCK_OCCUPIED;
                 pos++;
                 allocatedBlocks++;
                 nodes[fileToBeEditedId]->blockList.push_back(i);
@@ -304,7 +304,7 @@ void INODESYSTEM::deleteFile( string fileName,bool deleteFolderInFolder, bool ig
         if(num != -1){
             for(int i = 0; i < nodes[num]->blockList.size(); i++){
               //  qDebug() << "here1";
-                blockStatus[nodes[num]->blockList[i]] = BLOCK_FREE2;
+                blockStatus[nodes[num]->blockList[i]] = BLOCK_FREE;
                 disk->getBlocks()[nodes[num]->blockList[i]] = " ";
             }
             //qDebug() << "here2";
@@ -378,16 +378,16 @@ void INODESYSTEM::deleteFolder(string fileName){
 void INODESYSTEM::showFat() {
     for (int i = 0; i < totalBlocks; i++) {
         switch (blockStatus[i]) {
-        case BLOCK_RESERVED2:
+        case BLOCK_RESERVED:
             cout <<"R";
             break;
-        case BLOCK_DEFECT2:
+        case BLOCK_DEFECT:
             cout <<"D";
             break;
-        case BLOCK_FREE2:
+        case BLOCK_FREE:
             cout <<"F";
             break;
-        case BLOCK_OCCUPIED2:
+        case BLOCK_OCCUPIED:
             for (int j = 0; j < MAX_FILES; j++) {
                 if (nodes[j] != NULL) {
                     auto at = find(nodes[j]->blockList.begin(), nodes[j]->blockList.end(), i);
