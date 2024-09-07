@@ -2,8 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+
 #include "inodesystem.h"
 #include "fatSystem.h"
+
 
 #include <QTreeWidgetItem>
 
@@ -57,6 +59,8 @@ public:
     void setClipboardNodeCopied(bool newClipboardNodeCopied);
 
     void showDataOfFile(INODESYSTEM *sys, string fileName);
+    void showFilesInFolder(FATSYSTEM *sys, string folderName);
+    void createTableFileRows(QList<File> files);
 public slots:
     void createDemoFiles();
 private

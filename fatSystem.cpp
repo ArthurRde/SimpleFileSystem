@@ -5,17 +5,37 @@
 
 using namespace std;
 
-FATSYSTEM::FATSYSTEM(int diskSize, int blockSize) {
+Disk* FATSYSTEM::getDisk() const
+{
+    return disk;
+}
+
+void FATSYSTEM::setDisk( Disk *newDisk)
+{
+    disk = newDisk;
+}
+
+Fat *FATSYSTEM::getFat() const
+{
+    return fat;
+}
+
+void FATSYSTEM::setFat(Fat *newFat)
+{
+    fat = newFat;
+}
+
+FATSYSTEM::FATSYSTEM(int diskSpace, Disk *disk_) {
     Fat *pFat = new Fat;
+    disk = disk_;
     pFat->blockStatus = new BlockStatus;
-    pFat->totalBlocks = diskSize / blockSize;
-    pFat->blockSize = blockSize;
-    for (int i = 0; i < blockSize; i++) {
+    pFat->totalBlocks = diskSpace / disk_->getBlockSize();
+    pFat->blockSize = disk_->getBlockSize();
+    for (int i = 0; i < pFat->totalBlocks; i++) {
         pFat->blockStatus[i] = BLOCK_FREE;
+        disk->getBlocks()[i] = " ";
     }
-    for (int i = 0; i < MAX_FILES; i++) {
-        pFat->files[i] = nullptr;
-    }
+
     fat = pFat;
 }
 
@@ -41,20 +61,30 @@ int FATSYSTEM::getFreeDiskSpace() {
     return freeBlocks * fat->blockSize;
 }
 
-File *FATSYSTEM::createFile(int fileSize, const char *fileName) {
-    if (strlen(fileName) > 31) {
+File *FATSYSTEM::createFile(char* name_, char* author_, string data,char* parentName, bool isFolder) {
+    if (strlen(name_) > 31) {
         cout << "Name zu lang" << endl;
         return nullptr;
     }
-    int requiredBlocks = fileSize / fat->blockSize;
+
+    vector<string> dataChunks;
+    size_t chunk_size = disk->getBlockSize();
+    size_t length = data.length();
+    int requiredBlocks = 0;
+    for (size_t i = 0; i < length; i += chunk_size) {
+        dataChunks.push_back(data.substr(i, chunk_size));
+        requiredBlocks++;
+    }
+
+
     if (requiredBlocks > getFreeDiskSpace() / fat->blockSize) {
         cout << "Nicht genug Platz" << endl;
         return nullptr;
     }
     File *newFile = new File;
-    strncpy(newFile->name, fileName, 31);
+    strncpy(newFile->name, name_, 31);
     newFile->name[31] = '\0';
-    newFile->size = fileSize;
+    newFile->size = length;
     newFile->clusterList = nullptr;
 
     Cluster *lastCluster = nullptr;
@@ -74,14 +104,8 @@ File *FATSYSTEM::createFile(int fileSize, const char *fileName) {
             allocatedBlocks++;
         }
     }
-    for (int i = 0; i < MAX_FILES; i++) {
-        if (fat->files[i] == nullptr) {
-            fat->files[i] = newFile;
-            return newFile;
-        }
-    }
-    cout << "Zu viele Dateien" << endl;
-    free(newFile);
+    fat->files.push_back(newFile);
+
     return nullptr;
 }
 

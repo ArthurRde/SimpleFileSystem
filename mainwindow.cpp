@@ -6,7 +6,7 @@
 Disk *diskD = new Disk(64, 512);
 Disk *diskC = new Disk(64, 512);
 INODESYSTEM *sys = new INODESYSTEM(diskD->getSize(), diskD);
-FATSYSTEM *fSys = new FATSYSTEM(diskC->getBlocks().size(),diskC->getBlockSize());
+FATSYSTEM *fSys = new FATSYSTEM(diskC->getSize(), diskC);
 
 int MainWindow::getSlotSelected() const
 {
@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent)
         ui->tableWidget->horizontalHeader()->setSectionResizeMode(c, QHeaderView::Stretch);
     }
 
-    //fSys->createFile(512,"helloWorld.txt");
+
 
     ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -74,6 +74,9 @@ MainWindow::MainWindow(QWidget *parent)
     showFilesInFolder(sys, "root");
 
 
+    fSys->createFile("me.mp4", "tets", " ", " ");
+    fSys->createFile("file.pdf", "dud", "jkfjnjfsnjsjndsjnjnjndjndsjnd", " ");
+    showFilesInFolder(fSys, " ");
     /** ;
      ui->treeWidget_DiskD->setColumnCount(1);
      ui->treeWidget_DiskD->setHeaderLabels(QStringList() << "Name");
@@ -177,7 +180,35 @@ void MainWindow::createTableFileRows(QList<INode *> node) {
     }
 }
 
+void MainWindow::createTableFileRows(QList<File> files) {
+    ui->tableWidget->clear();
+    ui->tableWidget->setRowCount(files.size());
+    ui->tableWidget->setColumnCount(4);
+    ui->tableWidget->setHorizontalHeaderLabels(QStringList() << "Icon" << "Name" << "Size" << "Date");
+    for (int i = 0; i < files.size(); i++) {
 
+            QTableWidgetItem *iconItem = new QTableWidgetItem;
+            iconItem->setIcon(QIcon("path/to/icon.png"));
+            iconItem->setFlags(iconItem->flags() & ~Qt::ItemIsEditable);
+            ui->tableWidget->setItem(i, 0, iconItem);
+
+            QTableWidgetItem *nameItem = new QTableWidgetItem;
+            nameItem->setText(QString::fromStdString(files.at(i).name));
+            nameItem->setFlags(nameItem->flags() & ~Qt::ItemIsEditable);
+            ui->tableWidget->setItem(i, 1, nameItem);
+
+            QTableWidgetItem *sizeItem = new QTableWidgetItem;
+            sizeItem->setText(QString::number(files.at(i).size / 1000) + " KB");
+            sizeItem->setFlags(sizeItem->flags() & ~Qt::ItemIsEditable);
+            ui->tableWidget->setItem(i, 2, sizeItem);
+
+            QTableWidgetItem *dateItem = new QTableWidgetItem;
+            dateItem->setText(files.at(i).date.toString("dd.MM.yyyy HH:mm:ss"));
+            dateItem->setFlags(dateItem->flags() & ~Qt::ItemIsEditable);
+            ui->tableWidget->setItem(i, 3, dateItem);
+
+    }
+}
 //deprecated
 QList<INode *> showAllFilesINode(INODESYSTEM *sys) {
     QList < INode * > node;
@@ -257,6 +288,14 @@ void MainWindow::showFilesInFolder(INODESYSTEM *sys, string folderName) {
     }
 }
 
+void MainWindow::showFilesInFolder(FATSYSTEM *sys, string folderName) {
+    QList <File> files;
+    for(int i = 0; i < sys->getFat()->files.size(); i++){
+        files.append(*sys->getFat()->files[i]);
+    }
+    createTableFileRows(files);
+}
+
 
 
 void MainWindow::on_treeWidget_DiskD_itemClicked(QTreeWidgetItem *item, int column) {
@@ -291,7 +330,6 @@ void MainWindow::showDataOfFile(INODESYSTEM *sys, string fileName){
 }
 void MainWindow::on_pushButton_clicked()
 {
-    //TODO: add new window to write new filename into
 
 
     DialogRename dlg(ui->tableWidget->item(slotSelected, 1)->text().toStdString());

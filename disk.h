@@ -1,6 +1,7 @@
 #ifndef DISKH
 #define DISK_H
 
+#pragma once
 #include <iostream>
 #include <vector>
 
