@@ -1,0 +1,163 @@
+\doxysection{Disk Class Reference}
+\hypertarget{class_disk}{}\label{class_disk}\index{Disk@{Disk}}
+
+
+Represents a disk with blocks of data.  
+
+
+
+
+{\ttfamily \#include $<$disk.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_disk_aad1acbeac37fb0c8c33d9d87294c54df}{Disk}} (int number\+Of\+Blocks, int block\+Size\+\_\+)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{class_disk}{Disk}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_disk_aee2556db68599c78c40007eac596f006}{add\+Data\+To\+Block}} (int block\+Num, string data\+\_\+)
+\begin{DoxyCompactList}\small\item\em Adds data to a specific block. \end{DoxyCompactList}\item 
+vector$<$ string $>$ \mbox{\hyperlink{class_disk_a6d603449ab10ad18b11264a3e321d865}{get\+Blocks}} () const
+\begin{DoxyCompactList}\small\item\em Gets the blocks of the disk. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_disk_a14646ca66cffb2540c761d7ddc1fec0c}{set\+Blocks}} (const vector$<$ string $>$ \&new\+Blocks)
+\begin{DoxyCompactList}\small\item\em Sets the blocks of the disk. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_disk_a6392a7f81d44606a86261f2ed0206a71}{get\+Size}} () const
+\begin{DoxyCompactList}\small\item\em Gets the size of the disk. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_disk_a359bbc1acb2960b0f35ed8cbb8223117}{set\+Size}} (int new\+Size)
+\begin{DoxyCompactList}\small\item\em Sets the size of the disk. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_disk_a50082e764976291cf787db08e05ada57}{get\+Block\+Size}} () const
+\begin{DoxyCompactList}\small\item\em Gets the size of each block. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_disk_a135d6f241f6a2cc6ec103e14a3d1ea23}{set\+Block\+Size}} (int new\+Block\+Size)
+\begin{DoxyCompactList}\small\item\em Sets the size of each block. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a disk with blocks of data. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_disk_aad1acbeac37fb0c8c33d9d87294c54df}\index{Disk@{Disk}!Disk@{Disk}}
+\index{Disk@{Disk}!Disk@{Disk}}
+\doxysubsubsection{\texorpdfstring{Disk()}{Disk()}}
+{\footnotesize\ttfamily \label{class_disk_aad1acbeac37fb0c8c33d9d87294c54df} 
+Disk\+::\+Disk (\begin{DoxyParamCaption}\item[{int}]{number\+Of\+Blocks}{, }\item[{int}]{block\+Size\+\_\+}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{class_disk}{Disk}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em number\+Of\+Blocks} & Number of blocks in the disk \\
+\hline
+{\em block\+Size\+\_\+} & Size of each block \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_disk_aee2556db68599c78c40007eac596f006}\index{Disk@{Disk}!addDataToBlock@{addDataToBlock}}
+\index{addDataToBlock@{addDataToBlock}!Disk@{Disk}}
+\doxysubsubsection{\texorpdfstring{addDataToBlock()}{addDataToBlock()}}
+{\footnotesize\ttfamily \label{class_disk_aee2556db68599c78c40007eac596f006} 
+void Disk\+::add\+Data\+To\+Block (\begin{DoxyParamCaption}\item[{int}]{block\+Num}{, }\item[{string}]{data\+\_\+}{}\end{DoxyParamCaption})}
+
+
+
+Adds data to a specific block. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em block\+Num} & Index of the block \\
+\hline
+{\em data\+\_\+} & Data to add to the block \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_disk_a6d603449ab10ad18b11264a3e321d865}\index{Disk@{Disk}!getBlocks@{getBlocks}}
+\index{getBlocks@{getBlocks}!Disk@{Disk}}
+\doxysubsubsection{\texorpdfstring{getBlocks()}{getBlocks()}}
+{\footnotesize\ttfamily \label{class_disk_a6d603449ab10ad18b11264a3e321d865} 
+vector$<$ string $>$ Disk\+::get\+Blocks (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the blocks of the disk. 
+
+\begin{DoxyReturn}{Returns}
+Vector of blocks 
+\end{DoxyReturn}
+\Hypertarget{class_disk_a50082e764976291cf787db08e05ada57}\index{Disk@{Disk}!getBlockSize@{getBlockSize}}
+\index{getBlockSize@{getBlockSize}!Disk@{Disk}}
+\doxysubsubsection{\texorpdfstring{getBlockSize()}{getBlockSize()}}
+{\footnotesize\ttfamily \label{class_disk_a50082e764976291cf787db08e05ada57} 
+int Disk\+::get\+Block\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the size of each block. 
+
+\begin{DoxyReturn}{Returns}
+Size of each block 
+\end{DoxyReturn}
+\Hypertarget{class_disk_a6392a7f81d44606a86261f2ed0206a71}\index{Disk@{Disk}!getSize@{getSize}}
+\index{getSize@{getSize}!Disk@{Disk}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily \label{class_disk_a6392a7f81d44606a86261f2ed0206a71} 
+int Disk\+::get\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the size of the disk. 
+
+\begin{DoxyReturn}{Returns}
+Size of the disk 
+\end{DoxyReturn}
+\Hypertarget{class_disk_a14646ca66cffb2540c761d7ddc1fec0c}\index{Disk@{Disk}!setBlocks@{setBlocks}}
+\index{setBlocks@{setBlocks}!Disk@{Disk}}
+\doxysubsubsection{\texorpdfstring{setBlocks()}{setBlocks()}}
+{\footnotesize\ttfamily \label{class_disk_a14646ca66cffb2540c761d7ddc1fec0c} 
+void Disk\+::set\+Blocks (\begin{DoxyParamCaption}\item[{const vector$<$ string $>$ \&}]{new\+Blocks}{}\end{DoxyParamCaption})}
+
+
+
+Sets the blocks of the disk. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Blocks} & Vector of new blocks \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_disk_a135d6f241f6a2cc6ec103e14a3d1ea23}\index{Disk@{Disk}!setBlockSize@{setBlockSize}}
+\index{setBlockSize@{setBlockSize}!Disk@{Disk}}
+\doxysubsubsection{\texorpdfstring{setBlockSize()}{setBlockSize()}}
+{\footnotesize\ttfamily \label{class_disk_a135d6f241f6a2cc6ec103e14a3d1ea23} 
+void Disk\+::set\+Block\+Size (\begin{DoxyParamCaption}\item[{int}]{new\+Block\+Size}{}\end{DoxyParamCaption})}
+
+
+
+Sets the size of each block. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Block\+Size} & New size of each block \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_disk_a359bbc1acb2960b0f35ed8cbb8223117}\index{Disk@{Disk}!setSize@{setSize}}
+\index{setSize@{setSize}!Disk@{Disk}}
+\doxysubsubsection{\texorpdfstring{setSize()}{setSize()}}
+{\footnotesize\ttfamily \label{class_disk_a359bbc1acb2960b0f35ed8cbb8223117} 
+void Disk\+::set\+Size (\begin{DoxyParamCaption}\item[{int}]{new\+Size}{}\end{DoxyParamCaption})}
+
+
+
+Sets the size of the disk. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Size} & New size of the disk \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/disk.\+h\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/disk.\+cpp\end{DoxyCompactItemize}

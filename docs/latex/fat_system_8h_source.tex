@@ -1,0 +1,113 @@
+\doxysection{/\+Users/rode/git/uni/\+Simple\+File\+System/fat\+System.h}
+\hypertarget{fat_system_8h_source}{}\label{fat_system_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ FATSYSTEM\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ FATSYSTEM\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#define\ MAX\_FILES\ 10}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}disk.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <QDateTime>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}blockstatus.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <QMessageBox>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_cluster}{Cluster}}\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_cluster_aac969deb49cf458fc47244bbe997e816}{blockIndex}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_cluster}{Cluster}}\ *\mbox{\hyperlink{struct_cluster_a1d19c2f6b133def28c31637603c7c973}{next}};\ \ \ \ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_cluster}{Cluster}}\ *\mbox{\hyperlink{struct_cluster_ad0431b38f8877e57c17648063a114a25}{prev}};\ \ \ \ }
+\DoxyCodeLine{00024\ \};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_file}{File}}\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{struct_file_a2962cbda035fc3186558d1ed407944d6}{name}}[32];\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_file_abec73ae2a96ee8136ba14a49fec88b25}{size}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{struct_file_afb61f46ac1d8a0ff0d61e33c632bdf28}{author}}[32];\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ QDateTime\ \mbox{\hyperlink{struct_file_a6b30897fac3ee19d098b7fb52bb7da01}{date}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_file_a1a98e74b7ae4cbed1fb632be860300d1}{isFolder}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{struct_cluster}{Cluster}}\ *\mbox{\hyperlink{struct_file_a5597d5a0d8785ccd29eb912277fc41e6}{clusterList}};\ \ \ \ }
+\DoxyCodeLine{00037\ \};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_fat}{Fat}}\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ vector<BlockStatus>\ \mbox{\hyperlink{struct_fat_a3bb38c6fc58266739d2b9b6aa4fe73e8}{blockStatus}};\ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_fat_a8d0830477d8f90a2f24207344428f121}{totalBlocks}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_fat_a51f33d5d38fa50dd9c985f16b7705eff}{blockSize}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00047\ \ \ \ \ vector<File\ *>\ \mbox{\hyperlink{struct_fat_aca4c0d91f87d2ef97fe7c32206ca7a0b}{files}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00048\ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00054\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}}\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \mbox{\hyperlink{struct_fat}{Fat}}\ *fat;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ \mbox{\hyperlink{class_disk}{Disk}}\ *disk;\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ad0b3cabe68c42a645e505eb77de8876c}{FATSYSTEM}}(\textcolor{keywordtype}{int}\ diskSpace,\ \mbox{\hyperlink{class_disk}{Disk}}\ *disk\_);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00069\ \ \ \ \ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a071ea078d760fc399fb4b85eb041ecbb}{\string~FATSYSTEM}}();}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00076\ \ \ \ \ \mbox{\hyperlink{struct_cluster}{Cluster}}\ *\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a7759bdd4ce6ff210157a7f103828f999}{createCluster}}(\textcolor{keywordtype}{int}\ blockIndex);}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a79431b7c064dd434f4573beefcdff78c}{getFreeDiskSpace}}();}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00093\ \ \ \ \ \mbox{\hyperlink{struct_file}{File}}\ *\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_aa34b7804cbfc5ee0d7246b1ec2830cb7}{createFile}}(\textcolor{keywordtype}{char}\ *name\_,\ \textcolor{keywordtype}{char}\ *author\_,\ \textcolor{keywordtype}{string}\ data,\ \textcolor{keywordtype}{char}\ *parentName,\ \textcolor{keywordtype}{bool}\ isFolder\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a38eaa5e71ad9d24ca259496d0e077a1e}{deleteFile}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *fileName,\ \textcolor{keywordtype}{bool}\ deleteFolderInFolder\ =\ \textcolor{keyword}{false},\ \textcolor{keywordtype}{bool}\ ignoreFolderTyp\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a23e7cb07d9d83990c55ef0c2642e31ba}{showFat}}();}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a7ecf1d648e634ac502f2a1cecf1a4118}{getFragmentation}}();}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a745d4036bb61b6b49e1cfb08a96dd170}{defragDisk}}();}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00123\ \ \ \ \ \mbox{\hyperlink{class_disk}{Disk}}\ *\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ad77ddfc8adb49d3b97d871b7d2b61f54}{getDisk}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a177418ac278137d6e7e0b85b8bdbdfe0}{setDisk}}(\mbox{\hyperlink{class_disk}{Disk}}\ *newDisk);}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00135\ \ \ \ \ \mbox{\hyperlink{struct_fat}{Fat}}\ *\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a42c1e4e3c50a284798bb498843dbb359}{getFat}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ac20c6fee0cdb9efb01facf4419832416}{setFat}}(\mbox{\hyperlink{struct_fat}{Fat}}\ *newFat);}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00148\ \ \ \ \ \mbox{\hyperlink{struct_file}{File}}\ *\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a8fd00b04a5eee8d34e4587dbb365f8ea}{findFile}}(\textcolor{keywordtype}{char}\ *fileName);}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ab210edba7df8be0d728a0b03f597089e}{editData}}(\textcolor{keywordtype}{char}\ *fileName,\ \textcolor{keywordtype}{string}\ data);}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a91c1dfb87b08b3bf5a59de21b9cb5f49}{getNumberOfBlocks}}(\textcolor{keywordtype}{char}\ *fileName);}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00170\ \ \ \ \ \mbox{\hyperlink{struct_cluster}{Cluster}}\ *\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ae32eb310eb8739b398a4d2f0d36acbbb}{getLastClusterOfFile}}(\textcolor{keywordtype}{char}\ *fileName);}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a38678b0f308cad8fc8f9645a2c2bf0d6}{showCluster}}(\textcolor{keywordtype}{char}\ *fileName);}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a7ddfce9dddcc7b7ba27bf1183084c863}{getDataOfFile}}(\textcolor{keywordtype}{char}\ *fileName);}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00190\ \ \ \ \ vector<string>\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ab8f8c1a75a6e9254af3a38d95ed19911}{splitStringIntoParts}}(\textcolor{keywordtype}{string}\ inputString);}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00197\ \ \ \ \ QList<File\ *>\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a467966fc93b8c7e31a5b67d1d24f43ef}{getFilesInFolder}}(\textcolor{keywordtype}{char}\ *folderName);}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00204\ \ \ \ \ \mbox{\hyperlink{struct_file}{File}}\ *\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a8fd00b04a5eee8d34e4587dbb365f8ea}{findFile}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *fileName);}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00211\ \ \ \ \ QList<File\ *>\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a27192f6664bb4240991e15bf635e48f7}{getFoldersInFolder}}(\textcolor{keywordtype}{char}\ *folderName);}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ac3a5867d2c075e665f2363322b1c620e}{renameFile}}(\textcolor{keywordtype}{char}\ *folder,\ \textcolor{keywordtype}{char}\ *fileName,\ \textcolor{keywordtype}{char}\ *newName);}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a043167f538c39720d1fb5c06614efc89}{findFolderOfFile}}(\textcolor{keywordtype}{char}\ *fileName);}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a86ba1da262c9964ee2bfb9b5571ac44f}{removeFileFromFolder}}(\textcolor{keywordtype}{char}\ *fileName,\ \textcolor{keywordtype}{char}\ *folderName);}
+\DoxyCodeLine{00234\ }
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a788eec3d014c5ef0c532e8d38e4d1342}{addFileToFolder}}(\textcolor{keywordtype}{char}\ *parentName,\ \textcolor{keywordtype}{char}\ *name\_);}
+\DoxyCodeLine{00242\ }
+\DoxyCodeLine{00248\ \ \ \ \ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ad74200563049acefbf4f53df508f73e2}{getFolderOfFile}}(\textcolor{keywordtype}{char}\ *fileName);}
+\DoxyCodeLine{00249\ }
+\DoxyCodeLine{00254\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a1348dbdb65fbc8cc5bc223d76569e8c7}{deleteFolder}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *fileName);}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00262\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ab0e9262c7bc376a83e8c7246ce42892e}{createUniqueName}}(\textcolor{keywordtype}{char}\ *fileName,\ \textcolor{keywordtype}{char}\ *uniqueText\ =\ \textcolor{stringliteral}{"{}-\/C"{}});}
+\DoxyCodeLine{00263\ }
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a5acac57cfc93e1887011f44a553d25c2}{existFile}}(\textcolor{keywordtype}{char}\ *fileName);}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00276\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_abc53cfc9326f0fd58b0ab3366d7d8b11}{copyFile}}(\textcolor{keywordtype}{char}\ *fileName,\ \textcolor{keywordtype}{char}\ *folderName);}
+\DoxyCodeLine{00277\ \};}
+\DoxyCodeLine{00278\ }
+\DoxyCodeLine{00279\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ FATSYSTEM\_H}}
+
+\end{DoxyCode}

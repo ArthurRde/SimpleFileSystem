@@ -1,0 +1,141 @@
+\doxysection{Dialog\+Eject Class Reference}
+\hypertarget{class_dialog_eject}{}\label{class_dialog_eject}\index{DialogEject@{DialogEject}}
+
+
+The \doxylink{class_dialog_eject}{Dialog\+Eject} class represents a dialog window for ejecting CDs from the system.  
+
+
+
+
+{\ttfamily \#include $<$dialogeject.\+h$>$}
+
+Inheritance diagram for Dialog\+Eject\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_dialog_eject}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_dialog_eject_a022186a9ae25d07e3ee12c2127cdad35}{add\+Cd\+To\+Combo\+Box}} (string name)
+\begin{DoxyCompactList}\small\item\em Adds a CD name to the combo box. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_dialog_eject_a96bc5482d1baaba29dac2f750069b518}{remove\+Cd\+From\+Combo\+Box}} (string name)
+\begin{DoxyCompactList}\small\item\em Removes a CD name from the combo box. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_dialog_eject_abc6ec52aebbfaec1be5ba7ef027f49ae}{clear\+Cd\+From\+Combo\+Box}} ()
+\begin{DoxyCompactList}\small\item\em Clears all CDs from the combo box. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_dialog_eject_abc5a86064927bef4f7baeb067cd788de}{eject}} ()
+\begin{DoxyCompactList}\small\item\em Ejects the selected CD. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_dialog_eject_afc249de65233fa39f084255cb0c51659}{Dialog\+Eject}} (\mbox{\hyperlink{class_c_d_s_y_s_t_e_m}{CDSYSTEM}} \texorpdfstring{$\ast$}{*}sys\+\_\+, QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Constructs a \doxylink{class_dialog_eject}{Dialog\+Eject} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_dialog_eject_a2dc6d80a071fa794f4e1bc0a31d4da63}{\texorpdfstring{$\sim$}{\string~}\+Dialog\+Eject}} ()
+\begin{DoxyCompactList}\small\item\em Destructor for \doxylink{class_dialog_eject}{Dialog\+Eject}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_dialog_eject_aada474f845486e1444871a4631f6f0c3}\label{class_dialog_eject_aada474f845486e1444871a4631f6f0c3} 
+\mbox{\hyperlink{class_c_d_s_y_s_t_e_m}{CDSYSTEM}} \texorpdfstring{$\ast$}{*} {\bfseries sys}
+\begin{DoxyCompactList}\small\item\em Pointer to the \doxylink{class_c_d_s_y_s_t_e_m}{CDSYSTEM} object representing the CD system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \doxylink{class_dialog_eject}{Dialog\+Eject} class represents a dialog window for ejecting CDs from the system. 
+
+This class allows users to select a CD and eject it using the graphical interface. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_dialog_eject_afc249de65233fa39f084255cb0c51659}\index{DialogEject@{DialogEject}!DialogEject@{DialogEject}}
+\index{DialogEject@{DialogEject}!DialogEject@{DialogEject}}
+\doxysubsubsection{\texorpdfstring{DialogEject()}{DialogEject()}}
+{\footnotesize\ttfamily \label{class_dialog_eject_afc249de65233fa39f084255cb0c51659} 
+Dialog\+Eject\+::\+Dialog\+Eject (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_c_d_s_y_s_t_e_m}{CDSYSTEM}} \texorpdfstring{$\ast$}{*}}]{sys\+\_\+}{, }\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructs a \doxylink{class_dialog_eject}{Dialog\+Eject} object. 
+
+Initializes the dialog for ejecting CDs, setting up the UI and system references.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sys\+\_\+} & Pointer to the \doxylink{class_c_d_s_y_s_t_e_m}{CDSYSTEM} object, representing the CD system. \\
+\hline
+{\em parent} & Pointer to the parent widget (defaults to nullptr). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_dialog_eject_a2dc6d80a071fa794f4e1bc0a31d4da63}\index{DialogEject@{DialogEject}!````~DialogEject@{\texorpdfstring{$\sim$}{\string~}DialogEject}}
+\index{````~DialogEject@{\texorpdfstring{$\sim$}{\string~}DialogEject}!DialogEject@{DialogEject}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}DialogEject()}{\string~DialogEject()}}
+{\footnotesize\ttfamily \label{class_dialog_eject_a2dc6d80a071fa794f4e1bc0a31d4da63} 
+Dialog\+Eject\+::\texorpdfstring{$\sim$}{\string~}\+Dialog\+Eject (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Destructor for \doxylink{class_dialog_eject}{Dialog\+Eject}. 
+
+Cleans up the allocated resources, including the UI object. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_dialog_eject_a022186a9ae25d07e3ee12c2127cdad35}\index{DialogEject@{DialogEject}!addCdToComboBox@{addCdToComboBox}}
+\index{addCdToComboBox@{addCdToComboBox}!DialogEject@{DialogEject}}
+\doxysubsubsection{\texorpdfstring{addCdToComboBox}{addCdToComboBox}}
+{\footnotesize\ttfamily \label{class_dialog_eject_a022186a9ae25d07e3ee12c2127cdad35} 
+void Dialog\+Eject\+::add\+Cd\+To\+Combo\+Box (\begin{DoxyParamCaption}\item[{string}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+
+Adds a CD name to the combo box. 
+
+This slot is used to dynamically add CD names to the combo box for selection.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the CD to be added to the combo box. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_dialog_eject_abc6ec52aebbfaec1be5ba7ef027f49ae}\index{DialogEject@{DialogEject}!clearCdFromComboBox@{clearCdFromComboBox}}
+\index{clearCdFromComboBox@{clearCdFromComboBox}!DialogEject@{DialogEject}}
+\doxysubsubsection{\texorpdfstring{clearCdFromComboBox}{clearCdFromComboBox}}
+{\footnotesize\ttfamily \label{class_dialog_eject_abc6ec52aebbfaec1be5ba7ef027f49ae} 
+void Dialog\+Eject\+::clear\+Cd\+From\+Combo\+Box (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+
+Clears all CDs from the combo box. 
+
+This slot is used to remove all entries from the CD combo box. \Hypertarget{class_dialog_eject_abc5a86064927bef4f7baeb067cd788de}\index{DialogEject@{DialogEject}!eject@{eject}}
+\index{eject@{eject}!DialogEject@{DialogEject}}
+\doxysubsubsection{\texorpdfstring{eject}{eject}}
+{\footnotesize\ttfamily \label{class_dialog_eject_abc5a86064927bef4f7baeb067cd788de} 
+void Dialog\+Eject\+::eject (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+
+Ejects the selected CD. 
+
+This slot is triggered to eject the currently selected CD from the system. \Hypertarget{class_dialog_eject_a96bc5482d1baaba29dac2f750069b518}\index{DialogEject@{DialogEject}!removeCdFromComboBox@{removeCdFromComboBox}}
+\index{removeCdFromComboBox@{removeCdFromComboBox}!DialogEject@{DialogEject}}
+\doxysubsubsection{\texorpdfstring{removeCdFromComboBox}{removeCdFromComboBox}}
+{\footnotesize\ttfamily \label{class_dialog_eject_a96bc5482d1baaba29dac2f750069b518} 
+void Dialog\+Eject\+::remove\+Cd\+From\+Combo\+Box (\begin{DoxyParamCaption}\item[{string}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+
+Removes a CD name from the combo box. 
+
+This slot is used to remove a specific CD from the combo box based on its name.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the CD to be removed from the combo box. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/dialogeject.\+h\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/dialogeject.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,40 @@
+\doxysection{File Struct Reference}
+\hypertarget{struct_file}{}\label{struct_file}\index{File@{File}}
+
+
+Represents a file or folder in the FAT system.  
+
+
+
+
+{\ttfamily \#include $<$fat\+System.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_file_a2962cbda035fc3186558d1ed407944d6}\label{struct_file_a2962cbda035fc3186558d1ed407944d6} 
+char {\bfseries name} \mbox{[}32\mbox{]}
+\begin{DoxyCompactList}\small\item\em Name of the file. \end{DoxyCompactList}\item 
+\Hypertarget{struct_file_abec73ae2a96ee8136ba14a49fec88b25}\label{struct_file_abec73ae2a96ee8136ba14a49fec88b25} 
+int {\bfseries size}
+\begin{DoxyCompactList}\small\item\em Size of the file in bytes. \end{DoxyCompactList}\item 
+\Hypertarget{struct_file_afb61f46ac1d8a0ff0d61e33c632bdf28}\label{struct_file_afb61f46ac1d8a0ff0d61e33c632bdf28} 
+char {\bfseries author} \mbox{[}32\mbox{]}
+\begin{DoxyCompactList}\small\item\em Author of the file. \end{DoxyCompactList}\item 
+\Hypertarget{struct_file_a6b30897fac3ee19d098b7fb52bb7da01}\label{struct_file_a6b30897fac3ee19d098b7fb52bb7da01} 
+QDate\+Time {\bfseries date}
+\begin{DoxyCompactList}\small\item\em Creation date of the file. \end{DoxyCompactList}\item 
+\Hypertarget{struct_file_a1a98e74b7ae4cbed1fb632be860300d1}\label{struct_file_a1a98e74b7ae4cbed1fb632be860300d1} 
+bool {\bfseries is\+Folder}
+\begin{DoxyCompactList}\small\item\em True if this is a folder, false if it\textquotesingle{}s a file. \end{DoxyCompactList}\item 
+\Hypertarget{struct_file_a5597d5a0d8785ccd29eb912277fc41e6}\label{struct_file_a5597d5a0d8785ccd29eb912277fc41e6} 
+\mbox{\hyperlink{struct_cluster}{Cluster}} \texorpdfstring{$\ast$}{*} {\bfseries cluster\+List}
+\begin{DoxyCompactList}\small\item\em List of clusters allocated to this file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a file or folder in the FAT system. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/fat\+System.\+h\end{DoxyCompactItemize}

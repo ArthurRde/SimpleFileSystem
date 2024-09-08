@@ -328,7 +328,7 @@ void INODESYSTEM::deleteFolder(string fileName) {
     deleteFile(fileName, false, true);
 }
 
-void INODESYSTEM::showFat() {
+void INODESYSTEM::showINodes() {
     for (int i = 0; i < totalBlocks; i++) {
         switch (blockStatus[i]) {
             case BLOCK_RESERVED:
@@ -341,7 +341,7 @@ void INODESYSTEM::showFat() {
                 cout << "F";
                 break;
             case BLOCK_OCCUPIED:
-                for (int j = 0; j < MAX_FILES; j++) {
+                for (int j = 0; j < nodes.size(); j++) {
                     if (nodes[j] != NULL) {
                         auto at = find(nodes[j]->blockList.begin(), nodes[j]->blockList.end(), i);
                         if (at != nodes[j]->blockList.end()) {

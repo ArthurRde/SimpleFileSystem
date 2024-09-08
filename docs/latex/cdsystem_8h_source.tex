@@ -1,0 +1,67 @@
+\doxysection{/\+Users/rode/git/uni/\+Simple\+File\+System/cdsystem.h}
+\hypertarget{cdsystem_8h_source}{}\label{cdsystem_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ CDSYSTEM\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ CDSYSTEM\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}cdrom.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}fatSystem.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}inodesystem.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_c_d_s_y_s_t_e_m}{CDSYSTEM}}\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ vector<CDROM\ *>\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a713f8c3030af563bb8a714c31ba9ad3d}{ejectedCds}};\ \ \ \ \ \ }
+\DoxyCodeLine{00019\ \ \ \ \ vector<CDROM\ *>\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_abc59b8335c7d7ba1caa771e39cc00986}{insertedCds}};\ \ \ \ \ }
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}}\ *\mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a0e3b6eb580cf08f8ff6e8f97d0aed8b2}{ISys}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}}\ *\mbox{\hyperlink{class_c_d_s_y_s_t_e_m_aa08250a3a2fd499146e38dc8c8cda0c7}{FSys}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a9cf4a89d195355a6f27f3881ceff71e3}{CDSYSTEM}}(\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}}\ *Isys,\ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}}\ *Fsys);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00037\ \ \ \ \ vector<CDROM\ *>\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_ad375148f3e5865fa60f79ab11b51ba28}{getEjectedCds}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ vector<INode\ *>\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a7a379d7ea8593ecb43863a1d4f234892}{nodes}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ vector<File\ *>\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a81cc65549c8d1642491a7566fdfcbd9c}{files}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_ae9ae4a175f06519814da4b93d9796b4b}{setEjectedCds}}(\textcolor{keyword}{const}\ vector<CDROM\ *>\ \&newEjectedCds);}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a411a9c87691ed3f2871a4d781985fb97}{addEjectedCd}}(\textcolor{keywordtype}{string}\ portName\_);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00058\ \ \ \ \ vector<CDROM\ *>\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_aab72b3492cddf3ba3458d4d3f2d08525}{getInsertedCds}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a363d22d3c029fcb1086f1d8ccad03608}{setInsertedCds}}(\textcolor{keyword}{const}\ vector<CDROM\ *>\ \&newInsertedCds);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00071\ \ \ \ \ \mbox{\hyperlink{struct_file_entry}{FileEntry}}\ *\mbox{\hyperlink{class_c_d_s_y_s_t_e_m_af8de10561a23d794ff8c97d09f8a7b4b}{createFileEntry}}(\mbox{\hyperlink{struct_i_node}{INode}}\ *node);}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00084\ \ \ \ \ vector<Base\ *>\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a18018b0f04591c9ea15b3d32a517f8a8}{processFiles}}(vector<INode\ *>\ nodes\_,\ vector<File\ *>\ files\_,\ \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}}\ *cd,\ \textcolor{keywordtype}{int}\ leastStartBlock);}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00096\ \ \ \ \ vector<Base\ *>\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a9bd2958beee10ab1df856845d00c528a}{processFolder}}(\mbox{\hyperlink{struct_i_node}{INode}}\ *node\_,\ \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}}\ *cd,\ \textcolor{keywordtype}{int}\ leastStartBlock);}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00102\ \ \ \ \ \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}}\ *\mbox{\hyperlink{class_c_d_s_y_s_t_e_m_adaf98aae8649b749dd73a2cdc38dbfd4}{burnCD}}();}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a6b4af35f8b87cc6b64d6da9d96540992}{getNumberOfFilesInFolder}}(\mbox{\hyperlink{struct_file}{File}}\ *file\_);}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a6b4af35f8b87cc6b64d6da9d96540992}{getNumberOfFilesInFolder}}(\mbox{\hyperlink{struct_i_node}{INode}}\ *node\_);}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a451babf6f113eea3e039560c93750130}{getNumberOfFiles}}(vector<INode\ *>\ nodes\_,\ vector<File\ *>\ files\_);}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a8ff961a42ad2e0453968334823f46cca}{createDataBlocks}}(\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}}\ *cd,\ \textcolor{keywordtype}{string}\ data,\ \textcolor{keywordtype}{int}\ leastStartBlock);}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00146\ \ \ \ \ \mbox{\hyperlink{struct_file_entry}{FileEntry}}\ *\mbox{\hyperlink{class_c_d_s_y_s_t_e_m_af8de10561a23d794ff8c97d09f8a7b4b}{createFileEntry}}(\mbox{\hyperlink{struct_file}{File}}\ *file);}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00158\ \ \ \ \ vector<Base\ *>\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a9bd2958beee10ab1df856845d00c528a}{processFolder}}(\mbox{\hyperlink{struct_file}{File}}\ *file\_,\ \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}}\ *cd,\ \textcolor{keywordtype}{int}\ leastStartBlock);}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00170\ \ \ \ \ vector<Base\ *>\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_aded18c3f3a05971325fae83638b145a9}{processFolder2}}(\mbox{\hyperlink{struct_i_node}{INode}}\ *node\_,\ \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}}\ *cd,\ \textcolor{keywordtype}{int}\ leastStartBlock);}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_aaf616ae382db021fbda2d06938d366ae}{readFolder}}(\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}}\ *cd,\ \textcolor{keywordtype}{int}\ currentSystem,\ \mbox{\hyperlink{struct_file_entry}{FileEntry}}\ *folder,\ \textcolor{keywordtype}{string}\ folderName);}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00190\ \ \ \ \ \mbox{\hyperlink{struct_file_entry}{FileEntry}}\ *\mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a6e004a376540b58e1e01b229563b9c0c}{findEntry}}(\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}}\ *cd,\ \textcolor{keywordtype}{int}\ baseBlock);}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00192\ \textcolor{keyword}{public}\ slots:}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_ab6f29d68b1fec5737861d9d97e71303c}{readCD}}(\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}}\ *cd,\ \textcolor{keywordtype}{int}\ currentSystem);}
+\DoxyCodeLine{00199\ \};}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CDSYSTEM\_H}}
+
+\end{DoxyCode}

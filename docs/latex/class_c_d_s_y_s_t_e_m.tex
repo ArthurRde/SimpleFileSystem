@@ -1,0 +1,474 @@
+\doxysection{CDSYSTEM Class Reference}
+\hypertarget{class_c_d_s_y_s_t_e_m}{}\label{class_c_d_s_y_s_t_e_m}\index{CDSYSTEM@{CDSYSTEM}}
+
+
+The \doxylink{class_c_d_s_y_s_t_e_m}{CDSYSTEM} class manages the operations for CD-\/\+ROMs using different file systems.  
+
+
+
+
+{\ttfamily \#include $<$cdsystem.\+h$>$}
+
+\doxysubsubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_ab6f29d68b1fec5737861d9d97e71303c}{read\+CD}} (\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*}cd, int current\+System)
+\begin{DoxyCompactList}\small\item\em Slot to handle reading the contents of a CD-\/\+ROM. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a9cf4a89d195355a6f27f3881ceff71e3}{CDSYSTEM}} (\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}Isys, \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}Fsys)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{class_c_d_s_y_s_t_e_m}{CDSYSTEM}. \end{DoxyCompactList}\item 
+vector$<$ \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_ad375148f3e5865fa60f79ab11b51ba28}{get\+Ejected\+Cds}} () const
+\begin{DoxyCompactList}\small\item\em Get the list of ejected CDs. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_ae9ae4a175f06519814da4b93d9796b4b}{set\+Ejected\+Cds}} (const vector$<$ \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*} $>$ \&new\+Ejected\+Cds)
+\begin{DoxyCompactList}\small\item\em Set the list of ejected CDs. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a411a9c87691ed3f2871a4d781985fb97}{add\+Ejected\+Cd}} (string port\+Name\+\_\+)
+\begin{DoxyCompactList}\small\item\em Add a new ejected CD based on the port name. \end{DoxyCompactList}\item 
+vector$<$ \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_aab72b3492cddf3ba3458d4d3f2d08525}{get\+Inserted\+Cds}} () const
+\begin{DoxyCompactList}\small\item\em Get the list of inserted CDs. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a363d22d3c029fcb1086f1d8ccad03608}{set\+Inserted\+Cds}} (const vector$<$ \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*} $>$ \&new\+Inserted\+Cds)
+\begin{DoxyCompactList}\small\item\em Set the list of inserted CDs. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_file_entry}{File\+Entry}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_af8de10561a23d794ff8c97d09f8a7b4b}{create\+File\+Entry}} (\mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*}node)
+\begin{DoxyCompactList}\small\item\em Create a file entry based on the \doxylink{struct_i_node}{INode}. \end{DoxyCompactList}\item 
+vector$<$ \mbox{\hyperlink{struct_base}{Base}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a18018b0f04591c9ea15b3d32a517f8a8}{process\+Files}} (vector$<$ \mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} $>$ nodes\+\_\+, vector$<$ \mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} $>$ files\+\_\+, \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*}cd, int least\+Start\+Block)
+\begin{DoxyCompactList}\small\item\em Process files to create base entries on a CD-\/\+ROM. \end{DoxyCompactList}\item 
+vector$<$ \mbox{\hyperlink{struct_base}{Base}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a9bd2958beee10ab1df856845d00c528a}{process\+Folder}} (\mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*}node\+\_\+, \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*}cd, int least\+Start\+Block)
+\begin{DoxyCompactList}\small\item\em Process a folder to create base entries on a CD-\/\+ROM. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_adaf98aae8649b749dd73a2cdc38dbfd4}{burn\+CD}} ()
+\begin{DoxyCompactList}\small\item\em Burn a CD-\/\+ROM with the current system state. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a6b4af35f8b87cc6b64d6da9d96540992}{get\+Number\+Of\+Files\+In\+Folder}} (\mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*}file\+\_\+)
+\begin{DoxyCompactList}\small\item\em Get the number of files in a folder. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a3a906d0492a710d67a8c94271fdaf963}{get\+Number\+Of\+Files\+In\+Folder}} (\mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*}node\+\_\+)
+\begin{DoxyCompactList}\small\item\em Get the number of files in a folder. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a451babf6f113eea3e039560c93750130}{get\+Number\+Of\+Files}} (vector$<$ \mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} $>$ nodes\+\_\+, vector$<$ \mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} $>$ files\+\_\+)
+\begin{DoxyCompactList}\small\item\em Get the total number of files across multiple nodes and files. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a8ff961a42ad2e0453968334823f46cca}{create\+Data\+Blocks}} (\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*}cd, string data, int least\+Start\+Block)
+\begin{DoxyCompactList}\small\item\em Create data blocks on a CD-\/\+ROM. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_file_entry}{File\+Entry}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_acd05c2e1f3b2b10dfdaa8e965a5244fd}{create\+File\+Entry}} (\mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*}file)
+\begin{DoxyCompactList}\small\item\em Create a file entry based on a \doxylink{struct_file}{File} object. \end{DoxyCompactList}\item 
+vector$<$ \mbox{\hyperlink{struct_base}{Base}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_accb52bc493854c83dabae5d1d73c9cb4}{process\+Folder}} (\mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*}file\+\_\+, \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*}cd, int least\+Start\+Block)
+\begin{DoxyCompactList}\small\item\em Process a folder to create base entries on a CD-\/\+ROM. \end{DoxyCompactList}\item 
+vector$<$ \mbox{\hyperlink{struct_base}{Base}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_aded18c3f3a05971325fae83638b145a9}{process\+Folder2}} (\mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*}node\+\_\+, \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*}cd, int least\+Start\+Block)
+\begin{DoxyCompactList}\small\item\em Process a folder represented by an \doxylink{struct_i_node}{INode} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_aaf616ae382db021fbda2d06938d366ae}{read\+Folder}} (\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*}cd, int current\+System, \mbox{\hyperlink{struct_file_entry}{File\+Entry}} \texorpdfstring{$\ast$}{*}folder, string folder\+Name)
+\begin{DoxyCompactList}\small\item\em Read the contents of a folder from the CD-\/\+ROM. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_file_entry}{File\+Entry}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_c_d_s_y_s_t_e_m_a6e004a376540b58e1e01b229563b9c0c}{find\+Entry}} (\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*}cd, int base\+Block)
+\begin{DoxyCompactList}\small\item\em Find a specific file entry on the CD-\/\+ROM. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_c_d_s_y_s_t_e_m_a713f8c3030af563bb8a714c31ba9ad3d}\label{class_c_d_s_y_s_t_e_m_a713f8c3030af563bb8a714c31ba9ad3d} 
+vector$<$ \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries ejected\+Cds}
+\begin{DoxyCompactList}\small\item\em List of ejected CDs. \end{DoxyCompactList}\item 
+\Hypertarget{class_c_d_s_y_s_t_e_m_abc59b8335c7d7ba1caa771e39cc00986}\label{class_c_d_s_y_s_t_e_m_abc59b8335c7d7ba1caa771e39cc00986} 
+vector$<$ \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries inserted\+Cds}
+\begin{DoxyCompactList}\small\item\em List of inserted CDs. \end{DoxyCompactList}\item 
+\Hypertarget{class_c_d_s_y_s_t_e_m_a0e3b6eb580cf08f8ff6e8f97d0aed8b2}\label{class_c_d_s_y_s_t_e_m_a0e3b6eb580cf08f8ff6e8f97d0aed8b2} 
+\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*} {\bfseries ISys}
+\begin{DoxyCompactList}\small\item\em Pointer to the INODE file system. \end{DoxyCompactList}\item 
+\Hypertarget{class_c_d_s_y_s_t_e_m_aa08250a3a2fd499146e38dc8c8cda0c7}\label{class_c_d_s_y_s_t_e_m_aa08250a3a2fd499146e38dc8c8cda0c7} 
+\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*} {\bfseries FSys}
+\begin{DoxyCompactList}\small\item\em Pointer to the FAT file system. \end{DoxyCompactList}\item 
+\Hypertarget{class_c_d_s_y_s_t_e_m_a7a379d7ea8593ecb43863a1d4f234892}\label{class_c_d_s_y_s_t_e_m_a7a379d7ea8593ecb43863a1d4f234892} 
+vector$<$ \mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries nodes}
+\begin{DoxyCompactList}\small\item\em List of \doxylink{struct_i_node}{INode} objects. \end{DoxyCompactList}\item 
+\Hypertarget{class_c_d_s_y_s_t_e_m_a81cc65549c8d1642491a7566fdfcbd9c}\label{class_c_d_s_y_s_t_e_m_a81cc65549c8d1642491a7566fdfcbd9c} 
+vector$<$ \mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries files}
+\begin{DoxyCompactList}\small\item\em List of \doxylink{struct_file}{File} objects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \doxylink{class_c_d_s_y_s_t_e_m}{CDSYSTEM} class manages the operations for CD-\/\+ROMs using different file systems. 
+
+This class provides functionality for handling ejected and inserted CDs, burning CDs, processing files and folders, and managing file systems like FAT and INODE. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_c_d_s_y_s_t_e_m_a9cf4a89d195355a6f27f3881ceff71e3}\index{CDSYSTEM@{CDSYSTEM}!CDSYSTEM@{CDSYSTEM}}
+\index{CDSYSTEM@{CDSYSTEM}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{CDSYSTEM()}{CDSYSTEM()}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_a9cf4a89d195355a6f27f3881ceff71e3} 
+CDSYSTEM\+::\+CDSYSTEM (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}}]{Isys}{, }\item[{\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}}]{Fsys}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{class_c_d_s_y_s_t_e_m}{CDSYSTEM}. 
+
+Initializes the system with pointers to \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM} and \doxylink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Isys} & Pointer to the INODE system. \\
+\hline
+{\em Fsys} & Pointer to the FAT system. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_c_d_s_y_s_t_e_m_a411a9c87691ed3f2871a4d781985fb97}\index{CDSYSTEM@{CDSYSTEM}!addEjectedCd@{addEjectedCd}}
+\index{addEjectedCd@{addEjectedCd}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{addEjectedCd()}{addEjectedCd()}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_a411a9c87691ed3f2871a4d781985fb97} 
+void CDSYSTEM\+::add\+Ejected\+Cd (\begin{DoxyParamCaption}\item[{string}]{port\+Name\+\_\+}{}\end{DoxyParamCaption})}
+
+
+
+Add a new ejected CD based on the port name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em port\+Name\+\_\+} & The port name of the CD to eject. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_c_d_s_y_s_t_e_m_adaf98aae8649b749dd73a2cdc38dbfd4}\index{CDSYSTEM@{CDSYSTEM}!burnCD@{burnCD}}
+\index{burnCD@{burnCD}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{burnCD()}{burnCD()}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_adaf98aae8649b749dd73a2cdc38dbfd4} 
+\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*} CDSYSTEM\+::burn\+CD (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Burn a CD-\/\+ROM with the current system state. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the burned \doxylink{class_c_d_r_o_m}{CDROM}. 
+\end{DoxyReturn}
+\Hypertarget{class_c_d_s_y_s_t_e_m_a8ff961a42ad2e0453968334823f46cca}\index{CDSYSTEM@{CDSYSTEM}!createDataBlocks@{createDataBlocks}}
+\index{createDataBlocks@{createDataBlocks}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{createDataBlocks()}{createDataBlocks()}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_a8ff961a42ad2e0453968334823f46cca} 
+int CDSYSTEM\+::create\+Data\+Blocks (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*}}]{cd}{, }\item[{string}]{data}{, }\item[{int}]{least\+Start\+Block}{}\end{DoxyParamCaption})}
+
+
+
+Create data blocks on a CD-\/\+ROM. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cd} & Pointer to the \doxylink{class_c_d_r_o_m}{CDROM}. \\
+\hline
+{\em data} & The data to store in the blocks. \\
+\hline
+{\em least\+Start\+Block} & The starting block for the data. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of blocks created. 
+\end{DoxyReturn}
+\Hypertarget{class_c_d_s_y_s_t_e_m_acd05c2e1f3b2b10dfdaa8e965a5244fd}\index{CDSYSTEM@{CDSYSTEM}!createFileEntry@{createFileEntry}}
+\index{createFileEntry@{createFileEntry}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{createFileEntry()}{createFileEntry()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_acd05c2e1f3b2b10dfdaa8e965a5244fd} 
+\mbox{\hyperlink{struct_file_entry}{File\+Entry}} \texorpdfstring{$\ast$}{*} CDSYSTEM\+::create\+File\+Entry (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*}}]{file}{}\end{DoxyParamCaption})}
+
+
+
+Create a file entry based on a \doxylink{struct_file}{File} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & Pointer to the \doxylink{struct_file}{File} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the created \doxylink{struct_file_entry}{File\+Entry}. 
+\end{DoxyReturn}
+\Hypertarget{class_c_d_s_y_s_t_e_m_af8de10561a23d794ff8c97d09f8a7b4b}\index{CDSYSTEM@{CDSYSTEM}!createFileEntry@{createFileEntry}}
+\index{createFileEntry@{createFileEntry}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{createFileEntry()}{createFileEntry()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_af8de10561a23d794ff8c97d09f8a7b4b} 
+\mbox{\hyperlink{struct_file_entry}{File\+Entry}} \texorpdfstring{$\ast$}{*} CDSYSTEM\+::create\+File\+Entry (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
+
+
+
+Create a file entry based on the \doxylink{struct_i_node}{INode}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & Pointer to the \doxylink{struct_i_node}{INode}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the created \doxylink{struct_file_entry}{File\+Entry}. 
+\end{DoxyReturn}
+\Hypertarget{class_c_d_s_y_s_t_e_m_a6e004a376540b58e1e01b229563b9c0c}\index{CDSYSTEM@{CDSYSTEM}!findEntry@{findEntry}}
+\index{findEntry@{findEntry}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{findEntry()}{findEntry()}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_a6e004a376540b58e1e01b229563b9c0c} 
+\mbox{\hyperlink{struct_file_entry}{File\+Entry}} \texorpdfstring{$\ast$}{*} CDSYSTEM\+::find\+Entry (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*}}]{cd}{, }\item[{int}]{base\+Block}{}\end{DoxyParamCaption})}
+
+
+
+Find a specific file entry on the CD-\/\+ROM. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cd} & Pointer to the \doxylink{class_c_d_r_o_m}{CDROM}. \\
+\hline
+{\em base\+Block} & The base block where the file entry is located. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the found \doxylink{struct_file_entry}{File\+Entry}. 
+\end{DoxyReturn}
+\Hypertarget{class_c_d_s_y_s_t_e_m_ad375148f3e5865fa60f79ab11b51ba28}\index{CDSYSTEM@{CDSYSTEM}!getEjectedCds@{getEjectedCds}}
+\index{getEjectedCds@{getEjectedCds}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{getEjectedCds()}{getEjectedCds()}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_ad375148f3e5865fa60f79ab11b51ba28} 
+vector$<$ \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*} $>$ CDSYSTEM\+::get\+Ejected\+Cds (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the list of ejected CDs. 
+
+\begin{DoxyReturn}{Returns}
+Vector of ejected CDs. 
+\end{DoxyReturn}
+\Hypertarget{class_c_d_s_y_s_t_e_m_aab72b3492cddf3ba3458d4d3f2d08525}\index{CDSYSTEM@{CDSYSTEM}!getInsertedCds@{getInsertedCds}}
+\index{getInsertedCds@{getInsertedCds}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{getInsertedCds()}{getInsertedCds()}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_aab72b3492cddf3ba3458d4d3f2d08525} 
+vector$<$ \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*} $>$ CDSYSTEM\+::get\+Inserted\+Cds (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the list of inserted CDs. 
+
+\begin{DoxyReturn}{Returns}
+Vector of inserted CDs. 
+\end{DoxyReturn}
+\Hypertarget{class_c_d_s_y_s_t_e_m_a451babf6f113eea3e039560c93750130}\index{CDSYSTEM@{CDSYSTEM}!getNumberOfFiles@{getNumberOfFiles}}
+\index{getNumberOfFiles@{getNumberOfFiles}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{getNumberOfFiles()}{getNumberOfFiles()}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_a451babf6f113eea3e039560c93750130} 
+int CDSYSTEM\+::get\+Number\+Of\+Files (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} $>$}]{nodes\+\_\+}{, }\item[{vector$<$ \mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} $>$}]{files\+\_\+}{}\end{DoxyParamCaption})}
+
+
+
+Get the total number of files across multiple nodes and files. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nodes\+\_\+} & List of \doxylink{struct_i_node}{INode} objects. \\
+\hline
+{\em files\+\_\+} & List of \doxylink{struct_file}{File} objects. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The total number of files. 
+\end{DoxyReturn}
+\Hypertarget{class_c_d_s_y_s_t_e_m_a6b4af35f8b87cc6b64d6da9d96540992}\index{CDSYSTEM@{CDSYSTEM}!getNumberOfFilesInFolder@{getNumberOfFilesInFolder}}
+\index{getNumberOfFilesInFolder@{getNumberOfFilesInFolder}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{getNumberOfFilesInFolder()}{getNumberOfFilesInFolder()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_a6b4af35f8b87cc6b64d6da9d96540992} 
+int CDSYSTEM\+::get\+Number\+Of\+Files\+In\+Folder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*}}]{file\+\_\+}{}\end{DoxyParamCaption})}
+
+
+
+Get the number of files in a folder. 
+
+Counts the number of files in a folder represented by a \doxylink{struct_file}{File} object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+\_\+} & Pointer to the \doxylink{struct_file}{File} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of files in the folder. 
+\end{DoxyReturn}
+\Hypertarget{class_c_d_s_y_s_t_e_m_a3a906d0492a710d67a8c94271fdaf963}\index{CDSYSTEM@{CDSYSTEM}!getNumberOfFilesInFolder@{getNumberOfFilesInFolder}}
+\index{getNumberOfFilesInFolder@{getNumberOfFilesInFolder}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{getNumberOfFilesInFolder()}{getNumberOfFilesInFolder()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_a3a906d0492a710d67a8c94271fdaf963} 
+int CDSYSTEM\+::get\+Number\+Of\+Files\+In\+Folder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*}}]{node\+\_\+}{}\end{DoxyParamCaption})}
+
+
+
+Get the number of files in a folder. 
+
+Counts the number of files in a folder represented by an \doxylink{struct_i_node}{INode} object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+} & Pointer to the \doxylink{struct_i_node}{INode} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of files in the folder. 
+\end{DoxyReturn}
+\Hypertarget{class_c_d_s_y_s_t_e_m_a18018b0f04591c9ea15b3d32a517f8a8}\index{CDSYSTEM@{CDSYSTEM}!processFiles@{processFiles}}
+\index{processFiles@{processFiles}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{processFiles()}{processFiles()}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_a18018b0f04591c9ea15b3d32a517f8a8} 
+vector$<$ \mbox{\hyperlink{struct_base}{Base}} \texorpdfstring{$\ast$}{*} $>$ CDSYSTEM\+::process\+Files (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} $>$}]{nodes\+\_\+}{, }\item[{vector$<$ \mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} $>$}]{files\+\_\+}{, }\item[{\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*}}]{cd}{, }\item[{int}]{least\+Start\+Block}{}\end{DoxyParamCaption})}
+
+
+
+Process files to create base entries on a CD-\/\+ROM. 
+
+Processes the files and nodes and adds them to the \doxylink{class_c_d_r_o_m}{CDROM}\textquotesingle{}s base blocks.
+
+
+\begin{DoxyParams}{Parameters}
+{\em nodes\+\_\+} & List of \doxylink{struct_i_node}{INode} objects. \\
+\hline
+{\em files\+\_\+} & List of \doxylink{struct_file}{File} objects. \\
+\hline
+{\em cd} & Pointer to the \doxylink{class_c_d_r_o_m}{CDROM}. \\
+\hline
+{\em least\+Start\+Block} & The starting block for the files. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector of base entries created from the files. 
+\end{DoxyReturn}
+\Hypertarget{class_c_d_s_y_s_t_e_m_accb52bc493854c83dabae5d1d73c9cb4}\index{CDSYSTEM@{CDSYSTEM}!processFolder@{processFolder}}
+\index{processFolder@{processFolder}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{processFolder()}{processFolder()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_accb52bc493854c83dabae5d1d73c9cb4} 
+vector$<$ \mbox{\hyperlink{struct_base}{Base}} \texorpdfstring{$\ast$}{*} $>$ CDSYSTEM\+::process\+Folder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*}}]{file\+\_\+}{, }\item[{\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*}}]{cd}{, }\item[{int}]{least\+Start\+Block}{}\end{DoxyParamCaption})}
+
+
+
+Process a folder to create base entries on a CD-\/\+ROM. 
+
+Processes the folder represented by a \doxylink{struct_file}{File} object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+\_\+} & Pointer to the \doxylink{struct_file}{File} object. \\
+\hline
+{\em cd} & Pointer to the \doxylink{class_c_d_r_o_m}{CDROM}. \\
+\hline
+{\em least\+Start\+Block} & The starting block for the folder. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector of base entries created from the folder. 
+\end{DoxyReturn}
+\Hypertarget{class_c_d_s_y_s_t_e_m_a9bd2958beee10ab1df856845d00c528a}\index{CDSYSTEM@{CDSYSTEM}!processFolder@{processFolder}}
+\index{processFolder@{processFolder}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{processFolder()}{processFolder()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_a9bd2958beee10ab1df856845d00c528a} 
+vector$<$ \mbox{\hyperlink{struct_base}{Base}} \texorpdfstring{$\ast$}{*} $>$ CDSYSTEM\+::process\+Folder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*}}]{node\+\_\+}{, }\item[{\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*}}]{cd}{, }\item[{int}]{least\+Start\+Block}{}\end{DoxyParamCaption})}
+
+
+
+Process a folder to create base entries on a CD-\/\+ROM. 
+
+Processes the \doxylink{struct_i_node}{INode} object representing the folder.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+} & Pointer to the \doxylink{struct_i_node}{INode} representing the folder. \\
+\hline
+{\em cd} & Pointer to the \doxylink{class_c_d_r_o_m}{CDROM}. \\
+\hline
+{\em least\+Start\+Block} & The starting block for the folder. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector of base entries created from the folder. 
+\end{DoxyReturn}
+\Hypertarget{class_c_d_s_y_s_t_e_m_aded18c3f3a05971325fae83638b145a9}\index{CDSYSTEM@{CDSYSTEM}!processFolder2@{processFolder2}}
+\index{processFolder2@{processFolder2}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{processFolder2()}{processFolder2()}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_aded18c3f3a05971325fae83638b145a9} 
+vector$<$ \mbox{\hyperlink{struct_base}{Base}} \texorpdfstring{$\ast$}{*} $>$ CDSYSTEM\+::process\+Folder2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*}}]{node\+\_\+}{, }\item[{\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*}}]{cd}{, }\item[{int}]{least\+Start\+Block}{}\end{DoxyParamCaption})}
+
+
+
+Process a folder represented by an \doxylink{struct_i_node}{INode} object. 
+
+Processes the folder represented by the \doxylink{struct_i_node}{INode} object and creates base entries.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+} & Pointer to the \doxylink{struct_i_node}{INode} object. \\
+\hline
+{\em cd} & Pointer to the \doxylink{class_c_d_r_o_m}{CDROM}. \\
+\hline
+{\em least\+Start\+Block} & The starting block for the folder. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector of base entries created from the folder. 
+\end{DoxyReturn}
+\Hypertarget{class_c_d_s_y_s_t_e_m_ab6f29d68b1fec5737861d9d97e71303c}\index{CDSYSTEM@{CDSYSTEM}!readCD@{readCD}}
+\index{readCD@{readCD}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{readCD}{readCD}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_ab6f29d68b1fec5737861d9d97e71303c} 
+void CDSYSTEM\+::read\+CD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*}}]{cd}{, }\item[{int}]{current\+System}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+
+Slot to handle reading the contents of a CD-\/\+ROM. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cd} & Pointer to the \doxylink{class_c_d_r_o_m}{CDROM}. \\
+\hline
+{\em current\+System} & The current file system being used (FAT or INODE). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_c_d_s_y_s_t_e_m_aaf616ae382db021fbda2d06938d366ae}\index{CDSYSTEM@{CDSYSTEM}!readFolder@{readFolder}}
+\index{readFolder@{readFolder}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{readFolder()}{readFolder()}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_aaf616ae382db021fbda2d06938d366ae} 
+void CDSYSTEM\+::read\+Folder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*}}]{cd}{, }\item[{int}]{current\+System}{, }\item[{\mbox{\hyperlink{struct_file_entry}{File\+Entry}} \texorpdfstring{$\ast$}{*}}]{folder}{, }\item[{string}]{folder\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Read the contents of a folder from the CD-\/\+ROM. 
+
+Reads the folder\textquotesingle{}s contents and processes it based on the current file system.
+
+
+\begin{DoxyParams}{Parameters}
+{\em cd} & Pointer to the \doxylink{class_c_d_r_o_m}{CDROM}. \\
+\hline
+{\em current\+System} & The file system being used (FAT or INODE). \\
+\hline
+{\em folder} & Pointer to the \doxylink{struct_file_entry}{File\+Entry} representing the folder. \\
+\hline
+{\em folder\+Name} & The name of the folder. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_c_d_s_y_s_t_e_m_ae9ae4a175f06519814da4b93d9796b4b}\index{CDSYSTEM@{CDSYSTEM}!setEjectedCds@{setEjectedCds}}
+\index{setEjectedCds@{setEjectedCds}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{setEjectedCds()}{setEjectedCds()}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_ae9ae4a175f06519814da4b93d9796b4b} 
+void CDSYSTEM\+::set\+Ejected\+Cds (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*} $>$ \&}]{new\+Ejected\+Cds}{}\end{DoxyParamCaption})}
+
+
+
+Set the list of ejected CDs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Ejected\+Cds} & New vector of ejected CDs. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_c_d_s_y_s_t_e_m_a363d22d3c029fcb1086f1d8ccad03608}\index{CDSYSTEM@{CDSYSTEM}!setInsertedCds@{setInsertedCds}}
+\index{setInsertedCds@{setInsertedCds}!CDSYSTEM@{CDSYSTEM}}
+\doxysubsubsection{\texorpdfstring{setInsertedCds()}{setInsertedCds()}}
+{\footnotesize\ttfamily \label{class_c_d_s_y_s_t_e_m_a363d22d3c029fcb1086f1d8ccad03608} 
+void CDSYSTEM\+::set\+Inserted\+Cds (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{class_c_d_r_o_m}{CDROM}} \texorpdfstring{$\ast$}{*} $>$ \&}]{new\+Inserted\+Cds}{}\end{DoxyParamCaption})}
+
+
+
+Set the list of inserted CDs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Inserted\+Cds} & New vector of inserted CDs. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/cdsystem.\+h\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/cdsystem.\+cpp\end{DoxyCompactItemize}

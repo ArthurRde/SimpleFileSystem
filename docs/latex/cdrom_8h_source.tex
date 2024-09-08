@@ -1,0 +1,146 @@
+\doxysection{/\+Users/rode/git/uni/\+Simple\+File\+System/cdrom.h}
+\hypertarget{cdrom_8h_source}{}\label{cdrom_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ CDROM\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ CDROM\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}QtCore/qdatetime.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <ctime>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <QDebug>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}blockstatus.h"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_base}{Base}}\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{struct_base_a306fb25541331080645a716286357ef9}{\string~Base}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_base_afbd2cff8d6b84d0939fe8ca646b0e534}{print}}()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00030\ \};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_file_entry}{FileEntry}}\ :\ \mbox{\hyperlink{struct_base}{Base}}\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_file_entry_a7716903d3210e2f9ef3c8db13b43891c}{entryLength}}\ =\ 1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_file_entry_a6b03a6c515f8402b8e14d76b282e9284}{extendedAttributeLength}};\ \ \ \ \ \ }
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{struct_file_entry_aab22cbb6a10dbc970170f69a57f9abbc}{startBlock}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{struct_file_entry_a9c0abe0724b043af2c811a6ce7b01399}{fileSize}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{struct_file_entry_aca7dd5226fbec68fa5950c2a2aa784b7}{dateTime}}[7];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{struct_file_entry_af986df915c0dad34deb86026bc7250cb}{flags}}\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{char}[3];\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_file_entry_a4ea471b6db24c82ef900fe3c448e7c57}{fileNameLength}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{struct_file_entry_aa9e0b6bcf1bc05139fc385bd89268c09}{fileName}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ vector<uint8\_t>\ \mbox{\hyperlink{struct_file_entry_a7fdfc9387b4656fe66f979e1183666c0}{padding}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{struct_file_entry_afa511973f8bdb56ef979f59fda71fbaf}{FileEntry}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&name,\ uint64\_t\ size)\ :\ \mbox{\hyperlink{struct_file_entry_aa9e0b6bcf1bc05139fc385bd89268c09}{fileName}}(name),\ \mbox{\hyperlink{struct_file_entry_a9c0abe0724b043af2c811a6ce7b01399}{fileSize}}(size)\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_file_entry_a6b03a6c515f8402b8e14d76b282e9284}{extendedAttributeLength}}\ =\ 0;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ time\_t\ t\ =\ time(NULL);}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ tm\ *now\ =\ gmtime(\&t);}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_file_entry_aca7dd5226fbec68fa5950c2a2aa784b7}{dateTime}}[0]\ =\ now-\/>tm\_year\ \%\ 100;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_file_entry_aca7dd5226fbec68fa5950c2a2aa784b7}{dateTime}}[1]\ =\ now-\/>tm\_mon\ +\ 1;}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_file_entry_aca7dd5226fbec68fa5950c2a2aa784b7}{dateTime}}[2]\ =\ now-\/>tm\_mday;}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_file_entry_aca7dd5226fbec68fa5950c2a2aa784b7}{dateTime}}[3]\ =\ now-\/>tm\_hour;}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_file_entry_aca7dd5226fbec68fa5950c2a2aa784b7}{dateTime}}[4]\ =\ now-\/>tm\_min;}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_file_entry_aca7dd5226fbec68fa5950c2a2aa784b7}{dateTime}}[5]\ =\ now-\/>tm\_sec;}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_file_entry_aca7dd5226fbec68fa5950c2a2aa784b7}{dateTime}}[6]\ =\ 0;}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_file_entry_a4ea471b6db24c82ef900fe3c448e7c57}{fileNameLength}}\ =\ \mbox{\hyperlink{struct_file_entry_aa9e0b6bcf1bc05139fc385bd89268c09}{fileName}}.size();}
+\DoxyCodeLine{00067\ \ \ \ \ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_file_entry_ad96805fdc6826caa552b6bc91373a02a}{print}}()\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ qDebug()\ <<\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00074\ \ \ \ \ \}}
+\DoxyCodeLine{00075\ \};}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00080\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_primary_volume_descriptor}{PrimaryVolumeDescriptor}}\ :\ \mbox{\hyperlink{struct_base}{Base}}\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{struct_primary_volume_descriptor_ade841a5a550770e2dd225fd0031c17da}{systemIdentifier}}[32]\ =\ \textcolor{stringliteral}{"{}SYSTEM"{}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{struct_primary_volume_descriptor_ae097df4e5e6f82658b8ab10263d8c2f5}{volumeIdentifier}}[32]\ =\ \textcolor{stringliteral}{"{}VOL1"{}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{struct_primary_volume_descriptor_a16ef8d66661e60f51a763e89341cec75}{publisherIdentifier}}[128]\ =\ \textcolor{stringliteral}{"{}CD\ PUBLISH"{}};\ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{struct_primary_volume_descriptor_ac4e3fd837e8186057847283156dcacc2}{preparerIdentifier}}[128]\ =\ \textcolor{stringliteral}{"{}IDENTIFIED"{}};\ \ \ \ }
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_primary_volume_descriptor_a8a963dac7849739e56394e764199b911}{logicalBlockSize}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_primary_volume_descriptor_abc71a957ab9e401b0ee6fe0669b3f59c}{volumeSpaceSize}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{struct_primary_volume_descriptor_a6c620318d6086b106298f2c65eadd649}{creationDate}}[17];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{struct_primary_volume_descriptor_add25e00d6bddf759361bb411a8a3bfa8}{expirationDate}}[17];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00090\ \ \ \ \ \mbox{\hyperlink{struct_file_entry}{FileEntry}}\ *\mbox{\hyperlink{struct_primary_volume_descriptor_a6dbe22f531f997aa30c36cba8ddd0c56}{rootDirectoryEntry}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{struct_primary_volume_descriptor_a095ddce5f0f05c929fde1f4d46f90cdf}{summaryFileName}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{struct_primary_volume_descriptor_a39a0d9632e56cfe55944583a6dd6c8d4}{copyrightFileName}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{struct_primary_volume_descriptor_a45165dfb98817b42c071a7bda624040c}{bibliographicFileName}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00100\ \ \ \ \ \mbox{\hyperlink{struct_primary_volume_descriptor_a059ef4ae5cde53635457f13395645545}{PrimaryVolumeDescriptor}}(\mbox{\hyperlink{struct_file_entry}{FileEntry}}\ *root)}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{struct_primary_volume_descriptor_a8a963dac7849739e56394e764199b911}{logicalBlockSize}}(2352),\ \mbox{\hyperlink{struct_primary_volume_descriptor_abc71a957ab9e401b0ee6fe0669b3f59c}{volumeSpaceSize}}(0),\ \mbox{\hyperlink{struct_primary_volume_descriptor_a6dbe22f531f997aa30c36cba8ddd0c56}{rootDirectoryEntry}}(root),\ \mbox{\hyperlink{struct_primary_volume_descriptor_a095ddce5f0f05c929fde1f4d46f90cdf}{summaryFileName}}(\textcolor{stringliteral}{"{}test"{}}),}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_primary_volume_descriptor_a39a0d9632e56cfe55944583a6dd6c8d4}{copyrightFileName}}(\textcolor{stringliteral}{"{}test"{}}),\ \mbox{\hyperlink{struct_primary_volume_descriptor_a45165dfb98817b42c071a7bda624040c}{bibliographicFileName}}(\textcolor{stringliteral}{"{}test"{}})\ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ time\_t\ t\ =\ time(NULL);}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ tm\ *now\ =\ gmtime(\&t);}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_primary_volume_descriptor_a6c620318d6086b106298f2c65eadd649}{creationDate}}[0]\ =\ now-\/>tm\_year\ \%\ 100;}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_primary_volume_descriptor_a6c620318d6086b106298f2c65eadd649}{creationDate}}[1]\ =\ now-\/>tm\_mon\ +\ 1;}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_primary_volume_descriptor_a6c620318d6086b106298f2c65eadd649}{creationDate}}[2]\ =\ now-\/>tm\_mday;}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_primary_volume_descriptor_a6c620318d6086b106298f2c65eadd649}{creationDate}}[3]\ =\ now-\/>tm\_hour;}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_primary_volume_descriptor_a6c620318d6086b106298f2c65eadd649}{creationDate}}[4]\ =\ now-\/>tm\_min;}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_primary_volume_descriptor_a6c620318d6086b106298f2c65eadd649}{creationDate}}[5]\ =\ now-\/>tm\_sec;}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_primary_volume_descriptor_a6c620318d6086b106298f2c65eadd649}{creationDate}}[6]\ =\ 0;}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_primary_volume_descriptor_add25e00d6bddf759361bb411a8a3bfa8}{expirationDate}}[0]\ =\ now-\/>tm\_year\ \%\ 100\ +\ 10;}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_primary_volume_descriptor_add25e00d6bddf759361bb411a8a3bfa8}{expirationDate}}[1]\ =\ now-\/>tm\_mon\ +\ 1;}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_primary_volume_descriptor_add25e00d6bddf759361bb411a8a3bfa8}{expirationDate}}[2]\ =\ now-\/>tm\_mday;}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_primary_volume_descriptor_add25e00d6bddf759361bb411a8a3bfa8}{expirationDate}}[3]\ =\ now-\/>tm\_hour;}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_primary_volume_descriptor_add25e00d6bddf759361bb411a8a3bfa8}{expirationDate}}[4]\ =\ now-\/>tm\_min;}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_primary_volume_descriptor_add25e00d6bddf759361bb411a8a3bfa8}{expirationDate}}[5]\ =\ now-\/>tm\_sec;}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_primary_volume_descriptor_add25e00d6bddf759361bb411a8a3bfa8}{expirationDate}}[6]\ =\ 0;}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ fill(\mbox{\hyperlink{struct_primary_volume_descriptor_ade841a5a550770e2dd225fd0031c17da}{systemIdentifier}},\ \mbox{\hyperlink{struct_primary_volume_descriptor_ade841a5a550770e2dd225fd0031c17da}{systemIdentifier}}\ +\ 32,\ \textcolor{charliteral}{'\ '});}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ fill(\mbox{\hyperlink{struct_primary_volume_descriptor_ae097df4e5e6f82658b8ab10263d8c2f5}{volumeIdentifier}},\ \mbox{\hyperlink{struct_primary_volume_descriptor_ae097df4e5e6f82658b8ab10263d8c2f5}{volumeIdentifier}}\ +\ 32,\ \textcolor{charliteral}{'\ '});}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ fill(\mbox{\hyperlink{struct_primary_volume_descriptor_a16ef8d66661e60f51a763e89341cec75}{publisherIdentifier}},\ \mbox{\hyperlink{struct_primary_volume_descriptor_a16ef8d66661e60f51a763e89341cec75}{publisherIdentifier}}\ +\ 128,\ \textcolor{charliteral}{'\ '});}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ fill(\mbox{\hyperlink{struct_primary_volume_descriptor_ac4e3fd837e8186057847283156dcacc2}{preparerIdentifier}},\ \mbox{\hyperlink{struct_primary_volume_descriptor_ac4e3fd837e8186057847283156dcacc2}{preparerIdentifier}}\ +\ 128,\ \textcolor{charliteral}{'\ '});}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ t\ =\ time(NULL);}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ now\ =\ gmtime(\&t);}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ strftime(\mbox{\hyperlink{struct_primary_volume_descriptor_a6c620318d6086b106298f2c65eadd649}{creationDate}},\ 17,\ \textcolor{stringliteral}{"{}\%Y\%m\%d\%H\%M\%S00"{}},\ now);}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ strftime(\mbox{\hyperlink{struct_primary_volume_descriptor_add25e00d6bddf759361bb411a8a3bfa8}{expirationDate}},\ 17,\ \textcolor{stringliteral}{"{}\%Y\%m\%d\%H\%M\%S00"{}},\ now);}
+\DoxyCodeLine{00131\ \ \ \ \ \}}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_primary_volume_descriptor_a61e89c331cb69045fd36ec797320e02d}{print}}()\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ qDebug()\ <<\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00138\ \ \ \ \ \}}
+\DoxyCodeLine{00139\ \};}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00144\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_data_block}{DataBlock}}\ :\ \mbox{\hyperlink{struct_base}{Base}}\ \{}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{struct_data_block_aab9e925931d8a4a045c22f097018423e}{data}};\ \ \ }
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00151\ \ \ \ \ \mbox{\hyperlink{struct_data_block_a52afe5acf0123c5bf6ef809ca9a8bd7c}{DataBlock}}(\textcolor{keywordtype}{string}\ data\_)\ :\ \mbox{\hyperlink{struct_data_block_aab9e925931d8a4a045c22f097018423e}{data}}(data\_)\ \{\}}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \ \ \mbox{\hyperlink{struct_data_block}{DataBlock}}\ *\mbox{\hyperlink{struct_data_block_a24719f9464c5d19f33cd05ab0f799ab7}{next}}\ =\ NULL;\ }
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{struct_data_block_af1e2bc868c5b2a8f93ea7cbc56eca960}{print}}()\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ qDebug()\ <<\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00160\ \ \ \ \ \}}
+\DoxyCodeLine{00161\ \};}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00166\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_c_d_r_o_m}{CDROM}}\ \{}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keywordtype}{bool}\ isBurned\ =\ \textcolor{keyword}{false};\ \ \ }
+\DoxyCodeLine{00168\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_c_d_r_o_m_a162c84b47583807102a33732220c76d1}{blockSize}}\ =\ 2352;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_c_d_r_o_m_ae5eaa2bc2b67adb1359863339d735dd9}{blockPortion}}\ =\ 2048;\ \ \ \ \ \ }
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_c_d_r_o_m_aa8c18bf7a7b5eeec142f54282125fa4b}{diskSize}}\ =\ 235200;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00172\ \ \ \ \ vector<Base\ *>\ \mbox{\hyperlink{class_c_d_r_o_m_ac1a3db37abe3994599ec32f9cac1a5ca}{baseBlocks}};\ \ \ \ }
+\DoxyCodeLine{00173\ \ \ \ \ vector<BlockStatus>\ \mbox{\hyperlink{class_c_d_r_o_m_a3e22ffaf76294d16f8d684de5f0235a8}{baseStatus}};\ }
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_c_d_r_o_m_af286f27413cdb6dcc0911f24ea67c362}{portName}};\ \ \ }
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00181\ \ \ \ \ \mbox{\hyperlink{class_c_d_r_o_m_afe7e6219c31241ca50838214a553d31a}{CDROM}}(\textcolor{keywordtype}{string}\ portName\_);}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_c_d_r_o_m_a0a1766390313a4100bc192488f547f7d}{getIsBurned}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_c_d_r_o_m_a364293844e245e98f9a951e123558921}{setIsBurned}}(\textcolor{keywordtype}{bool}\ newIsBurned);}
+\DoxyCodeLine{00194\ \};}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CDROM\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,95 @@
+\doxysection{/\+Users/rode/git/uni/\+Simple\+File\+System/inodesystem.h}
+\hypertarget{inodesystem_8h_source}{}\label{inodesystem_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ INODESYSTEM\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ INODESYSTEM\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <QDate>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}disk.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <QMessageBox>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}blockstatus.h"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ BLOCKSIZE\ 512}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ MAX\_FILES\ 10}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_i_node}{INode}}\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_i_node_a2d569a952d85a525a42a9d3d229b5eb9}{iNodeNum}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{struct_i_node_a2b10fd26fb36b05cdda9b62f5412ee33}{name}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ vector<int>\ \mbox{\hyperlink{struct_i_node_a106327c2598607ff16f30ca009197116}{blockList}};\ \ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{struct_i_node_a1ba59c17c3a152cdf7f835df67d38986}{author}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ QDateTime\ \mbox{\hyperlink{struct_i_node_a486c46921f9c3d842688119d9e12440e}{date}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct_i_node_a3d05303dffa59463621d99af3f928816}{size}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_i_node_af70a3975b223b9dece7a561672a19594}{isFolder}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00031\ \};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}}\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ map<int,\ INode\ *>\ nodes;\ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{class_disk}{Disk}}\ *disk;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ vector<BlockStatus>\ \mbox{\hyperlink{classblock_status}{blockStatus}};\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{int}\ totalBlocks;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a5e946fa6fe0a50a437570eeb053f6e2d}{INODESYSTEM}}(\textcolor{keywordtype}{int}\ diskSize,\ \mbox{\hyperlink{class_disk}{Disk}}\ *disk\_);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a2037bb3848a5a3a21f34a5608d494fd2}{showInodes}}();}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a7a7a9796ee511484f761f038f776b2a7}{deleteFile}}(\textcolor{keywordtype}{string}\ fileName,\ \textcolor{keywordtype}{bool}\ deleteFolderInFolder\ =\ \textcolor{keyword}{false},\ \textcolor{keywordtype}{bool}\ ignoreFolderTyp\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a3a3132745d22dfeee8d31d38a906d2f2}{findFile}}(\textcolor{keywordtype}{string}\ fileName);}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a3a3132745d22dfeee8d31d38a906d2f2}{findFile}}(\textcolor{keywordtype}{int}\ num);}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a12fe01ea0c7bae381d1a5186f13838e3}{createFile}}(\textcolor{keywordtype}{string}\ name\_,\ \textcolor{keywordtype}{string}\ author\_,\ \textcolor{keywordtype}{string}\ data,\ \textcolor{keywordtype}{string}\ parentName,\ \textcolor{keywordtype}{bool}\ isFolder\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a58251dc558c84d165001491f8e3c3a5e}{findLowestNumber}}();}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_afbcbb7be31a68b552609c2537976712a}{findLowestNumber2}}();}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a1cb5ccbb97b25463b2fa09c4230f0844}{getFreeDiskSpace}}();}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_ad3c2d7e3ceac3c84e220776bdb2fc7e4}{renameFile}}(\textcolor{keywordtype}{string}\ fileName,\ \textcolor{keywordtype}{string}\ newName);}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00118\ \ \ \ \ map<int,\ INode\ *>\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_ac9c153a2db08d25680534d4296d2300e}{getNodes}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a5ae1b966731764e3073e62bddda9cb27}{setNodes}}(\textcolor{keyword}{const}\ map<int,\ INode\ *>\ \&newNodes);}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00130\ \ \ \ \ \mbox{\hyperlink{class_disk}{Disk}}\ *\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a047f72d86dc927f321a681381257a993}{getDisk}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a0f20fd091571bcac05710c44b32d748f}{setDisk}}(\mbox{\hyperlink{class_disk}{Disk}}\ *newDisk);}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_aa91cdac2668a7db7273bd0d25b273782}{getFragmentation}}();}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a3d19dec1424aeb48156c6ee4fbfc93aa}{defragDisk}}();}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a2821616721ebd454c59358183dd531b2}{editData}}(\textcolor{keywordtype}{int}\ fileToBeEditedId,\ \textcolor{keywordtype}{string}\ data);}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a40f276774511651189d2c02e377d31be}{findFolderofFile}}(\textcolor{keywordtype}{string}\ fileName);}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00169\ \ \ \ \ QList<INode\ *>\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a710dfe85024991e656785d7e93bd4c95}{getFoldersInFolder}}(\textcolor{keywordtype}{string}\ folderName);}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00176\ \ \ \ \ QList<INode\ *>\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a1ec8faf4b5bc6147c4f8ee8bed52d308}{getFilesInFolder}}(\textcolor{keywordtype}{string}\ folderName);}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00183\ \ \ \ \ vector<int>\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a129b3cbb5d519e6e95865573bf20e310}{splitStringIntoInts}}(\textcolor{keywordtype}{string}\ inputString);}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_ae0e2efbaae5bbb45ec32fcae180b3134}{deleteFolder}}(\textcolor{keywordtype}{string}\ fileName);}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_ab6054b7bdaa27f3c5fbca6c0292f391d}{existFileInFolder}}(\textcolor{keywordtype}{string}\ fileName,\ \textcolor{keywordtype}{string}\ folderName);}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a030a53fa8ff1c3de7648abc29021e504}{getDataOfFile}}(\textcolor{keywordtype}{string}\ fileName);}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_aa63a526d3cb9a9b115289c48352ca70f}{createUniqueName}}(\textcolor{keywordtype}{string}\ fileName,\ \textcolor{keywordtype}{string}\ uniqueText\ =\ \textcolor{stringliteral}{"{}-\/C"{}});}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_ab451304c5edd5348b4f929597c7a9f11}{copyFile}}(\textcolor{keywordtype}{string}\ fileName,\ \textcolor{keywordtype}{string}\ folderName);}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_ac839fcd275839a06f946ce82033381f0}{existFile}}(\textcolor{keywordtype}{string}\ fileName);}
+\DoxyCodeLine{00227\ \};}
+\DoxyCodeLine{00228\ }
+\DoxyCodeLine{00229\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ INODESYSTEM\_H}}
+
+\end{DoxyCode}

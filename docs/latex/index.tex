@@ -1,0 +1,70 @@
+\chapter{Simple\+File\+System}
+\hypertarget{index}{}\label{index}\index{SimpleFileSystem@{SimpleFileSystem}}
+\label{index_md__2_users_2rode_2git_2uni_2_simple_file_system_2_r_e_a_d_m_e}%
+\Hypertarget{index_md__2_users_2rode_2git_2uni_2_simple_file_system_2_r_e_a_d_m_e}%
+
+
+A small project in which a FAT and an I-\/\+Node based file system is implemented and showcased.\hypertarget{index_autotoc_md1}{}\doxysection{\texorpdfstring{Project Overview}{Project Overview}}\label{index_autotoc_md1}
+This project implements two types of file systems\+: FAT (\doxylink{struct_file}{File} Allocation Table) and I-\/\+Node based file systems. The project is written in C++ and uses Qt for the graphical user interface.\hypertarget{index_autotoc_md2}{}\doxysubsection{\texorpdfstring{Features}{Features}}\label{index_autotoc_md2}
+
+\begin{DoxyItemize}
+\item {\bfseries{FAT \doxylink{struct_file}{File} System}}\+: Implements a simple FAT file system.
+\item {\bfseries{I-\/\+Node \doxylink{struct_file}{File} System}}\+: Implements a simple I-\/\+Node based file system.
+\item {\bfseries{Graphical Interface}}\+: Uses Qt to provide a graphical interface for interacting with the file systems.
+\item {\bfseries{Fragmentation and Defragmentation}}\+: Supports fragmentation and defragmentation of both FAT and I-\/\+Node based file systems.
+\item {\bfseries{CD Burning}}\+: Provides functionality to burn data to a CD.
+\end{DoxyItemize}\hypertarget{index_autotoc_md3}{}\doxysection{\texorpdfstring{Getting Started}{Getting Started}}\label{index_autotoc_md3}
+\hypertarget{index_autotoc_md4}{}\doxysubsection{\texorpdfstring{Prerequisites}{Prerequisites}}\label{index_autotoc_md4}
+
+\begin{DoxyItemize}
+\item {\bfseries{Qt Creator}}\+: Make sure you have Qt Creator installed. You can download it from \href{https://www.qt.io/download}{\texttt{ Qt\textquotesingle{}s official website}}.
+\item {\bfseries{C++ Compiler}}\+: Ensure you have a C++ compiler installed (e.\+g., GCC, Clang, or MSVC).
+\end{DoxyItemize}\hypertarget{index_autotoc_md5}{}\doxysubsection{\texorpdfstring{Setting Up the Project in Qt Creator}{Setting Up the Project in Qt Creator}}\label{index_autotoc_md5}
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Clone the Repository}}\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{git\ clone\ https://github.com/ArthurRde/SimpleFileSystem.git}
+\DoxyCodeLine{cd\ SimpleFileSystem}
+
+\end{DoxyCode}
+
+\item {\bfseries{Open the Project}}\+:
+\begin{DoxyItemize}
+\item Launch Qt Creator.
+\item Go to {\ttfamily \doxylink{struct_file}{File}} \texorpdfstring{$>$}{>} {\ttfamily Open \doxylink{struct_file}{File} or Project...}.
+\item Navigate to the {\ttfamily Simple\+File\+System} directory and open the {\ttfamily Simple\+File\+System.\+pro} file.
+\end{DoxyItemize}
+\item {\bfseries{Configure the Project}}\+:
+\begin{DoxyItemize}
+\item Qt Creator will prompt you to configure the project. Select the appropriate kit for your environment (e.\+g., Desktop Qt 5.\+15.\+2 GCC 64bit).
+\item Click {\ttfamily Configure Project}.
+\end{DoxyItemize}
+\item {\bfseries{Build the Project}}\+:
+\begin{DoxyItemize}
+\item Click the {\ttfamily Build} button (hammer icon) or press {\ttfamily Ctrl+B} to build the project.
+\end{DoxyItemize}
+\item {\bfseries{Run the Project}}\+:
+\begin{DoxyItemize}
+\item Click the {\ttfamily Run} button (green play icon) or press {\ttfamily Ctrl+R} to run the project.
+\end{DoxyItemize}
+\end{DoxyEnumerate}\hypertarget{index_autotoc_md6}{}\doxysubsection{\texorpdfstring{Project Structure}{Project Structure}}\label{index_autotoc_md6}
+
+\begin{DoxyItemize}
+\item {\ttfamily mainwindow.\+ui}\+: Defines the main window layout and UI elements.
+\item {\ttfamily blockstatus.\+cpp}\+: Contains the implementation for block status.
+\item {\ttfamily disk.\+cpp}\+: Contains the implementation for disk operations.
+\item {\ttfamily README.\+md}\+: Project documentation.
+\item {\ttfamily \doxylink{blockstatus_8h_source}{blockstatus.\+h}}\+: Header file for block status.
+\item {\ttfamily \doxylink{disk_8h_source}{disk.\+h}}\+: Header file for disk operations.
+\item {\ttfamily inode.\+cpp}\+: Contains the implementation for the I-\/\+Node file system.
+\item {\ttfamily inode.\+h}\+: Header file for the I-\/\+Node file system.
+\item {\ttfamily fatsystem.\+cpp}\+: Contains the implementation for the FAT file system.
+\item {\ttfamily \doxylink{fat_system_8h_source}{fatsystem.\+h}}\+: Header file for the FAT file system.
+\item {\ttfamily main.\+cpp}\+: Entry point of the application.
+\item {\ttfamily mainwindow.\+cpp}\+: Implementation of the main window.
+\item {\ttfamily \doxylink{mainwindow_8h_source}{mainwindow.\+h}}\+: Header file for the main window.
+\end{DoxyItemize}\hypertarget{index_autotoc_md7}{}\doxysection{\texorpdfstring{Usage}{Usage}}\label{index_autotoc_md7}
+Once the project is running, you can interact with the file systems through the graphical interface. The interface provides options to create, read, write, and manage files within the FAT and I-\/\+Node based file systems.\hypertarget{index_autotoc_md8}{}\doxysection{\texorpdfstring{Contributing}{Contributing}}\label{index_autotoc_md8}
+If you wish to contribute to this project, please fork the repository and submit a pull request with your changes.\hypertarget{index_autotoc_md9}{}\doxysection{\texorpdfstring{License}{License}}\label{index_autotoc_md9}
+This project is licensed under the MIT License. See the {\ttfamily LICENSE} file for more details. 

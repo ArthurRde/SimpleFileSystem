@@ -1,0 +1,104 @@
+\doxysection{File\+Entry Struct Reference}
+\hypertarget{struct_file_entry}{}\label{struct_file_entry}\index{FileEntry@{FileEntry}}
+
+
+Struct representing a file entry in the system.  
+
+
+
+
+{\ttfamily \#include $<$cdrom.\+h$>$}
+
+Inheritance diagram for File\+Entry\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_file_entry}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_file_entry_afa511973f8bdb56ef979f59fda71fbaf}{File\+Entry}} (const string \&name, uint64\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Constructor to initialize a file entry. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_file_entry_ad96805fdc6826caa552b6bc91373a02a}{print}} () const override
+\begin{DoxyCompactList}\small\item\em Print the file entry details. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{struct_base}{Base}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual {\bfseries \texorpdfstring{$\sim$}{\string~}\+Base} ()=default
+\begin{DoxyCompactList}\small\item\em Virtual destructor for the \doxylink{struct_base}{Base} class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_file_entry_a7716903d3210e2f9ef3c8db13b43891c}\label{struct_file_entry_a7716903d3210e2f9ef3c8db13b43891c} 
+uint8\+\_\+t {\bfseries entry\+Length} = 1
+\begin{DoxyCompactList}\small\item\em The length of the file entry. \end{DoxyCompactList}\item 
+\Hypertarget{struct_file_entry_a6b03a6c515f8402b8e14d76b282e9284}\label{struct_file_entry_a6b03a6c515f8402b8e14d76b282e9284} 
+uint8\+\_\+t {\bfseries extended\+Attribute\+Length}
+\begin{DoxyCompactList}\small\item\em Length of the extended attributes. \end{DoxyCompactList}\item 
+\Hypertarget{struct_file_entry_aab22cbb6a10dbc970170f69a57f9abbc}\label{struct_file_entry_aab22cbb6a10dbc970170f69a57f9abbc} 
+uint64\+\_\+t {\bfseries start\+Block}
+\begin{DoxyCompactList}\small\item\em The starting block of the file. \end{DoxyCompactList}\item 
+\Hypertarget{struct_file_entry_a9c0abe0724b043af2c811a6ce7b01399}\label{struct_file_entry_a9c0abe0724b043af2c811a6ce7b01399} 
+uint64\+\_\+t {\bfseries file\+Size}
+\begin{DoxyCompactList}\small\item\em The size of the file. \end{DoxyCompactList}\item 
+\Hypertarget{struct_file_entry_aca7dd5226fbec68fa5950c2a2aa784b7}\label{struct_file_entry_aca7dd5226fbec68fa5950c2a2aa784b7} 
+char {\bfseries date\+Time} \mbox{[}7\mbox{]}
+\begin{DoxyCompactList}\small\item\em The date and time information. \end{DoxyCompactList}\item 
+\Hypertarget{struct_file_entry_af986df915c0dad34deb86026bc7250cb}\label{struct_file_entry_af986df915c0dad34deb86026bc7250cb} 
+char \texorpdfstring{$\ast$}{*} {\bfseries flags} = new char\mbox{[}3\mbox{]}
+\begin{DoxyCompactList}\small\item\em Flags associated with the file entry. \end{DoxyCompactList}\item 
+\Hypertarget{struct_file_entry_a4ea471b6db24c82ef900fe3c448e7c57}\label{struct_file_entry_a4ea471b6db24c82ef900fe3c448e7c57} 
+uint8\+\_\+t {\bfseries file\+Name\+Length}
+\begin{DoxyCompactList}\small\item\em The length of the file name. \end{DoxyCompactList}\item 
+\Hypertarget{struct_file_entry_aa9e0b6bcf1bc05139fc385bd89268c09}\label{struct_file_entry_aa9e0b6bcf1bc05139fc385bd89268c09} 
+string {\bfseries file\+Name}
+\begin{DoxyCompactList}\small\item\em The name of the file. \end{DoxyCompactList}\item 
+\Hypertarget{struct_file_entry_a7fdfc9387b4656fe66f979e1183666c0}\label{struct_file_entry_a7fdfc9387b4656fe66f979e1183666c0} 
+vector$<$ uint8\+\_\+t $>$ {\bfseries padding}
+\begin{DoxyCompactList}\small\item\em Padding to align data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Struct representing a file entry in the system. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_file_entry_afa511973f8bdb56ef979f59fda71fbaf}\index{FileEntry@{FileEntry}!FileEntry@{FileEntry}}
+\index{FileEntry@{FileEntry}!FileEntry@{FileEntry}}
+\doxysubsubsection{\texorpdfstring{FileEntry()}{FileEntry()}}
+{\footnotesize\ttfamily \label{struct_file_entry_afa511973f8bdb56ef979f59fda71fbaf} 
+File\+Entry\+::\+File\+Entry (\begin{DoxyParamCaption}\item[{const string \&}]{name}{, }\item[{uint64\+\_\+t}]{size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor to initialize a file entry. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Name of the file. \\
+\hline
+{\em size} & Size of the file. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_file_entry_ad96805fdc6826caa552b6bc91373a02a}\index{FileEntry@{FileEntry}!print@{print}}
+\index{print@{print}!FileEntry@{FileEntry}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{struct_file_entry_ad96805fdc6826caa552b6bc91373a02a} 
+void File\+Entry\+::print (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Print the file entry details. 
+
+
+
+Implements \mbox{\hyperlink{struct_base_afbd2cff8d6b84d0939fe8ca646b0e534}{Base}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/cdrom.\+h\end{DoxyCompactItemize}

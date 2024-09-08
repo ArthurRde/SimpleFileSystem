@@ -1,0 +1,109 @@
+\doxysection{Dialog\+Insert Class Reference}
+\hypertarget{class_dialog_insert}{}\label{class_dialog_insert}\index{DialogInsert@{DialogInsert}}
+
+
+A dialog for inserting CDs into the system.  
+
+
+
+
+{\ttfamily \#include $<$dialoginsert.\+h$>$}
+
+Inheritance diagram for Dialog\+Insert\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_dialog_insert}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_dialog_insert_ad0b8065a5d12bc4b14be92537011d468}\label{class_dialog_insert_ad0b8065a5d12bc4b14be92537011d468} 
+void {\bfseries insert} ()
+\begin{DoxyCompactList}\small\item\em Slot for inserting a CD. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_dialog_insert_aada8e043c59a7a37e54a45aaf1eb5c93}{Dialog\+Insert}} (\mbox{\hyperlink{class_c_d_s_y_s_t_e_m}{CDSYSTEM}} \texorpdfstring{$\ast$}{*}sys\+\_\+, QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{class_dialog_insert}{Dialog\+Insert}. \end{DoxyCompactList}\item 
+\Hypertarget{class_dialog_insert_ab887963afefd1919c6940b79b4749822}\label{class_dialog_insert_ab887963afefd1919c6940b79b4749822} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Dialog\+Insert} ()
+\begin{DoxyCompactList}\small\item\em Destructor for \doxylink{class_dialog_insert}{Dialog\+Insert}. \end{DoxyCompactList}\item 
+\Hypertarget{class_dialog_insert_a7e1350424adc8089f35c93018a47ce0e}\label{class_dialog_insert_a7e1350424adc8089f35c93018a47ce0e} 
+void {\bfseries clear\+Cd\+From\+Combo\+Box} ()
+\begin{DoxyCompactList}\small\item\em Clears the CD entries from the combo box. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_dialog_insert_a6176394c0fad390adc95682039f1b6aa}{remove\+Cd\+From\+Combo\+Box}} (string name)
+\begin{DoxyCompactList}\small\item\em Removes a CD entry from the combo box. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_dialog_insert_af0c001dc950d1300f739bcba310a975f}{add\+Cd\+To\+Combo\+Box}} (string name)
+\begin{DoxyCompactList}\small\item\em Adds a CD entry to the combo box. \end{DoxyCompactList}\item 
+\Hypertarget{class_dialog_insert_ab9d8f1122058dfcccbbba162ba13c1db}\label{class_dialog_insert_ab9d8f1122058dfcccbbba162ba13c1db} 
+void {\bfseries on\+\_\+push\+Button\+\_\+clicked} ()
+\begin{DoxyCompactList}\small\item\em Slot for handling the push button click event. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_dialog_insert_ae0090fa59f9c801a10dd21d30d0b9afe}\label{class_dialog_insert_ae0090fa59f9c801a10dd21d30d0b9afe} 
+\mbox{\hyperlink{class_c_d_s_y_s_t_e_m}{CDSYSTEM}} \texorpdfstring{$\ast$}{*} {\bfseries sys}
+\begin{DoxyCompactList}\small\item\em Pointer to the \doxylink{class_c_d_s_y_s_t_e_m}{CDSYSTEM}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A dialog for inserting CDs into the system. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_dialog_insert_aada8e043c59a7a37e54a45aaf1eb5c93}\index{DialogInsert@{DialogInsert}!DialogInsert@{DialogInsert}}
+\index{DialogInsert@{DialogInsert}!DialogInsert@{DialogInsert}}
+\doxysubsubsection{\texorpdfstring{DialogInsert()}{DialogInsert()}}
+{\footnotesize\ttfamily \label{class_dialog_insert_aada8e043c59a7a37e54a45aaf1eb5c93} 
+Dialog\+Insert\+::\+Dialog\+Insert (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_c_d_s_y_s_t_e_m}{CDSYSTEM}} \texorpdfstring{$\ast$}{*}}]{sys\+\_\+}{, }\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructor for \doxylink{class_dialog_insert}{Dialog\+Insert}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sys\+\_\+} & Pointer to the \doxylink{class_c_d_s_y_s_t_e_m}{CDSYSTEM}. \\
+\hline
+{\em parent} & Pointer to the parent widget. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_dialog_insert_af0c001dc950d1300f739bcba310a975f}\index{DialogInsert@{DialogInsert}!addCdToComboBox@{addCdToComboBox}}
+\index{addCdToComboBox@{addCdToComboBox}!DialogInsert@{DialogInsert}}
+\doxysubsubsection{\texorpdfstring{addCdToComboBox()}{addCdToComboBox()}}
+{\footnotesize\ttfamily \label{class_dialog_insert_af0c001dc950d1300f739bcba310a975f} 
+void Dialog\+Insert\+::add\+Cd\+To\+Combo\+Box (\begin{DoxyParamCaption}\item[{string}]{name}{}\end{DoxyParamCaption})}
+
+
+
+Adds a CD entry to the combo box. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Name of the CD to add. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_dialog_insert_a6176394c0fad390adc95682039f1b6aa}\index{DialogInsert@{DialogInsert}!removeCdFromComboBox@{removeCdFromComboBox}}
+\index{removeCdFromComboBox@{removeCdFromComboBox}!DialogInsert@{DialogInsert}}
+\doxysubsubsection{\texorpdfstring{removeCdFromComboBox()}{removeCdFromComboBox()}}
+{\footnotesize\ttfamily \label{class_dialog_insert_a6176394c0fad390adc95682039f1b6aa} 
+void Dialog\+Insert\+::remove\+Cd\+From\+Combo\+Box (\begin{DoxyParamCaption}\item[{string}]{name}{}\end{DoxyParamCaption})}
+
+
+
+Removes a CD entry from the combo box. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Name of the CD to remove. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/dialoginsert.\+h\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/dialoginsert.\+cpp\end{DoxyCompactItemize}

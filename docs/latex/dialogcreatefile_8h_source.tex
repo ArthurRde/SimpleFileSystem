@@ -1,0 +1,46 @@
+\doxysection{/\+Users/rode/git/uni/\+Simple\+File\+System/dialogcreatefile.h}
+\hypertarget{dialogcreatefile_8h_source}{}\label{dialogcreatefile_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ DIALOGCREATEFILE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ DIALOGCREATEFILE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <QDialog>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }Ui\ \{}
+\DoxyCodeLine{00007\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_dialog_create_file}{DialogCreateFile}};}
+\DoxyCodeLine{00008\ \}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_dialog_create_file}{DialogCreateFile}}\ :\ \textcolor{keyword}{public}\ QDialog\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_dialog_create_file_aa207b6efe7a8632c94363e89aa8ea760}{DialogCreateFile}}(QWidget\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{class_dialog_create_file_a7c17cacf0348436850abd012612a2d9e}{\string~DialogCreateFile}}();}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00041\ \ \ \ \ Ui::DialogCreateFile\ *\mbox{\hyperlink{class_dialog_create_file_a77291f7bd8a1afbca9c27d387405a12d}{getUi}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_dialog_create_file_a487c0698fedd0e1265a9a069324b211f}{setUi}}(Ui::DialogCreateFile\ *newUi);}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_dialog_create_file_ac0c15fe015318cdaf17b402ec91efcac}{checkIfComplete}}();}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{private}\ slots:}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ on\_comboBox\_currentTextChanged(\textcolor{keyword}{const}\ QString\ \&arg1);}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{void}\ on\_lineEdit\_textChanged(\textcolor{keyword}{const}\ QString\ \&arg1);}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{void}\ on\_lineEdit\_2\_textChanged(\textcolor{keyword}{const}\ QString\ \&arg1);}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ on\_lineEdit\_3\_textChanged(\textcolor{keyword}{const}\ QString\ \&arg1);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00095\ \ \ \ \ Ui::DialogCreateFile\ *ui;\ \ \ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{bool}\ isFolder;\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasName;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasAuthor;\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasData;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00100\ \};}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ DIALOGCREATEFILE\_H}}
+
+\end{DoxyCode}

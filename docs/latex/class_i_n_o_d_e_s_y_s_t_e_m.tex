@@ -1,0 +1,508 @@
+\doxysection{INODESYSTEM Class Reference}
+\hypertarget{class_i_n_o_d_e_s_y_s_t_e_m}{}\label{class_i_n_o_d_e_s_y_s_t_e_m}\index{INODESYSTEM@{INODESYSTEM}}
+
+
+Manages inodes and file operations in the file system.  
+
+
+
+
+{\ttfamily \#include $<$inodesystem.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a5e946fa6fe0a50a437570eeb053f6e2d}{INODESYSTEM}} (int disk\+Size, \mbox{\hyperlink{class_disk}{Disk}} \texorpdfstring{$\ast$}{*}disk\+\_\+)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}. \end{DoxyCompactList}\item 
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a2037bb3848a5a3a21f34a5608d494fd2}\label{class_i_n_o_d_e_s_y_s_t_e_m_a2037bb3848a5a3a21f34a5608d494fd2} 
+void {\bfseries show\+Inodes} ()
+\begin{DoxyCompactList}\small\item\em Displays the file allocation table (FAT). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a7a7a9796ee511484f761f038f776b2a7}{delete\+File}} (string file\+Name, bool delete\+Folder\+In\+Folder=false, bool ignore\+Folder\+Typ=false)
+\begin{DoxyCompactList}\small\item\em Deletes a file from the file system. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a3a3132745d22dfeee8d31d38a906d2f2}{find\+File}} (string file\+Name)
+\begin{DoxyCompactList}\small\item\em Finds a file by name. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_acda015fd6b307b879e7030b6bed8c127}{find\+File}} (int num)
+\begin{DoxyCompactList}\small\item\em Finds a file by inode number. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a12fe01ea0c7bae381d1a5186f13838e3}{create\+File}} (string name\+\_\+, string author\+\_\+, string data, string parent\+Name, bool is\+Folder=false)
+\begin{DoxyCompactList}\small\item\em Creates a file in the file system. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a58251dc558c84d165001491f8e3c3a5e}{find\+Lowest\+Number}} ()
+\begin{DoxyCompactList}\small\item\em Finds the lowest available inode number. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_afbcbb7be31a68b552609c2537976712a}{find\+Lowest\+Number2}} ()
+\begin{DoxyCompactList}\small\item\em Finds the second lowest available inode number. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a1cb5ccbb97b25463b2fa09c4230f0844}{get\+Free\+Disk\+Space}} ()
+\begin{DoxyCompactList}\small\item\em Gets the free disk space. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_ad3c2d7e3ceac3c84e220776bdb2fc7e4}{rename\+File}} (string file\+Name, string new\+Name)
+\begin{DoxyCompactList}\small\item\em Renames a file in the file system. \end{DoxyCompactList}\item 
+map$<$ int, \mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_ac9c153a2db08d25680534d4296d2300e}{get\+Nodes}} () const
+\begin{DoxyCompactList}\small\item\em Gets the nodes in the file system. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a5ae1b966731764e3073e62bddda9cb27}{set\+Nodes}} (const map$<$ int, \mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} $>$ \&new\+Nodes)
+\begin{DoxyCompactList}\small\item\em Sets the nodes in the file system. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_disk}{Disk}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a047f72d86dc927f321a681381257a993}{get\+Disk}} () const
+\begin{DoxyCompactList}\small\item\em Gets the disk. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a0f20fd091571bcac05710c44b32d748f}{set\+Disk}} (\mbox{\hyperlink{class_disk}{Disk}} \texorpdfstring{$\ast$}{*}new\+Disk)
+\begin{DoxyCompactList}\small\item\em Sets the disk. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_aa91cdac2668a7db7273bd0d25b273782}{get\+Fragmentation}} ()
+\begin{DoxyCompactList}\small\item\em Gets the fragmentation of the disk. \end{DoxyCompactList}\item 
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a3d19dec1424aeb48156c6ee4fbfc93aa}\label{class_i_n_o_d_e_s_y_s_t_e_m_a3d19dec1424aeb48156c6ee4fbfc93aa} 
+void {\bfseries defrag\+Disk} ()
+\begin{DoxyCompactList}\small\item\em Defragments the disk. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a2821616721ebd454c59358183dd531b2}{edit\+Data}} (int file\+To\+Be\+Edited\+Id, string data)
+\begin{DoxyCompactList}\small\item\em Edits the data of a file. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a40f276774511651189d2c02e377d31be}{find\+Folderof\+File}} (string file\+Name)
+\begin{DoxyCompactList}\small\item\em Finds the folder containing a file. \end{DoxyCompactList}\item 
+QList$<$ \mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a710dfe85024991e656785d7e93bd4c95}{get\+Folders\+In\+Folder}} (string folder\+Name)
+\begin{DoxyCompactList}\small\item\em Gets the folders in a folder. \end{DoxyCompactList}\item 
+QList$<$ \mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a1ec8faf4b5bc6147c4f8ee8bed52d308}{get\+Files\+In\+Folder}} (string folder\+Name)
+\begin{DoxyCompactList}\small\item\em Gets the files in a folder. \end{DoxyCompactList}\item 
+vector$<$ int $>$ \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a129b3cbb5d519e6e95865573bf20e310}{split\+String\+Into\+Ints}} (string input\+String)
+\begin{DoxyCompactList}\small\item\em Splits a string into a vector of integers. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_ae0e2efbaae5bbb45ec32fcae180b3134}{delete\+Folder}} (string file\+Name)
+\begin{DoxyCompactList}\small\item\em Deletes a folder from the file system. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_ab6054b7bdaa27f3c5fbca6c0292f391d}{exist\+File\+In\+Folder}} (string file\+Name, string folder\+Name)
+\begin{DoxyCompactList}\small\item\em Checks if a file exists in a folder. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_a030a53fa8ff1c3de7648abc29021e504}{get\+Data\+Of\+File}} (string file\+Name)
+\begin{DoxyCompactList}\small\item\em Gets the data of a file. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_aa63a526d3cb9a9b115289c48352ca70f}{create\+Unique\+Name}} (string file\+Name, string unique\+Text="{}-\/C"{})
+\begin{DoxyCompactList}\small\item\em Creates a unique name for a file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_ab451304c5edd5348b4f929597c7a9f11}{copy\+File}} (string file\+Name, string folder\+Name)
+\begin{DoxyCompactList}\small\item\em Copies a file to a folder. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m_ac839fcd275839a06f946ce82033381f0}{exist\+File}} (string file\+Name)
+\begin{DoxyCompactList}\small\item\em Checks if a file exists in the file system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages inodes and file operations in the file system. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a5e946fa6fe0a50a437570eeb053f6e2d}\index{INODESYSTEM@{INODESYSTEM}!INODESYSTEM@{INODESYSTEM}}
+\index{INODESYSTEM@{INODESYSTEM}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{INODESYSTEM()}{INODESYSTEM()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_a5e946fa6fe0a50a437570eeb053f6e2d} 
+INODESYSTEM\+::\+INODESYSTEM (\begin{DoxyParamCaption}\item[{int}]{disk\+Size}{, }\item[{\mbox{\hyperlink{class_disk}{Disk}} \texorpdfstring{$\ast$}{*}}]{disk\+\_\+}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em disk\+Size} & Size of the disk. \\
+\hline
+{\em disk\+\_\+} & Pointer to the disk. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_ab451304c5edd5348b4f929597c7a9f11}\index{INODESYSTEM@{INODESYSTEM}!copyFile@{copyFile}}
+\index{copyFile@{copyFile}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{copyFile()}{copyFile()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_ab451304c5edd5348b4f929597c7a9f11} 
+void INODESYSTEM\+::copy\+File (\begin{DoxyParamCaption}\item[{string}]{file\+Name}{, }\item[{string}]{folder\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Copies a file to a folder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file to copy. \\
+\hline
+{\em folder\+Name} & Name of the folder to copy the file to. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a12fe01ea0c7bae381d1a5186f13838e3}\index{INODESYSTEM@{INODESYSTEM}!createFile@{createFile}}
+\index{createFile@{createFile}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{createFile()}{createFile()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_a12fe01ea0c7bae381d1a5186f13838e3} 
+string INODESYSTEM\+::create\+File (\begin{DoxyParamCaption}\item[{string}]{name\+\_\+}{, }\item[{string}]{author\+\_\+}{, }\item[{string}]{data}{, }\item[{string}]{parent\+Name}{, }\item[{bool}]{is\+Folder}{ = {\ttfamily false}}\end{DoxyParamCaption})}
+
+
+
+Creates a file in the file system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name\+\_\+} & Name of the file. \\
+\hline
+{\em author\+\_\+} & Author of the file. \\
+\hline
+{\em data} & Data to be stored in the file. \\
+\hline
+{\em parent\+Name} & Name of the parent folder. \\
+\hline
+{\em is\+Folder} & Flag indicating if the file is a folder. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Name of the created file. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_aa63a526d3cb9a9b115289c48352ca70f}\index{INODESYSTEM@{INODESYSTEM}!createUniqueName@{createUniqueName}}
+\index{createUniqueName@{createUniqueName}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{createUniqueName()}{createUniqueName()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_aa63a526d3cb9a9b115289c48352ca70f} 
+string INODESYSTEM\+::create\+Unique\+Name (\begin{DoxyParamCaption}\item[{string}]{file\+Name}{, }\item[{string}]{unique\+Text}{ = {\ttfamily "{}-\/C"{}}}\end{DoxyParamCaption})}
+
+
+
+Creates a unique name for a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & \doxylink{struct_base}{Base} name of the file. \\
+\hline
+{\em unique\+Text} & Text to make the name unique. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Unique name of the file. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a7a7a9796ee511484f761f038f776b2a7}\index{INODESYSTEM@{INODESYSTEM}!deleteFile@{deleteFile}}
+\index{deleteFile@{deleteFile}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{deleteFile()}{deleteFile()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_a7a7a9796ee511484f761f038f776b2a7} 
+void INODESYSTEM\+::delete\+File (\begin{DoxyParamCaption}\item[{string}]{file\+Name}{, }\item[{bool}]{delete\+Folder\+In\+Folder}{ = {\ttfamily false}, }\item[{bool}]{ignore\+Folder\+Typ}{ = {\ttfamily false}}\end{DoxyParamCaption})}
+
+
+
+Deletes a file from the file system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file to delete. \\
+\hline
+{\em delete\+Folder\+In\+Folder} & Flag to delete folders within folders. \\
+\hline
+{\em ignore\+Folder\+Typ} & Flag to ignore folder type. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_ae0e2efbaae5bbb45ec32fcae180b3134}\index{INODESYSTEM@{INODESYSTEM}!deleteFolder@{deleteFolder}}
+\index{deleteFolder@{deleteFolder}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{deleteFolder()}{deleteFolder()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_ae0e2efbaae5bbb45ec32fcae180b3134} 
+void INODESYSTEM\+::delete\+Folder (\begin{DoxyParamCaption}\item[{string}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Deletes a folder from the file system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the folder to delete. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a2821616721ebd454c59358183dd531b2}\index{INODESYSTEM@{INODESYSTEM}!editData@{editData}}
+\index{editData@{editData}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{editData()}{editData()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_a2821616721ebd454c59358183dd531b2} 
+int INODESYSTEM\+::edit\+Data (\begin{DoxyParamCaption}\item[{int}]{file\+To\+Be\+Edited\+Id}{, }\item[{string}]{data}{}\end{DoxyParamCaption})}
+
+
+
+Edits the data of a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+To\+Be\+Edited\+Id} & Inode number of the file to be edited. \\
+\hline
+{\em data} & New data to be stored in the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the edit operation. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_ac839fcd275839a06f946ce82033381f0}\index{INODESYSTEM@{INODESYSTEM}!existFile@{existFile}}
+\index{existFile@{existFile}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{existFile()}{existFile()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_ac839fcd275839a06f946ce82033381f0} 
+bool INODESYSTEM\+::exist\+File (\begin{DoxyParamCaption}\item[{string}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Checks if a file exists in the file system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the file exists, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_ab6054b7bdaa27f3c5fbca6c0292f391d}\index{INODESYSTEM@{INODESYSTEM}!existFileInFolder@{existFileInFolder}}
+\index{existFileInFolder@{existFileInFolder}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{existFileInFolder()}{existFileInFolder()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_ab6054b7bdaa27f3c5fbca6c0292f391d} 
+bool INODESYSTEM\+::exist\+File\+In\+Folder (\begin{DoxyParamCaption}\item[{string}]{file\+Name}{, }\item[{string}]{folder\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Checks if a file exists in a folder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file. \\
+\hline
+{\em folder\+Name} & Name of the folder. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the file exists, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_acda015fd6b307b879e7030b6bed8c127}\index{INODESYSTEM@{INODESYSTEM}!findFile@{findFile}}
+\index{findFile@{findFile}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{findFile()}{findFile()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_acda015fd6b307b879e7030b6bed8c127} 
+int INODESYSTEM\+::find\+File (\begin{DoxyParamCaption}\item[{int}]{num}{}\end{DoxyParamCaption})}
+
+
+
+Finds a file by inode number. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em num} & Inode number of the file to find. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Inode number of the file. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a3a3132745d22dfeee8d31d38a906d2f2}\index{INODESYSTEM@{INODESYSTEM}!findFile@{findFile}}
+\index{findFile@{findFile}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{findFile()}{findFile()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_a3a3132745d22dfeee8d31d38a906d2f2} 
+int INODESYSTEM\+::find\+File (\begin{DoxyParamCaption}\item[{string}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Finds a file by name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file to find. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Inode number of the file. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a40f276774511651189d2c02e377d31be}\index{INODESYSTEM@{INODESYSTEM}!findFolderofFile@{findFolderofFile}}
+\index{findFolderofFile@{findFolderofFile}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{findFolderofFile()}{findFolderofFile()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_a40f276774511651189d2c02e377d31be} 
+string INODESYSTEM\+::find\+Folderof\+File (\begin{DoxyParamCaption}\item[{string}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Finds the folder containing a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Name of the folder containing the file. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a58251dc558c84d165001491f8e3c3a5e}\index{INODESYSTEM@{INODESYSTEM}!findLowestNumber@{findLowestNumber}}
+\index{findLowestNumber@{findLowestNumber}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{findLowestNumber()}{findLowestNumber()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_a58251dc558c84d165001491f8e3c3a5e} 
+int INODESYSTEM\+::find\+Lowest\+Number (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Finds the lowest available inode number. 
+
+\begin{DoxyReturn}{Returns}
+Lowest available inode number. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_afbcbb7be31a68b552609c2537976712a}\index{INODESYSTEM@{INODESYSTEM}!findLowestNumber2@{findLowestNumber2}}
+\index{findLowestNumber2@{findLowestNumber2}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{findLowestNumber2()}{findLowestNumber2()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_afbcbb7be31a68b552609c2537976712a} 
+int INODESYSTEM\+::find\+Lowest\+Number2 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Finds the second lowest available inode number. 
+
+\begin{DoxyReturn}{Returns}
+Second lowest available inode number. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a030a53fa8ff1c3de7648abc29021e504}\index{INODESYSTEM@{INODESYSTEM}!getDataOfFile@{getDataOfFile}}
+\index{getDataOfFile@{getDataOfFile}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{getDataOfFile()}{getDataOfFile()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_a030a53fa8ff1c3de7648abc29021e504} 
+string INODESYSTEM\+::get\+Data\+Of\+File (\begin{DoxyParamCaption}\item[{string}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Gets the data of a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Data of the file. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a047f72d86dc927f321a681381257a993}\index{INODESYSTEM@{INODESYSTEM}!getDisk@{getDisk}}
+\index{getDisk@{getDisk}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{getDisk()}{getDisk()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_a047f72d86dc927f321a681381257a993} 
+\mbox{\hyperlink{class_disk}{Disk}} \texorpdfstring{$\ast$}{*} INODESYSTEM\+::get\+Disk (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the disk. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the disk. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a1ec8faf4b5bc6147c4f8ee8bed52d308}\index{INODESYSTEM@{INODESYSTEM}!getFilesInFolder@{getFilesInFolder}}
+\index{getFilesInFolder@{getFilesInFolder}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{getFilesInFolder()}{getFilesInFolder()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_a1ec8faf4b5bc6147c4f8ee8bed52d308} 
+QList$<$ \mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} $>$ INODESYSTEM\+::get\+Files\+In\+Folder (\begin{DoxyParamCaption}\item[{string}]{folder\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Gets the files in a folder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em folder\+Name} & Name of the folder. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of inodes representing the files. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a710dfe85024991e656785d7e93bd4c95}\index{INODESYSTEM@{INODESYSTEM}!getFoldersInFolder@{getFoldersInFolder}}
+\index{getFoldersInFolder@{getFoldersInFolder}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{getFoldersInFolder()}{getFoldersInFolder()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_a710dfe85024991e656785d7e93bd4c95} 
+QList$<$ \mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} $>$ INODESYSTEM\+::get\+Folders\+In\+Folder (\begin{DoxyParamCaption}\item[{string}]{folder\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Gets the folders in a folder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em folder\+Name} & Name of the folder. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of inodes representing the folders. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_aa91cdac2668a7db7273bd0d25b273782}\index{INODESYSTEM@{INODESYSTEM}!getFragmentation@{getFragmentation}}
+\index{getFragmentation@{getFragmentation}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{getFragmentation()}{getFragmentation()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_aa91cdac2668a7db7273bd0d25b273782} 
+float INODESYSTEM\+::get\+Fragmentation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the fragmentation of the disk. 
+
+\begin{DoxyReturn}{Returns}
+Fragmentation percentage. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a1cb5ccbb97b25463b2fa09c4230f0844}\index{INODESYSTEM@{INODESYSTEM}!getFreeDiskSpace@{getFreeDiskSpace}}
+\index{getFreeDiskSpace@{getFreeDiskSpace}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{getFreeDiskSpace()}{getFreeDiskSpace()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_a1cb5ccbb97b25463b2fa09c4230f0844} 
+int INODESYSTEM\+::get\+Free\+Disk\+Space (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the free disk space. 
+
+\begin{DoxyReturn}{Returns}
+Free disk space. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_ac9c153a2db08d25680534d4296d2300e}\index{INODESYSTEM@{INODESYSTEM}!getNodes@{getNodes}}
+\index{getNodes@{getNodes}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{getNodes()}{getNodes()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_ac9c153a2db08d25680534d4296d2300e} 
+map$<$ int, \mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} $>$ INODESYSTEM\+::get\+Nodes (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the nodes in the file system. 
+
+\begin{DoxyReturn}{Returns}
+Map of inode numbers to inode pointers. 
+\end{DoxyReturn}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_ad3c2d7e3ceac3c84e220776bdb2fc7e4}\index{INODESYSTEM@{INODESYSTEM}!renameFile@{renameFile}}
+\index{renameFile@{renameFile}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{renameFile()}{renameFile()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_ad3c2d7e3ceac3c84e220776bdb2fc7e4} 
+void INODESYSTEM\+::rename\+File (\begin{DoxyParamCaption}\item[{string}]{file\+Name}{, }\item[{string}]{new\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Renames a file in the file system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Current name of the file. \\
+\hline
+{\em new\+Name} & New name of the file. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a0f20fd091571bcac05710c44b32d748f}\index{INODESYSTEM@{INODESYSTEM}!setDisk@{setDisk}}
+\index{setDisk@{setDisk}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{setDisk()}{setDisk()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_a0f20fd091571bcac05710c44b32d748f} 
+void INODESYSTEM\+::set\+Disk (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_disk}{Disk}} \texorpdfstring{$\ast$}{*}}]{new\+Disk}{}\end{DoxyParamCaption})}
+
+
+
+Sets the disk. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Disk} & Pointer to the new disk. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a5ae1b966731764e3073e62bddda9cb27}\index{INODESYSTEM@{INODESYSTEM}!setNodes@{setNodes}}
+\index{setNodes@{setNodes}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{setNodes()}{setNodes()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_a5ae1b966731764e3073e62bddda9cb27} 
+void INODESYSTEM\+::set\+Nodes (\begin{DoxyParamCaption}\item[{const map$<$ int, \mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} $>$ \&}]{new\+Nodes}{}\end{DoxyParamCaption})}
+
+
+
+Sets the nodes in the file system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Nodes} & Map of inode numbers to inode pointers. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_i_n_o_d_e_s_y_s_t_e_m_a129b3cbb5d519e6e95865573bf20e310}\index{INODESYSTEM@{INODESYSTEM}!splitStringIntoInts@{splitStringIntoInts}}
+\index{splitStringIntoInts@{splitStringIntoInts}!INODESYSTEM@{INODESYSTEM}}
+\doxysubsubsection{\texorpdfstring{splitStringIntoInts()}{splitStringIntoInts()}}
+{\footnotesize\ttfamily \label{class_i_n_o_d_e_s_y_s_t_e_m_a129b3cbb5d519e6e95865573bf20e310} 
+vector$<$ int $>$ INODESYSTEM\+::split\+String\+Into\+Ints (\begin{DoxyParamCaption}\item[{string}]{input\+String}{}\end{DoxyParamCaption})}
+
+
+
+Splits a string into a vector of integers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+String} & String to be split. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector of integers. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/inodesystem.\+h\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/inodesystem.\+cpp\end{DoxyCompactItemize}

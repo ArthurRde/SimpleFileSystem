@@ -1,0 +1,31 @@
+\doxysection{Cluster Struct Reference}
+\hypertarget{struct_cluster}{}\label{struct_cluster}\index{Cluster@{Cluster}}
+
+
+Represents a cluster in the FAT system. Each cluster points to the next one, forming a chain of clusters for a file.  
+
+
+
+
+{\ttfamily \#include $<$fat\+System.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_cluster_aac969deb49cf458fc47244bbe997e816}\label{struct_cluster_aac969deb49cf458fc47244bbe997e816} 
+int {\bfseries block\+Index}
+\begin{DoxyCompactList}\small\item\em Index of the block on the disk. \end{DoxyCompactList}\item 
+\Hypertarget{struct_cluster_a1d19c2f6b133def28c31637603c7c973}\label{struct_cluster_a1d19c2f6b133def28c31637603c7c973} 
+struct \mbox{\hyperlink{struct_cluster}{Cluster}} \texorpdfstring{$\ast$}{*} {\bfseries next}
+\begin{DoxyCompactList}\small\item\em Pointer to the next cluster in the chain. \end{DoxyCompactList}\item 
+\Hypertarget{struct_cluster_ad0431b38f8877e57c17648063a114a25}\label{struct_cluster_ad0431b38f8877e57c17648063a114a25} 
+struct \mbox{\hyperlink{struct_cluster}{Cluster}} \texorpdfstring{$\ast$}{*} {\bfseries prev}
+\begin{DoxyCompactList}\small\item\em Pointer to the previous cluster in the chain. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a cluster in the FAT system. Each cluster points to the next one, forming a chain of clusters for a file. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/fat\+System.\+h\end{DoxyCompactItemize}

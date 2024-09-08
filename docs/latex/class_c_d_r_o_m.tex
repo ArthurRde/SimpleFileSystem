@@ -1,0 +1,99 @@
+\doxysection{CDROM Class Reference}
+\hypertarget{class_c_d_r_o_m}{}\label{class_c_d_r_o_m}\index{CDROM@{CDROM}}
+
+
+Class representing a CD-\/\+ROM with various blocks and statuses.  
+
+
+
+
+{\ttfamily \#include $<$cdrom.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_c_d_r_o_m_afe7e6219c31241ca50838214a553d31a}{CDROM}} (string port\+Name\+\_\+)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{class_c_d_r_o_m}{CDROM} class. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_c_d_r_o_m_a0a1766390313a4100bc192488f547f7d}{get\+Is\+Burned}} () const
+\begin{DoxyCompactList}\small\item\em Get the burn status of the CD-\/\+ROM. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_c_d_r_o_m_a364293844e245e98f9a951e123558921}{set\+Is\+Burned}} (bool new\+Is\+Burned)
+\begin{DoxyCompactList}\small\item\em Set the burn status of the CD-\/\+ROM. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_c_d_r_o_m_a162c84b47583807102a33732220c76d1}\label{class_c_d_r_o_m_a162c84b47583807102a33732220c76d1} 
+int {\bfseries block\+Size} = 2352
+\begin{DoxyCompactList}\small\item\em Size of a block on the CD-\/\+ROM. \end{DoxyCompactList}\item 
+\Hypertarget{class_c_d_r_o_m_ae5eaa2bc2b67adb1359863339d735dd9}\label{class_c_d_r_o_m_ae5eaa2bc2b67adb1359863339d735dd9} 
+int {\bfseries block\+Portion} = 2048
+\begin{DoxyCompactList}\small\item\em Portion of the block that contains useful data. \end{DoxyCompactList}\item 
+\Hypertarget{class_c_d_r_o_m_aa8c18bf7a7b5eeec142f54282125fa4b}\label{class_c_d_r_o_m_aa8c18bf7a7b5eeec142f54282125fa4b} 
+int {\bfseries disk\+Size} = 235200
+\begin{DoxyCompactList}\small\item\em Total size of the disk in blocks. \end{DoxyCompactList}\item 
+\Hypertarget{class_c_d_r_o_m_ac1a3db37abe3994599ec32f9cac1a5ca}\label{class_c_d_r_o_m_ac1a3db37abe3994599ec32f9cac1a5ca} 
+vector$<$ \mbox{\hyperlink{struct_base}{Base}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries base\+Blocks}
+\begin{DoxyCompactList}\small\item\em Vector of base blocks. \end{DoxyCompactList}\item 
+\Hypertarget{class_c_d_r_o_m_a3e22ffaf76294d16f8d684de5f0235a8}\label{class_c_d_r_o_m_a3e22ffaf76294d16f8d684de5f0235a8} 
+vector$<$ Block\+Status $>$ {\bfseries base\+Status}
+\begin{DoxyCompactList}\small\item\em Vector of block statuses. \end{DoxyCompactList}\item 
+\Hypertarget{class_c_d_r_o_m_af286f27413cdb6dcc0911f24ea67c362}\label{class_c_d_r_o_m_af286f27413cdb6dcc0911f24ea67c362} 
+string {\bfseries port\+Name}
+\begin{DoxyCompactList}\small\item\em Name of the port to which the CD-\/\+ROM is connected. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class representing a CD-\/\+ROM with various blocks and statuses. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_c_d_r_o_m_afe7e6219c31241ca50838214a553d31a}\index{CDROM@{CDROM}!CDROM@{CDROM}}
+\index{CDROM@{CDROM}!CDROM@{CDROM}}
+\doxysubsubsection{\texorpdfstring{CDROM()}{CDROM()}}
+{\footnotesize\ttfamily \label{class_c_d_r_o_m_afe7e6219c31241ca50838214a553d31a} 
+CDROM\+::\+CDROM (\begin{DoxyParamCaption}\item[{string}]{port\+Name\+\_\+}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{class_c_d_r_o_m}{CDROM} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em port\+Name\+\_\+} & The name of the port to which the CD-\/\+ROM is connected. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_c_d_r_o_m_a0a1766390313a4100bc192488f547f7d}\index{CDROM@{CDROM}!getIsBurned@{getIsBurned}}
+\index{getIsBurned@{getIsBurned}!CDROM@{CDROM}}
+\doxysubsubsection{\texorpdfstring{getIsBurned()}{getIsBurned()}}
+{\footnotesize\ttfamily \label{class_c_d_r_o_m_a0a1766390313a4100bc192488f547f7d} 
+bool CDROM\+::get\+Is\+Burned (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the burn status of the CD-\/\+ROM. 
+
+\begin{DoxyReturn}{Returns}
+true if the CD-\/\+ROM is burned, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_c_d_r_o_m_a364293844e245e98f9a951e123558921}\index{CDROM@{CDROM}!setIsBurned@{setIsBurned}}
+\index{setIsBurned@{setIsBurned}!CDROM@{CDROM}}
+\doxysubsubsection{\texorpdfstring{setIsBurned()}{setIsBurned()}}
+{\footnotesize\ttfamily \label{class_c_d_r_o_m_a364293844e245e98f9a951e123558921} 
+void CDROM\+::set\+Is\+Burned (\begin{DoxyParamCaption}\item[{bool}]{new\+Is\+Burned}{}\end{DoxyParamCaption})}
+
+
+
+Set the burn status of the CD-\/\+ROM. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Is\+Burned} & The new burn status. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/cdrom.\+h\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/cdrom.\+cpp\end{DoxyCompactItemize}

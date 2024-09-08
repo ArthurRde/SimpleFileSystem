@@ -1,0 +1,111 @@
+\doxysection{Primary\+Volume\+Descriptor Struct Reference}
+\hypertarget{struct_primary_volume_descriptor}{}\label{struct_primary_volume_descriptor}\index{PrimaryVolumeDescriptor@{PrimaryVolumeDescriptor}}
+
+
+Struct representing a primary volume descriptor.  
+
+
+
+
+{\ttfamily \#include $<$cdrom.\+h$>$}
+
+Inheritance diagram for Primary\+Volume\+Descriptor\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_primary_volume_descriptor}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_primary_volume_descriptor_a059ef4ae5cde53635457f13395645545}{Primary\+Volume\+Descriptor}} (\mbox{\hyperlink{struct_file_entry}{File\+Entry}} \texorpdfstring{$\ast$}{*}root)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{struct_primary_volume_descriptor}{Primary\+Volume\+Descriptor}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{struct_primary_volume_descriptor_a61e89c331cb69045fd36ec797320e02d}{print}} () const override
+\begin{DoxyCompactList}\small\item\em Print the primary volume descriptor details. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{struct_base}{Base}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual {\bfseries \texorpdfstring{$\sim$}{\string~}\+Base} ()=default
+\begin{DoxyCompactList}\small\item\em Virtual destructor for the \doxylink{struct_base}{Base} class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_primary_volume_descriptor_ade841a5a550770e2dd225fd0031c17da}\label{struct_primary_volume_descriptor_ade841a5a550770e2dd225fd0031c17da} 
+char {\bfseries system\+Identifier} \mbox{[}32\mbox{]} = "{}SYSTEM"{}
+\begin{DoxyCompactList}\small\item\em Identifier for the system. \end{DoxyCompactList}\item 
+\Hypertarget{struct_primary_volume_descriptor_ae097df4e5e6f82658b8ab10263d8c2f5}\label{struct_primary_volume_descriptor_ae097df4e5e6f82658b8ab10263d8c2f5} 
+char {\bfseries volume\+Identifier} \mbox{[}32\mbox{]} = "{}VOL1"{}
+\begin{DoxyCompactList}\small\item\em Identifier for the volume. \end{DoxyCompactList}\item 
+\Hypertarget{struct_primary_volume_descriptor_a16ef8d66661e60f51a763e89341cec75}\label{struct_primary_volume_descriptor_a16ef8d66661e60f51a763e89341cec75} 
+char {\bfseries publisher\+Identifier} \mbox{[}128\mbox{]} = "{}CD PUBLISH"{}
+\begin{DoxyCompactList}\small\item\em Identifier for the publisher. \end{DoxyCompactList}\item 
+\Hypertarget{struct_primary_volume_descriptor_ac4e3fd837e8186057847283156dcacc2}\label{struct_primary_volume_descriptor_ac4e3fd837e8186057847283156dcacc2} 
+char {\bfseries preparer\+Identifier} \mbox{[}128\mbox{]} = "{}IDENTIFIED"{}
+\begin{DoxyCompactList}\small\item\em Identifier for the preparer. \end{DoxyCompactList}\item 
+\Hypertarget{struct_primary_volume_descriptor_a8a963dac7849739e56394e764199b911}\label{struct_primary_volume_descriptor_a8a963dac7849739e56394e764199b911} 
+uint16\+\_\+t {\bfseries logical\+Block\+Size}
+\begin{DoxyCompactList}\small\item\em Logical block size of the volume. \end{DoxyCompactList}\item 
+\Hypertarget{struct_primary_volume_descriptor_abc71a957ab9e401b0ee6fe0669b3f59c}\label{struct_primary_volume_descriptor_abc71a957ab9e401b0ee6fe0669b3f59c} 
+uint32\+\_\+t {\bfseries volume\+Space\+Size}
+\begin{DoxyCompactList}\small\item\em Total size of the volume in blocks. \end{DoxyCompactList}\item 
+\Hypertarget{struct_primary_volume_descriptor_a6c620318d6086b106298f2c65eadd649}\label{struct_primary_volume_descriptor_a6c620318d6086b106298f2c65eadd649} 
+char {\bfseries creation\+Date} \mbox{[}17\mbox{]}
+\begin{DoxyCompactList}\small\item\em The creation date of the volume. \end{DoxyCompactList}\item 
+\Hypertarget{struct_primary_volume_descriptor_add25e00d6bddf759361bb411a8a3bfa8}\label{struct_primary_volume_descriptor_add25e00d6bddf759361bb411a8a3bfa8} 
+char {\bfseries expiration\+Date} \mbox{[}17\mbox{]}
+\begin{DoxyCompactList}\small\item\em The expiration date of the volume. \end{DoxyCompactList}\item 
+\Hypertarget{struct_primary_volume_descriptor_a6dbe22f531f997aa30c36cba8ddd0c56}\label{struct_primary_volume_descriptor_a6dbe22f531f997aa30c36cba8ddd0c56} 
+\mbox{\hyperlink{struct_file_entry}{File\+Entry}} \texorpdfstring{$\ast$}{*} {\bfseries root\+Directory\+Entry}
+\begin{DoxyCompactList}\small\item\em Root directory entry. \end{DoxyCompactList}\item 
+\Hypertarget{struct_primary_volume_descriptor_a095ddce5f0f05c929fde1f4d46f90cdf}\label{struct_primary_volume_descriptor_a095ddce5f0f05c929fde1f4d46f90cdf} 
+string {\bfseries summary\+File\+Name}
+\begin{DoxyCompactList}\small\item\em Summary file name. \end{DoxyCompactList}\item 
+\Hypertarget{struct_primary_volume_descriptor_a39a0d9632e56cfe55944583a6dd6c8d4}\label{struct_primary_volume_descriptor_a39a0d9632e56cfe55944583a6dd6c8d4} 
+string {\bfseries copyright\+File\+Name}
+\begin{DoxyCompactList}\small\item\em Copyright file name. \end{DoxyCompactList}\item 
+\Hypertarget{struct_primary_volume_descriptor_a45165dfb98817b42c071a7bda624040c}\label{struct_primary_volume_descriptor_a45165dfb98817b42c071a7bda624040c} 
+string {\bfseries bibliographic\+File\+Name}
+\begin{DoxyCompactList}\small\item\em Bibliographic file name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Struct representing a primary volume descriptor. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_primary_volume_descriptor_a059ef4ae5cde53635457f13395645545}\index{PrimaryVolumeDescriptor@{PrimaryVolumeDescriptor}!PrimaryVolumeDescriptor@{PrimaryVolumeDescriptor}}
+\index{PrimaryVolumeDescriptor@{PrimaryVolumeDescriptor}!PrimaryVolumeDescriptor@{PrimaryVolumeDescriptor}}
+\doxysubsubsection{\texorpdfstring{PrimaryVolumeDescriptor()}{PrimaryVolumeDescriptor()}}
+{\footnotesize\ttfamily \label{struct_primary_volume_descriptor_a059ef4ae5cde53635457f13395645545} 
+Primary\+Volume\+Descriptor\+::\+Primary\+Volume\+Descriptor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_file_entry}{File\+Entry}} \texorpdfstring{$\ast$}{*}}]{root}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor for the \doxylink{struct_primary_volume_descriptor}{Primary\+Volume\+Descriptor}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em root} & Pointer to the root directory entry. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_primary_volume_descriptor_a61e89c331cb69045fd36ec797320e02d}\index{PrimaryVolumeDescriptor@{PrimaryVolumeDescriptor}!print@{print}}
+\index{print@{print}!PrimaryVolumeDescriptor@{PrimaryVolumeDescriptor}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{struct_primary_volume_descriptor_a61e89c331cb69045fd36ec797320e02d} 
+void Primary\+Volume\+Descriptor\+::print (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Print the primary volume descriptor details. 
+
+
+
+Implements \mbox{\hyperlink{struct_base_afbd2cff8d6b84d0939fe8ca646b0e534}{Base}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/cdrom.\+h\end{DoxyCompactItemize}

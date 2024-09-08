@@ -1,0 +1,599 @@
+\doxysection{FATSYSTEM Class Reference}
+\hypertarget{class_f_a_t_s_y_s_t_e_m}{}\label{class_f_a_t_s_y_s_t_e_m}\index{FATSYSTEM@{FATSYSTEM}}
+
+
+Implements a FAT (\doxylink{struct_file}{File} Allocation Table) file system for managing files and folders on a disk.  
+
+
+
+
+{\ttfamily \#include $<$fat\+System.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ad0b3cabe68c42a645e505eb77de8876c}{FATSYSTEM}} (int disk\+Space, \mbox{\hyperlink{class_disk}{Disk}} \texorpdfstring{$\ast$}{*}disk\+\_\+)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}. \end{DoxyCompactList}\item 
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a071ea078d760fc399fb4b85eb041ecbb}\label{class_f_a_t_s_y_s_t_e_m_a071ea078d760fc399fb4b85eb041ecbb} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+FATSYSTEM} ()
+\begin{DoxyCompactList}\small\item\em Destructor for the \doxylink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_cluster}{Cluster}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a7759bdd4ce6ff210157a7f103828f999}{create\+Cluster}} (int block\+Index)
+\begin{DoxyCompactList}\small\item\em Creates a cluster at the specified block index. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a79431b7c064dd434f4573beefcdff78c}{get\+Free\+Disk\+Space}} ()
+\begin{DoxyCompactList}\small\item\em Gets the total free space available on the disk. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_aa34b7804cbfc5ee0d7246b1ec2830cb7}{create\+File}} (char \texorpdfstring{$\ast$}{*}name\+\_\+, char \texorpdfstring{$\ast$}{*}author\+\_\+, string data, char \texorpdfstring{$\ast$}{*}parent\+Name, bool is\+Folder=false)
+\begin{DoxyCompactList}\small\item\em Creates a new file or folder. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a38eaa5e71ad9d24ca259496d0e077a1e}{delete\+File}} (const char \texorpdfstring{$\ast$}{*}file\+Name, bool delete\+Folder\+In\+Folder=false, bool ignore\+Folder\+Typ=false)
+\begin{DoxyCompactList}\small\item\em Deletes a file or folder from the FAT system. \end{DoxyCompactList}\item 
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a23e7cb07d9d83990c55ef0c2642e31ba}\label{class_f_a_t_s_y_s_t_e_m_a23e7cb07d9d83990c55ef0c2642e31ba} 
+void {\bfseries show\+Fat} ()
+\begin{DoxyCompactList}\small\item\em Displays the current FAT table and file status. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a7ecf1d648e634ac502f2a1cecf1a4118}{get\+Fragmentation}} ()
+\begin{DoxyCompactList}\small\item\em Calculates the fragmentation percentage of the disk. \end{DoxyCompactList}\item 
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a745d4036bb61b6b49e1cfb08a96dd170}\label{class_f_a_t_s_y_s_t_e_m_a745d4036bb61b6b49e1cfb08a96dd170} 
+void {\bfseries defrag\+Disk} ()
+\begin{DoxyCompactList}\small\item\em Defragments the disk by rearranging clusters. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_disk}{Disk}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ad77ddfc8adb49d3b97d871b7d2b61f54}{get\+Disk}} () const
+\begin{DoxyCompactList}\small\item\em Gets the current \doxylink{class_disk}{Disk} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a177418ac278137d6e7e0b85b8bdbdfe0}{set\+Disk}} (\mbox{\hyperlink{class_disk}{Disk}} \texorpdfstring{$\ast$}{*}new\+Disk)
+\begin{DoxyCompactList}\small\item\em Sets a new \doxylink{class_disk}{Disk} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_fat}{Fat}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a42c1e4e3c50a284798bb498843dbb359}{get\+Fat}} () const
+\begin{DoxyCompactList}\small\item\em Gets the current FAT table. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ac20c6fee0cdb9efb01facf4419832416}{set\+Fat}} (\mbox{\hyperlink{struct_fat}{Fat}} \texorpdfstring{$\ast$}{*}new\+Fat)
+\begin{DoxyCompactList}\small\item\em Sets a new FAT table. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a8fd00b04a5eee8d34e4587dbb365f8ea}{find\+File}} (char \texorpdfstring{$\ast$}{*}file\+Name)
+\begin{DoxyCompactList}\small\item\em Finds a file by its name. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ab210edba7df8be0d728a0b03f597089e}{edit\+Data}} (char \texorpdfstring{$\ast$}{*}file\+Name, string data)
+\begin{DoxyCompactList}\small\item\em Edits the data of a file. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a91c1dfb87b08b3bf5a59de21b9cb5f49}{get\+Number\+Of\+Blocks}} (char \texorpdfstring{$\ast$}{*}file\+Name)
+\begin{DoxyCompactList}\small\item\em Gets the number of blocks used by a file. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_cluster}{Cluster}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ae32eb310eb8739b398a4d2f0d36acbbb}{get\+Last\+Cluster\+Of\+File}} (char \texorpdfstring{$\ast$}{*}file\+Name)
+\begin{DoxyCompactList}\small\item\em Gets the last cluster in the chain for a file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a38678b0f308cad8fc8f9645a2c2bf0d6}{show\+Cluster}} (char \texorpdfstring{$\ast$}{*}file\+Name)
+\begin{DoxyCompactList}\small\item\em Displays the cluster chain of a file. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a7ddfce9dddcc7b7ba27bf1183084c863}{get\+Data\+Of\+File}} (char \texorpdfstring{$\ast$}{*}file\+Name)
+\begin{DoxyCompactList}\small\item\em Retrieves the data stored in a file. \end{DoxyCompactList}\item 
+vector$<$ string $>$ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ab8f8c1a75a6e9254af3a38d95ed19911}{split\+String\+Into\+Parts}} (string input\+String)
+\begin{DoxyCompactList}\small\item\em Splits a string into smaller parts. \end{DoxyCompactList}\item 
+QList$<$ \mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a467966fc93b8c7e31a5b67d1d24f43ef}{get\+Files\+In\+Folder}} (char \texorpdfstring{$\ast$}{*}folder\+Name)
+\begin{DoxyCompactList}\small\item\em Gets the list of files in a specified folder. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ac9c4513dc351d90e494e26c1f82c7f47}{find\+File}} (const char \texorpdfstring{$\ast$}{*}file\+Name)
+\begin{DoxyCompactList}\small\item\em Finds a file by its name (const version). \end{DoxyCompactList}\item 
+QList$<$ \mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a27192f6664bb4240991e15bf635e48f7}{get\+Folders\+In\+Folder}} (char \texorpdfstring{$\ast$}{*}folder\+Name)
+\begin{DoxyCompactList}\small\item\em Gets the list of folders inside a folder. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ac3a5867d2c075e665f2363322b1c620e}{rename\+File}} (char \texorpdfstring{$\ast$}{*}folder, char \texorpdfstring{$\ast$}{*}file\+Name, char \texorpdfstring{$\ast$}{*}new\+Name)
+\begin{DoxyCompactList}\small\item\em Renames a file inside a folder. \end{DoxyCompactList}\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a043167f538c39720d1fb5c06614efc89}{find\+Folder\+Of\+File}} (char \texorpdfstring{$\ast$}{*}file\+Name)
+\begin{DoxyCompactList}\small\item\em Finds the folder containing a file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a86ba1da262c9964ee2bfb9b5571ac44f}{remove\+File\+From\+Folder}} (char \texorpdfstring{$\ast$}{*}file\+Name, char \texorpdfstring{$\ast$}{*}folder\+Name)
+\begin{DoxyCompactList}\small\item\em Removes a file from a folder. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a788eec3d014c5ef0c532e8d38e4d1342}{add\+File\+To\+Folder}} (char \texorpdfstring{$\ast$}{*}parent\+Name, char \texorpdfstring{$\ast$}{*}name\+\_\+)
+\begin{DoxyCompactList}\small\item\em Adds a file to a folder. \end{DoxyCompactList}\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ad74200563049acefbf4f53df508f73e2}{get\+Folder\+Of\+File}} (char \texorpdfstring{$\ast$}{*}file\+Name)
+\begin{DoxyCompactList}\small\item\em Gets the folder containing a file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a1348dbdb65fbc8cc5bc223d76569e8c7}{delete\+Folder}} (const char \texorpdfstring{$\ast$}{*}file\+Name)
+\begin{DoxyCompactList}\small\item\em Deletes a folder and its contents. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_ab0e9262c7bc376a83e8c7246ce42892e}{create\+Unique\+Name}} (char \texorpdfstring{$\ast$}{*}file\+Name, char \texorpdfstring{$\ast$}{*}unique\+Text="{}-\/C"{})
+\begin{DoxyCompactList}\small\item\em Creates a unique name for a file by appending unique text. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_a5acac57cfc93e1887011f44a553d25c2}{exist\+File}} (char \texorpdfstring{$\ast$}{*}file\+Name)
+\begin{DoxyCompactList}\small\item\em Checks if a file exists in the system. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m_abc53cfc9326f0fd58b0ab3366d7d8b11}{copy\+File}} (char \texorpdfstring{$\ast$}{*}file\+Name, char \texorpdfstring{$\ast$}{*}folder\+Name)
+\begin{DoxyCompactList}\small\item\em Copies a file to another folder. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implements a FAT (\doxylink{struct_file}{File} Allocation Table) file system for managing files and folders on a disk. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_ad0b3cabe68c42a645e505eb77de8876c}\index{FATSYSTEM@{FATSYSTEM}!FATSYSTEM@{FATSYSTEM}}
+\index{FATSYSTEM@{FATSYSTEM}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{FATSYSTEM()}{FATSYSTEM()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_ad0b3cabe68c42a645e505eb77de8876c} 
+FATSYSTEM\+::\+FATSYSTEM (\begin{DoxyParamCaption}\item[{int}]{disk\+Space}{, }\item[{\mbox{\hyperlink{class_disk}{Disk}} \texorpdfstring{$\ast$}{*}}]{disk\+\_\+}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em disk\+Space} & Total space of the disk in blocks. \\
+\hline
+{\em disk\+\_\+} & Pointer to the \doxylink{class_disk}{Disk} object. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a788eec3d014c5ef0c532e8d38e4d1342}\index{FATSYSTEM@{FATSYSTEM}!addFileToFolder@{addFileToFolder}}
+\index{addFileToFolder@{addFileToFolder}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{addFileToFolder()}{addFileToFolder()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a788eec3d014c5ef0c532e8d38e4d1342} 
+int FATSYSTEM\+::add\+File\+To\+Folder (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{parent\+Name}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{name\+\_\+}{}\end{DoxyParamCaption})}
+
+
+
+Adds a file to a folder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent\+Name} & Name of the parent folder. \\
+\hline
+{\em name\+\_\+} & Name of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful, non-\/zero otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_abc53cfc9326f0fd58b0ab3366d7d8b11}\index{FATSYSTEM@{FATSYSTEM}!copyFile@{copyFile}}
+\index{copyFile@{copyFile}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{copyFile()}{copyFile()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_abc53cfc9326f0fd58b0ab3366d7d8b11} 
+void FATSYSTEM\+::copy\+File (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{file\+Name}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{folder\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Copies a file to another folder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file to copy. \\
+\hline
+{\em folder\+Name} & Name of the destination folder. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a7759bdd4ce6ff210157a7f103828f999}\index{FATSYSTEM@{FATSYSTEM}!createCluster@{createCluster}}
+\index{createCluster@{createCluster}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{createCluster()}{createCluster()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a7759bdd4ce6ff210157a7f103828f999} 
+\mbox{\hyperlink{struct_cluster}{Cluster}} \texorpdfstring{$\ast$}{*} FATSYSTEM\+::create\+Cluster (\begin{DoxyParamCaption}\item[{int}]{block\+Index}{}\end{DoxyParamCaption})}
+
+
+
+Creates a cluster at the specified block index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em block\+Index} & Index of the block. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the newly created \doxylink{struct_cluster}{Cluster}. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_aa34b7804cbfc5ee0d7246b1ec2830cb7}\index{FATSYSTEM@{FATSYSTEM}!createFile@{createFile}}
+\index{createFile@{createFile}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{createFile()}{createFile()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_aa34b7804cbfc5ee0d7246b1ec2830cb7} 
+\mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} FATSYSTEM\+::create\+File (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{name\+\_\+}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{author\+\_\+}{, }\item[{string}]{data}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{parent\+Name}{, }\item[{bool}]{is\+Folder}{ = {\ttfamily false}}\end{DoxyParamCaption})}
+
+
+
+Creates a new file or folder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name\+\_\+} & Name of the file. \\
+\hline
+{\em author\+\_\+} & Name of the file\textquotesingle{}s author. \\
+\hline
+{\em data} & Data to be written to the file. \\
+\hline
+{\em parent\+Name} & Name of the parent folder. \\
+\hline
+{\em is\+Folder} & Flag to indicate whether it\textquotesingle{}s a folder (true) or file (false). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the newly created \doxylink{struct_file}{File}. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_ab0e9262c7bc376a83e8c7246ce42892e}\index{FATSYSTEM@{FATSYSTEM}!createUniqueName@{createUniqueName}}
+\index{createUniqueName@{createUniqueName}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{createUniqueName()}{createUniqueName()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_ab0e9262c7bc376a83e8c7246ce42892e} 
+string FATSYSTEM\+::create\+Unique\+Name (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{file\+Name}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{unique\+Text}{ = {\ttfamily "{}-\/C"{}}}\end{DoxyParamCaption})}
+
+
+
+Creates a unique name for a file by appending unique text. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Original file name. \\
+\hline
+{\em unique\+Text} & Text to append for uniqueness (default is "{}-\/\+C"{}). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The unique file name. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a38eaa5e71ad9d24ca259496d0e077a1e}\index{FATSYSTEM@{FATSYSTEM}!deleteFile@{deleteFile}}
+\index{deleteFile@{deleteFile}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{deleteFile()}{deleteFile()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a38eaa5e71ad9d24ca259496d0e077a1e} 
+void FATSYSTEM\+::delete\+File (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{file\+Name}{, }\item[{bool}]{delete\+Folder\+In\+Folder}{ = {\ttfamily false}, }\item[{bool}]{ignore\+Folder\+Typ}{ = {\ttfamily false}}\end{DoxyParamCaption})}
+
+
+
+Deletes a file or folder from the FAT system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file to delete. \\
+\hline
+{\em delete\+Folder\+In\+Folder} & Set true to delete folders recursively. \\
+\hline
+{\em ignore\+Folder\+Typ} & Set true to ignore folder type checking. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a1348dbdb65fbc8cc5bc223d76569e8c7}\index{FATSYSTEM@{FATSYSTEM}!deleteFolder@{deleteFolder}}
+\index{deleteFolder@{deleteFolder}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{deleteFolder()}{deleteFolder()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a1348dbdb65fbc8cc5bc223d76569e8c7} 
+void FATSYSTEM\+::delete\+Folder (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Deletes a folder and its contents. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the folder. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_ab210edba7df8be0d728a0b03f597089e}\index{FATSYSTEM@{FATSYSTEM}!editData@{editData}}
+\index{editData@{editData}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{editData()}{editData()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_ab210edba7df8be0d728a0b03f597089e} 
+int FATSYSTEM\+::edit\+Data (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{file\+Name}{, }\item[{string}]{data}{}\end{DoxyParamCaption})}
+
+
+
+Edits the data of a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file to edit. \\
+\hline
+{\em data} & New data to be written to the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of blocks used after editing. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a5acac57cfc93e1887011f44a553d25c2}\index{FATSYSTEM@{FATSYSTEM}!existFile@{existFile}}
+\index{existFile@{existFile}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{existFile()}{existFile()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a5acac57cfc93e1887011f44a553d25c2} 
+bool FATSYSTEM\+::exist\+File (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Checks if a file exists in the system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file to check. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the file exists, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a8fd00b04a5eee8d34e4587dbb365f8ea}\index{FATSYSTEM@{FATSYSTEM}!findFile@{findFile}}
+\index{findFile@{findFile}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{findFile()}{findFile()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a8fd00b04a5eee8d34e4587dbb365f8ea} 
+\mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} FATSYSTEM\+::find\+File (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Finds a file by its name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file to search for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the found \doxylink{struct_file}{File} object, or nullptr if not found. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_ac9c4513dc351d90e494e26c1f82c7f47}\index{FATSYSTEM@{FATSYSTEM}!findFile@{findFile}}
+\index{findFile@{findFile}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{findFile()}{findFile()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_ac9c4513dc351d90e494e26c1f82c7f47} 
+\mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} FATSYSTEM\+::find\+File (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Finds a file by its name (const version). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file to search for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the found \doxylink{struct_file}{File} object, or nullptr if not found. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a043167f538c39720d1fb5c06614efc89}\index{FATSYSTEM@{FATSYSTEM}!findFolderOfFile@{findFolderOfFile}}
+\index{findFolderOfFile@{findFolderOfFile}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{findFolderOfFile()}{findFolderOfFile()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a043167f538c39720d1fb5c06614efc89} 
+char \texorpdfstring{$\ast$}{*} FATSYSTEM\+::find\+Folder\+Of\+File (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Finds the folder containing a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Name of the folder containing the file. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a7ddfce9dddcc7b7ba27bf1183084c863}\index{FATSYSTEM@{FATSYSTEM}!getDataOfFile@{getDataOfFile}}
+\index{getDataOfFile@{getDataOfFile}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{getDataOfFile()}{getDataOfFile()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a7ddfce9dddcc7b7ba27bf1183084c863} 
+string FATSYSTEM\+::get\+Data\+Of\+File (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Retrieves the data stored in a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String containing the file data. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_ad77ddfc8adb49d3b97d871b7d2b61f54}\index{FATSYSTEM@{FATSYSTEM}!getDisk@{getDisk}}
+\index{getDisk@{getDisk}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{getDisk()}{getDisk()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_ad77ddfc8adb49d3b97d871b7d2b61f54} 
+\mbox{\hyperlink{class_disk}{Disk}} \texorpdfstring{$\ast$}{*} FATSYSTEM\+::get\+Disk (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the current \doxylink{class_disk}{Disk} object. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the \doxylink{class_disk}{Disk} object. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a42c1e4e3c50a284798bb498843dbb359}\index{FATSYSTEM@{FATSYSTEM}!getFat@{getFat}}
+\index{getFat@{getFat}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{getFat()}{getFat()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a42c1e4e3c50a284798bb498843dbb359} 
+\mbox{\hyperlink{struct_fat}{Fat}} \texorpdfstring{$\ast$}{*} FATSYSTEM\+::get\+Fat (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the current FAT table. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the FAT structure. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a467966fc93b8c7e31a5b67d1d24f43ef}\index{FATSYSTEM@{FATSYSTEM}!getFilesInFolder@{getFilesInFolder}}
+\index{getFilesInFolder@{getFilesInFolder}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{getFilesInFolder()}{getFilesInFolder()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a467966fc93b8c7e31a5b67d1d24f43ef} 
+QList$<$ \mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} $>$ FATSYSTEM\+::get\+Files\+In\+Folder (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{folder\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Gets the list of files in a specified folder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em folder\+Name} & Name of the folder. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of \doxylink{struct_file}{File} pointers in the folder. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_ad74200563049acefbf4f53df508f73e2}\index{FATSYSTEM@{FATSYSTEM}!getFolderOfFile@{getFolderOfFile}}
+\index{getFolderOfFile@{getFolderOfFile}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{getFolderOfFile()}{getFolderOfFile()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_ad74200563049acefbf4f53df508f73e2} 
+char \texorpdfstring{$\ast$}{*} FATSYSTEM\+::get\+Folder\+Of\+File (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Gets the folder containing a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Name of the folder containing the file. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a27192f6664bb4240991e15bf635e48f7}\index{FATSYSTEM@{FATSYSTEM}!getFoldersInFolder@{getFoldersInFolder}}
+\index{getFoldersInFolder@{getFoldersInFolder}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{getFoldersInFolder()}{getFoldersInFolder()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a27192f6664bb4240991e15bf635e48f7} 
+QList$<$ \mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} $>$ FATSYSTEM\+::get\+Folders\+In\+Folder (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{folder\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Gets the list of folders inside a folder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em folder\+Name} & Name of the folder. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of Folder pointers inside the folder. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a7ecf1d648e634ac502f2a1cecf1a4118}\index{FATSYSTEM@{FATSYSTEM}!getFragmentation@{getFragmentation}}
+\index{getFragmentation@{getFragmentation}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{getFragmentation()}{getFragmentation()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a7ecf1d648e634ac502f2a1cecf1a4118} 
+float FATSYSTEM\+::get\+Fragmentation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Calculates the fragmentation percentage of the disk. 
+
+\begin{DoxyReturn}{Returns}
+The fragmentation percentage. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a79431b7c064dd434f4573beefcdff78c}\index{FATSYSTEM@{FATSYSTEM}!getFreeDiskSpace@{getFreeDiskSpace}}
+\index{getFreeDiskSpace@{getFreeDiskSpace}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{getFreeDiskSpace()}{getFreeDiskSpace()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a79431b7c064dd434f4573beefcdff78c} 
+int FATSYSTEM\+::get\+Free\+Disk\+Space (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the total free space available on the disk. 
+
+\begin{DoxyReturn}{Returns}
+The free space in blocks. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_ae32eb310eb8739b398a4d2f0d36acbbb}\index{FATSYSTEM@{FATSYSTEM}!getLastClusterOfFile@{getLastClusterOfFile}}
+\index{getLastClusterOfFile@{getLastClusterOfFile}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{getLastClusterOfFile()}{getLastClusterOfFile()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_ae32eb310eb8739b398a4d2f0d36acbbb} 
+\mbox{\hyperlink{struct_cluster}{Cluster}} \texorpdfstring{$\ast$}{*} FATSYSTEM\+::get\+Last\+Cluster\+Of\+File (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Gets the last cluster in the chain for a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the last \doxylink{struct_cluster}{Cluster} in the file. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a91c1dfb87b08b3bf5a59de21b9cb5f49}\index{FATSYSTEM@{FATSYSTEM}!getNumberOfBlocks@{getNumberOfBlocks}}
+\index{getNumberOfBlocks@{getNumberOfBlocks}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{getNumberOfBlocks()}{getNumberOfBlocks()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a91c1dfb87b08b3bf5a59de21b9cb5f49} 
+int FATSYSTEM\+::get\+Number\+Of\+Blocks (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Gets the number of blocks used by a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of blocks used. 
+\end{DoxyReturn}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a86ba1da262c9964ee2bfb9b5571ac44f}\index{FATSYSTEM@{FATSYSTEM}!removeFileFromFolder@{removeFileFromFolder}}
+\index{removeFileFromFolder@{removeFileFromFolder}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{removeFileFromFolder()}{removeFileFromFolder()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a86ba1da262c9964ee2bfb9b5571ac44f} 
+void FATSYSTEM\+::remove\+File\+From\+Folder (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{file\+Name}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{folder\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Removes a file from a folder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file. \\
+\hline
+{\em folder\+Name} & Name of the folder. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_ac3a5867d2c075e665f2363322b1c620e}\index{FATSYSTEM@{FATSYSTEM}!renameFile@{renameFile}}
+\index{renameFile@{renameFile}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{renameFile()}{renameFile()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_ac3a5867d2c075e665f2363322b1c620e} 
+void FATSYSTEM\+::rename\+File (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{folder}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{file\+Name}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{new\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Renames a file inside a folder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em folder} & Name of the folder containing the file. \\
+\hline
+{\em file\+Name} & Current name of the file. \\
+\hline
+{\em new\+Name} & New name of the file. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a177418ac278137d6e7e0b85b8bdbdfe0}\index{FATSYSTEM@{FATSYSTEM}!setDisk@{setDisk}}
+\index{setDisk@{setDisk}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{setDisk()}{setDisk()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a177418ac278137d6e7e0b85b8bdbdfe0} 
+void FATSYSTEM\+::set\+Disk (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_disk}{Disk}} \texorpdfstring{$\ast$}{*}}]{new\+Disk}{}\end{DoxyParamCaption})}
+
+
+
+Sets a new \doxylink{class_disk}{Disk} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Disk} & Pointer to the new \doxylink{class_disk}{Disk} object. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_ac20c6fee0cdb9efb01facf4419832416}\index{FATSYSTEM@{FATSYSTEM}!setFat@{setFat}}
+\index{setFat@{setFat}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{setFat()}{setFat()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_ac20c6fee0cdb9efb01facf4419832416} 
+void FATSYSTEM\+::set\+Fat (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_fat}{Fat}} \texorpdfstring{$\ast$}{*}}]{new\+Fat}{}\end{DoxyParamCaption})}
+
+
+
+Sets a new FAT table. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Fat} & Pointer to the new FAT structure. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_a38678b0f308cad8fc8f9645a2c2bf0d6}\index{FATSYSTEM@{FATSYSTEM}!showCluster@{showCluster}}
+\index{showCluster@{showCluster}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{showCluster()}{showCluster()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_a38678b0f308cad8fc8f9645a2c2bf0d6} 
+void FATSYSTEM\+::show\+Cluster (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Displays the cluster chain of a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_f_a_t_s_y_s_t_e_m_ab8f8c1a75a6e9254af3a38d95ed19911}\index{FATSYSTEM@{FATSYSTEM}!splitStringIntoParts@{splitStringIntoParts}}
+\index{splitStringIntoParts@{splitStringIntoParts}!FATSYSTEM@{FATSYSTEM}}
+\doxysubsubsection{\texorpdfstring{splitStringIntoParts()}{splitStringIntoParts()}}
+{\footnotesize\ttfamily \label{class_f_a_t_s_y_s_t_e_m_ab8f8c1a75a6e9254af3a38d95ed19911} 
+vector$<$ string $>$ FATSYSTEM\+::split\+String\+Into\+Parts (\begin{DoxyParamCaption}\item[{string}]{input\+String}{}\end{DoxyParamCaption})}
+
+
+
+Splits a string into smaller parts. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+String} & The input string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector of strings containing the parts. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/fat\+System.\+h\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/fat\+System.\+cpp\end{DoxyCompactItemize}

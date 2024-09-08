@@ -1,0 +1,536 @@
+\doxysection{Main\+Window Class Reference}
+\hypertarget{class_main_window}{}\label{class_main_window}\index{MainWindow@{MainWindow}}
+
+
+The main window of the application.  
+
+
+
+
+{\ttfamily \#include $<$mainwindow.\+h$>$}
+
+Inheritance diagram for Main\+Window\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_main_window}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_main_window_a793629b5bb50f9a78fec053b093f5baa}\label{class_main_window_a793629b5bb50f9a78fec053b093f5baa} 
+void {\bfseries create\+Demo\+Files} ()
+\begin{DoxyCompactList}\small\item\em Creates demo files. \end{DoxyCompactList}\item 
+\Hypertarget{class_main_window_acec5f71ab9b0c1430307ed13076359bf}\label{class_main_window_acec5f71ab9b0c1430307ed13076359bf} 
+void {\bfseries eject\+CD} ()
+\begin{DoxyCompactList}\small\item\em Ejects the CD. \end{DoxyCompactList}\item 
+\Hypertarget{class_main_window_aa56c6ccf32b3736ac3ac70bfe14af32f}\label{class_main_window_aa56c6ccf32b3736ac3ac70bfe14af32f} 
+void {\bfseries insert\+CD} ()
+\begin{DoxyCompactList}\small\item\em Inserts a CD. \end{DoxyCompactList}\item 
+\Hypertarget{class_main_window_a5968ba32216fdb2714c93c7d1cd2cb47}\label{class_main_window_a5968ba32216fdb2714c93c7d1cd2cb47} 
+void {\bfseries burn\+CD} ()
+\begin{DoxyCompactList}\small\item\em Burns a CD. \end{DoxyCompactList}\item 
+\Hypertarget{class_main_window_a93cda97cc2c08b2e510577d1fdc17eb0}\label{class_main_window_a93cda97cc2c08b2e510577d1fdc17eb0} 
+void {\bfseries Add\+Files\+To\+CD} ()
+\begin{DoxyCompactList}\small\item\em Adds files to the CD. \end{DoxyCompactList}\item 
+\Hypertarget{class_main_window_aaaa9348c9b2318a5e28340ec3f70f8d5}\label{class_main_window_aaaa9348c9b2318a5e28340ec3f70f8d5} 
+void {\bfseries read\+CD} ()
+\begin{DoxyCompactList}\small\item\em Reads the CD. \end{DoxyCompactList}\item 
+\Hypertarget{class_main_window_afe8b3251d341c23c7406fa408ae916f4}\label{class_main_window_afe8b3251d341c23c7406fa408ae916f4} 
+void {\bfseries defrag\+System} ()
+\begin{DoxyCompactList}\small\item\em Defragments the system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_main_window_a996c5a2b6f77944776856f08ec30858d}{Main\+Window}} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{class_main_window}{Main\+Window}. \end{DoxyCompactList}\item 
+\Hypertarget{class_main_window_ae98d00a93bc118200eeef9f9bba1dba7}\label{class_main_window_ae98d00a93bc118200eeef9f9bba1dba7} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Main\+Window} ()
+\begin{DoxyCompactList}\small\item\em Destructor for \doxylink{class_main_window}{Main\+Window}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a9c4500fac3e2c9cf85498d723fb2fa92}{create\+Table\+File\+Rows}} (QList$<$ \mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} $>$ node)
+\begin{DoxyCompactList}\small\item\em Creates table rows for files. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a38adf51f248d23f41c726ace17c5be3d}{show\+All\+Folder}} (\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}sys, int root\+Id)
+\begin{DoxyCompactList}\small\item\em Shows all folders in the \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_ae50732e58c9190546fc961212a123041}{show\+Files\+In\+Folder}} (\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}sys, string folder\+Name)
+\begin{DoxyCompactList}\small\item\em Shows files in a folder. \end{DoxyCompactList}\item 
+QTree\+Widget\+Item \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_main_window_a74b0af801c839838bd2d02a8bc0a19ea}{set\+Tree\+Widget\+Child}} (QTree\+Widget\+Item \texorpdfstring{$\ast$}{*}root\+Item, string name)
+\begin{DoxyCompactList}\small\item\em Sets a child item in the tree widget. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a9ccd8ed47541ca06aff68831079dcba6}{set\+Tree\+Widget\+Child\+Rec}} (\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}sys, int root\+Id, QTree\+Widget\+Item \texorpdfstring{$\ast$}{*}root\+Item)
+\begin{DoxyCompactList}\small\item\em Recursively sets child items in the tree widget. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_aab3951f99dd39451e98b71bc603a6f1b}{show\+Path}} (\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}sys, int root\+Id)
+\begin{DoxyCompactList}\small\item\em Shows the path of a folder. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_main_window_aac2f89a7396a6f615709fac2663b1812}{find\+Folder\+Path}} (\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}sys, int root\+Id, string foldername)
+\begin{DoxyCompactList}\small\item\em Finds the path of a folder. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_main_window_a9151bc468a2345f9bd402808db2eabd1}{get\+Slot\+Selected}} () const
+\begin{DoxyCompactList}\small\item\em Gets the selected slot. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_aa4c47f46fbec90b28bae6d2990a65e9d}{set\+Slot\+Selected}} (int new\+Slot\+Selected)
+\begin{DoxyCompactList}\small\item\em Sets the selected slot. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_main_window_a7bba16f07e02c61e5890290a5526b22b}{get\+Clipboard\+File\+Node}} () const
+\begin{DoxyCompactList}\small\item\em Gets the clipboard file node. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a9e393a0668b668ed01cd891bdfd103e7}{set\+Clipboard\+File\+Node}} (\mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*}new\+Clipboard\+File\+Node)
+\begin{DoxyCompactList}\small\item\em Sets the clipboard file node. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_main_window_ae8d1038e6d1d0e41954b0ca049e9cdf3}{get\+Clipboard\+Node\+Copied}} () const
+\begin{DoxyCompactList}\small\item\em Gets the clipboard node copied flag. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a12f1a1dcda984267d6a3f020f554535c}{set\+Clipboard\+Node\+Copied}} (bool new\+Clipboard\+Node\+Copied)
+\begin{DoxyCompactList}\small\item\em Sets the clipboard node copied flag. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a83872d2a1844a410350fa8fed657cf6d}{show\+Data\+Of\+File}} (\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}sys, char \texorpdfstring{$\ast$}{*}file\+Name)
+\begin{DoxyCompactList}\small\item\em Shows the data of a file in the FAT system. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a757b1fc684af46e51d9577dbcd8138fb}{show\+Files\+In\+Folder}} (\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}sys, string folder\+Name)
+\begin{DoxyCompactList}\small\item\em Shows files in a folder in the FAT system. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_acd9e30f412a9652b50724ccc6b0d7f89}{create\+Table\+File\+Rows}} (QList$<$ \mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} $>$ files)
+\begin{DoxyCompactList}\small\item\em Creates table rows for files in the FAT system. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a4946f9c831177bdbbb4d8a3950ee74af}{show\+All\+Folder}} (\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}sys, char \texorpdfstring{$\ast$}{*}root\+Name)
+\begin{DoxyCompactList}\small\item\em Shows all folders in the FAT system. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a70f7aa332b8dd995e5bcb0bbc52b0ee0}{set\+Tree\+Widget\+Child\+Rec}} (\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}sys, char \texorpdfstring{$\ast$}{*}root\+Name, QTree\+Widget\+Item \texorpdfstring{$\ast$}{*}root\+Item)
+\begin{DoxyCompactList}\small\item\em Recursively sets child items in the tree widget for the FAT system. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{class_main_window_a30e16526f6eefe7b808aef80ebbca85e}{find\+Folder\+Path}} (\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}sys, char \texorpdfstring{$\ast$}{*}root\+Name, char \texorpdfstring{$\ast$}{*}foldername)
+\begin{DoxyCompactList}\small\item\em Finds the path of a folder in the FAT system. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a9cf77ce47bf16ed10204d8f5263446e5}{show\+Path}} (\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}sys, char \texorpdfstring{$\ast$}{*}root\+Name)
+\begin{DoxyCompactList}\small\item\em Shows the path of a folder in the FAT system. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a6dd0c43402ad388f3ba22164294bf44f}{show\+Data\+Of\+File}} (\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}sys, string file\+Name)
+\begin{DoxyCompactList}\small\item\em Shows the data of a file in the \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a1e9f6d3ee03d6b6c334035eb71c27641}{create\+All\+Files\+Of\+Folder}} (\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}src\+Sys, \mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}des\+Sys, string src\+Folder\+Name, string des\+Folder\+Name)
+\begin{DoxyCompactList}\small\item\em Creates all files of a folder from FAT system to \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_window_a436184f5f925b8b345a12e2d941e8c71}{create\+All\+Files\+Of\+Folder}} (\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}src\+Sys, \mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}des\+Sys, string src\+Folder\+Name, string des\+Folder\+Name)
+\begin{DoxyCompactList}\small\item\em Creates all files of a folder from \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM} to FAT system. \end{DoxyCompactList}\item 
+\Hypertarget{class_main_window_a28a67886c93624ffe883e25e25f1eba2}\label{class_main_window_a28a67886c93624ffe883e25e25f1eba2} 
+void {\bfseries buy\+New\+CD} ()
+\begin{DoxyCompactList}\small\item\em Buys a new CD. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_main_window_a6ef15f424abda030a44e83d7381eec6e}{current\+Folder}} = "{}root"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The main window of the application. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_main_window_a996c5a2b6f77944776856f08ec30858d}\index{MainWindow@{MainWindow}!MainWindow@{MainWindow}}
+\index{MainWindow@{MainWindow}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{MainWindow()}{MainWindow()}}
+{\footnotesize\ttfamily \label{class_main_window_a996c5a2b6f77944776856f08ec30858d} 
+Main\+Window\+::\+Main\+Window (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{class_main_window}{Main\+Window}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & Pointer to the parent widget. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_main_window_a1e9f6d3ee03d6b6c334035eb71c27641}\index{MainWindow@{MainWindow}!createAllFilesOfFolder@{createAllFilesOfFolder}}
+\index{createAllFilesOfFolder@{createAllFilesOfFolder}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{createAllFilesOfFolder()}{createAllFilesOfFolder()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_main_window_a1e9f6d3ee03d6b6c334035eb71c27641} 
+void Main\+Window\+::create\+All\+Files\+Of\+Folder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}}]{src\+Sys}{, }\item[{\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}}]{des\+Sys}{, }\item[{string}]{src\+Folder\+Name}{, }\item[{string}]{des\+Folder\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Creates all files of a folder from FAT system to \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em src\+Sys} & Pointer to the source \doxylink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}. \\
+\hline
+{\em des\+Sys} & Pointer to the destination \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}. \\
+\hline
+{\em src\+Folder\+Name} & Name of the source folder. \\
+\hline
+{\em des\+Folder\+Name} & Name of the destination folder. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_a436184f5f925b8b345a12e2d941e8c71}\index{MainWindow@{MainWindow}!createAllFilesOfFolder@{createAllFilesOfFolder}}
+\index{createAllFilesOfFolder@{createAllFilesOfFolder}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{createAllFilesOfFolder()}{createAllFilesOfFolder()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_main_window_a436184f5f925b8b345a12e2d941e8c71} 
+void Main\+Window\+::create\+All\+Files\+Of\+Folder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}}]{src\+Sys}{, }\item[{\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}}]{des\+Sys}{, }\item[{string}]{src\+Folder\+Name}{, }\item[{string}]{des\+Folder\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Creates all files of a folder from \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM} to FAT system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em src\+Sys} & Pointer to the source \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}. \\
+\hline
+{\em des\+Sys} & Pointer to the destination \doxylink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}. \\
+\hline
+{\em src\+Folder\+Name} & Name of the source folder. \\
+\hline
+{\em des\+Folder\+Name} & Name of the destination folder. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_acd9e30f412a9652b50724ccc6b0d7f89}\index{MainWindow@{MainWindow}!createTableFileRows@{createTableFileRows}}
+\index{createTableFileRows@{createTableFileRows}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{createTableFileRows()}{createTableFileRows()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_main_window_acd9e30f412a9652b50724ccc6b0d7f89} 
+void Main\+Window\+::create\+Table\+File\+Rows (\begin{DoxyParamCaption}\item[{QList$<$ \mbox{\hyperlink{struct_file}{File}} \texorpdfstring{$\ast$}{*} $>$}]{files}{}\end{DoxyParamCaption})}
+
+
+
+Creates table rows for files in the FAT system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em files} & List of \doxylink{struct_file}{File} pointers. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_a9c4500fac3e2c9cf85498d723fb2fa92}\index{MainWindow@{MainWindow}!createTableFileRows@{createTableFileRows}}
+\index{createTableFileRows@{createTableFileRows}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{createTableFileRows()}{createTableFileRows()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_main_window_a9c4500fac3e2c9cf85498d723fb2fa92} 
+void Main\+Window\+::create\+Table\+File\+Rows (\begin{DoxyParamCaption}\item[{QList$<$ \mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} $>$}]{node}{}\end{DoxyParamCaption})}
+
+
+
+Creates table rows for files. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & List of \doxylink{struct_i_node}{INode} pointers. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_a30e16526f6eefe7b808aef80ebbca85e}\index{MainWindow@{MainWindow}!findFolderPath@{findFolderPath}}
+\index{findFolderPath@{findFolderPath}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{findFolderPath()}{findFolderPath()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_main_window_a30e16526f6eefe7b808aef80ebbca85e} 
+QString Main\+Window\+::find\+Folder\+Path (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}}]{sys}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{root\+Name}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{foldername}{}\end{DoxyParamCaption})}
+
+
+
+Finds the path of a folder in the FAT system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sys} & Pointer to the \doxylink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}. \\
+\hline
+{\em root\+Name} & Name of the root folder. \\
+\hline
+{\em foldername} & Name of the folder. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Path of the folder as a QString. 
+\end{DoxyReturn}
+\Hypertarget{class_main_window_aac2f89a7396a6f615709fac2663b1812}\index{MainWindow@{MainWindow}!findFolderPath@{findFolderPath}}
+\index{findFolderPath@{findFolderPath}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{findFolderPath()}{findFolderPath()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_main_window_aac2f89a7396a6f615709fac2663b1812} 
+QString Main\+Window\+::find\+Folder\+Path (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}}]{sys}{, }\item[{int}]{root\+Id}{, }\item[{string}]{foldername}{}\end{DoxyParamCaption})}
+
+
+
+Finds the path of a folder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sys} & Pointer to the \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}. \\
+\hline
+{\em root\+Id} & Root ID of the folder. \\
+\hline
+{\em foldername} & Name of the folder. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Path of the folder as a QString. 
+\end{DoxyReturn}
+\Hypertarget{class_main_window_a7bba16f07e02c61e5890290a5526b22b}\index{MainWindow@{MainWindow}!getClipboardFileNode@{getClipboardFileNode}}
+\index{getClipboardFileNode@{getClipboardFileNode}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{getClipboardFileNode()}{getClipboardFileNode()}}
+{\footnotesize\ttfamily \label{class_main_window_a7bba16f07e02c61e5890290a5526b22b} 
+\mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*} Main\+Window\+::get\+Clipboard\+File\+Node (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the clipboard file node. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the clipboard file node. 
+\end{DoxyReturn}
+\Hypertarget{class_main_window_ae8d1038e6d1d0e41954b0ca049e9cdf3}\index{MainWindow@{MainWindow}!getClipboardNodeCopied@{getClipboardNodeCopied}}
+\index{getClipboardNodeCopied@{getClipboardNodeCopied}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{getClipboardNodeCopied()}{getClipboardNodeCopied()}}
+{\footnotesize\ttfamily \label{class_main_window_ae8d1038e6d1d0e41954b0ca049e9cdf3} 
+bool Main\+Window\+::get\+Clipboard\+Node\+Copied (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the clipboard node copied flag. 
+
+\begin{DoxyReturn}{Returns}
+Clipboard node copied flag. 
+\end{DoxyReturn}
+\Hypertarget{class_main_window_a9151bc468a2345f9bd402808db2eabd1}\index{MainWindow@{MainWindow}!getSlotSelected@{getSlotSelected}}
+\index{getSlotSelected@{getSlotSelected}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{getSlotSelected()}{getSlotSelected()}}
+{\footnotesize\ttfamily \label{class_main_window_a9151bc468a2345f9bd402808db2eabd1} 
+int Main\+Window\+::get\+Slot\+Selected (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the selected slot. 
+
+\begin{DoxyReturn}{Returns}
+Selected slot. 
+\end{DoxyReturn}
+\Hypertarget{class_main_window_a9e393a0668b668ed01cd891bdfd103e7}\index{MainWindow@{MainWindow}!setClipboardFileNode@{setClipboardFileNode}}
+\index{setClipboardFileNode@{setClipboardFileNode}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{setClipboardFileNode()}{setClipboardFileNode()}}
+{\footnotesize\ttfamily \label{class_main_window_a9e393a0668b668ed01cd891bdfd103e7} 
+void Main\+Window\+::set\+Clipboard\+File\+Node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_i_node}{INode}} \texorpdfstring{$\ast$}{*}}]{new\+Clipboard\+File\+Node}{}\end{DoxyParamCaption})}
+
+
+
+Sets the clipboard file node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Clipboard\+File\+Node} & Pointer to the new clipboard file node. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_a12f1a1dcda984267d6a3f020f554535c}\index{MainWindow@{MainWindow}!setClipboardNodeCopied@{setClipboardNodeCopied}}
+\index{setClipboardNodeCopied@{setClipboardNodeCopied}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{setClipboardNodeCopied()}{setClipboardNodeCopied()}}
+{\footnotesize\ttfamily \label{class_main_window_a12f1a1dcda984267d6a3f020f554535c} 
+void Main\+Window\+::set\+Clipboard\+Node\+Copied (\begin{DoxyParamCaption}\item[{bool}]{new\+Clipboard\+Node\+Copied}{}\end{DoxyParamCaption})}
+
+
+
+Sets the clipboard node copied flag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Clipboard\+Node\+Copied} & New clipboard node copied flag. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_aa4c47f46fbec90b28bae6d2990a65e9d}\index{MainWindow@{MainWindow}!setSlotSelected@{setSlotSelected}}
+\index{setSlotSelected@{setSlotSelected}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{setSlotSelected()}{setSlotSelected()}}
+{\footnotesize\ttfamily \label{class_main_window_aa4c47f46fbec90b28bae6d2990a65e9d} 
+void Main\+Window\+::set\+Slot\+Selected (\begin{DoxyParamCaption}\item[{int}]{new\+Slot\+Selected}{}\end{DoxyParamCaption})}
+
+
+
+Sets the selected slot. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Slot\+Selected} & New selected slot. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_a74b0af801c839838bd2d02a8bc0a19ea}\index{MainWindow@{MainWindow}!setTreeWidgetChild@{setTreeWidgetChild}}
+\index{setTreeWidgetChild@{setTreeWidgetChild}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{setTreeWidgetChild()}{setTreeWidgetChild()}}
+{\footnotesize\ttfamily \label{class_main_window_a74b0af801c839838bd2d02a8bc0a19ea} 
+QTree\+Widget\+Item \texorpdfstring{$\ast$}{*} Main\+Window\+::set\+Tree\+Widget\+Child (\begin{DoxyParamCaption}\item[{QTree\+Widget\+Item \texorpdfstring{$\ast$}{*}}]{root\+Item}{, }\item[{string}]{name}{}\end{DoxyParamCaption})}
+
+
+
+Sets a child item in the tree widget. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em root\+Item} & Pointer to the root item. \\
+\hline
+{\em name} & Name of the child item. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the created child item. 
+\end{DoxyReturn}
+\Hypertarget{class_main_window_a70f7aa332b8dd995e5bcb0bbc52b0ee0}\index{MainWindow@{MainWindow}!setTreeWidgetChildRec@{setTreeWidgetChildRec}}
+\index{setTreeWidgetChildRec@{setTreeWidgetChildRec}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{setTreeWidgetChildRec()}{setTreeWidgetChildRec()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_main_window_a70f7aa332b8dd995e5bcb0bbc52b0ee0} 
+void Main\+Window\+::set\+Tree\+Widget\+Child\+Rec (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}}]{sys}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{root\+Name}{, }\item[{QTree\+Widget\+Item \texorpdfstring{$\ast$}{*}}]{root\+Item}{}\end{DoxyParamCaption})}
+
+
+
+Recursively sets child items in the tree widget for the FAT system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sys} & Pointer to the \doxylink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}. \\
+\hline
+{\em root\+Name} & Name of the root folder. \\
+\hline
+{\em root\+Item} & Pointer to the root item. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_a9ccd8ed47541ca06aff68831079dcba6}\index{MainWindow@{MainWindow}!setTreeWidgetChildRec@{setTreeWidgetChildRec}}
+\index{setTreeWidgetChildRec@{setTreeWidgetChildRec}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{setTreeWidgetChildRec()}{setTreeWidgetChildRec()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_main_window_a9ccd8ed47541ca06aff68831079dcba6} 
+void Main\+Window\+::set\+Tree\+Widget\+Child\+Rec (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}}]{sys}{, }\item[{int}]{root\+Id}{, }\item[{QTree\+Widget\+Item \texorpdfstring{$\ast$}{*}}]{root\+Item}{}\end{DoxyParamCaption})}
+
+
+
+Recursively sets child items in the tree widget. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sys} & Pointer to the \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}. \\
+\hline
+{\em root\+Id} & Root ID of the folder. \\
+\hline
+{\em root\+Item} & Pointer to the root item. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_a4946f9c831177bdbbb4d8a3950ee74af}\index{MainWindow@{MainWindow}!showAllFolder@{showAllFolder}}
+\index{showAllFolder@{showAllFolder}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{showAllFolder()}{showAllFolder()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_main_window_a4946f9c831177bdbbb4d8a3950ee74af} 
+void Main\+Window\+::show\+All\+Folder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}}]{sys}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{root\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Shows all folders in the FAT system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sys} & Pointer to the \doxylink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}. \\
+\hline
+{\em root\+Name} & Name of the root folder. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_a38adf51f248d23f41c726ace17c5be3d}\index{MainWindow@{MainWindow}!showAllFolder@{showAllFolder}}
+\index{showAllFolder@{showAllFolder}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{showAllFolder()}{showAllFolder()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_main_window_a38adf51f248d23f41c726ace17c5be3d} 
+void Main\+Window\+::show\+All\+Folder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}}]{sys}{, }\item[{int}]{root\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Shows all folders in the \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sys} & Pointer to the \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}. \\
+\hline
+{\em root\+Id} & Root ID of the folder. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_a83872d2a1844a410350fa8fed657cf6d}\index{MainWindow@{MainWindow}!showDataOfFile@{showDataOfFile}}
+\index{showDataOfFile@{showDataOfFile}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{showDataOfFile()}{showDataOfFile()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_main_window_a83872d2a1844a410350fa8fed657cf6d} 
+void Main\+Window\+::show\+Data\+Of\+File (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}}]{sys}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Shows the data of a file in the FAT system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sys} & Pointer to the \doxylink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}. \\
+\hline
+{\em file\+Name} & Name of the file. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_a6dd0c43402ad388f3ba22164294bf44f}\index{MainWindow@{MainWindow}!showDataOfFile@{showDataOfFile}}
+\index{showDataOfFile@{showDataOfFile}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{showDataOfFile()}{showDataOfFile()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_main_window_a6dd0c43402ad388f3ba22164294bf44f} 
+void Main\+Window\+::show\+Data\+Of\+File (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}}]{sys}{, }\item[{string}]{file\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Shows the data of a file in the \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sys} & Pointer to the \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}. \\
+\hline
+{\em file\+Name} & Name of the file. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_a757b1fc684af46e51d9577dbcd8138fb}\index{MainWindow@{MainWindow}!showFilesInFolder@{showFilesInFolder}}
+\index{showFilesInFolder@{showFilesInFolder}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{showFilesInFolder()}{showFilesInFolder()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_main_window_a757b1fc684af46e51d9577dbcd8138fb} 
+void Main\+Window\+::show\+Files\+In\+Folder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}}]{sys}{, }\item[{string}]{folder\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Shows files in a folder in the FAT system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sys} & Pointer to the \doxylink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}. \\
+\hline
+{\em folder\+Name} & Name of the folder. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_ae50732e58c9190546fc961212a123041}\index{MainWindow@{MainWindow}!showFilesInFolder@{showFilesInFolder}}
+\index{showFilesInFolder@{showFilesInFolder}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{showFilesInFolder()}{showFilesInFolder()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_main_window_ae50732e58c9190546fc961212a123041} 
+void Main\+Window\+::show\+Files\+In\+Folder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}}]{sys}{, }\item[{string}]{folder\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Shows files in a folder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sys} & Pointer to the \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}. \\
+\hline
+{\em folder\+Name} & Name of the folder. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_a9cf77ce47bf16ed10204d8f5263446e5}\index{MainWindow@{MainWindow}!showPath@{showPath}}
+\index{showPath@{showPath}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{showPath()}{showPath()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_main_window_a9cf77ce47bf16ed10204d8f5263446e5} 
+void Main\+Window\+::show\+Path (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}} \texorpdfstring{$\ast$}{*}}]{sys}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{root\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Shows the path of a folder in the FAT system. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sys} & Pointer to the \doxylink{class_f_a_t_s_y_s_t_e_m}{FATSYSTEM}. \\
+\hline
+{\em root\+Name} & Name of the root folder. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_main_window_aab3951f99dd39451e98b71bc603a6f1b}\index{MainWindow@{MainWindow}!showPath@{showPath}}
+\index{showPath@{showPath}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{showPath()}{showPath()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_main_window_aab3951f99dd39451e98b71bc603a6f1b} 
+void Main\+Window\+::show\+Path (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}} \texorpdfstring{$\ast$}{*}}]{sys}{, }\item[{int}]{root\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Shows the path of a folder. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sys} & Pointer to the \doxylink{class_i_n_o_d_e_s_y_s_t_e_m}{INODESYSTEM}. \\
+\hline
+{\em root\+Id} & Root ID of the folder. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_main_window_a6ef15f424abda030a44e83d7381eec6e}\index{MainWindow@{MainWindow}!currentFolder@{currentFolder}}
+\index{currentFolder@{currentFolder}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{currentFolder}{currentFolder}}
+{\footnotesize\ttfamily \label{class_main_window_a6ef15f424abda030a44e83d7381eec6e} 
+string Main\+Window\+::current\+Folder = "{}root"{}}
+
+Current folder name 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/mainwindow.\+h\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/mainwindow.\+cpp\end{DoxyCompactItemize}

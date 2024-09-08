@@ -1,0 +1,38 @@
+\doxysection{/\+Users/rode/git/uni/\+Simple\+File\+System/disk.h}
+\hypertarget{disk_8h_source}{}\label{disk_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ DISKH}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ DISK\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_disk}{Disk}}\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ vector<string>\ blocks;\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{int}\ size;\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{int}\ blockSize;\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{class_disk_aad1acbeac37fb0c8c33d9d87294c54df}{Disk}}(\textcolor{keywordtype}{int}\ numberOfBlocks,\ \textcolor{keywordtype}{int}\ blockSize\_);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_disk_aee2556db68599c78c40007eac596f006}{addDataToBlock}}(\textcolor{keywordtype}{int}\ blockNum,\ \textcolor{keywordtype}{string}\ data\_);}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00039\ \ \ \ \ vector<string>\ \mbox{\hyperlink{class_disk_a6d603449ab10ad18b11264a3e321d865}{getBlocks}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_disk_a14646ca66cffb2540c761d7ddc1fec0c}{setBlocks}}(\textcolor{keyword}{const}\ vector<string>\ \&newBlocks);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_disk_a6392a7f81d44606a86261f2ed0206a71}{getSize}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_disk_a359bbc1acb2960b0f35ed8cbb8223117}{setSize}}(\textcolor{keywordtype}{int}\ newSize);}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_disk_a50082e764976291cf787db08e05ada57}{getBlockSize}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_disk_a135d6f241f6a2cc6ec103e14a3d1ea23}{setBlockSize}}(\textcolor{keywordtype}{int}\ newBlockSize);}
+\DoxyCodeLine{00070\ \};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ DISK\_H}}
+
+\end{DoxyCode}

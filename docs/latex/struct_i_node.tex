@@ -1,0 +1,81 @@
+\doxysection{INode Struct Reference}
+\hypertarget{struct_i_node}{}\label{struct_i_node}\index{INode@{INode}}
+
+
+Represents an inode in the file system.  
+
+
+
+
+{\ttfamily \#include $<$inodesystem.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{struct_i_node_a2d569a952d85a525a42a9d3d229b5eb9}{i\+Node\+Num}}
+\item 
+string \mbox{\hyperlink{struct_i_node_a2b10fd26fb36b05cdda9b62f5412ee33}{name}}
+\item 
+vector$<$ int $>$ \mbox{\hyperlink{struct_i_node_a106327c2598607ff16f30ca009197116}{block\+List}}
+\item 
+string \mbox{\hyperlink{struct_i_node_a1ba59c17c3a152cdf7f835df67d38986}{author}}
+\item 
+QDate\+Time \mbox{\hyperlink{struct_i_node_a486c46921f9c3d842688119d9e12440e}{date}}
+\item 
+int \mbox{\hyperlink{struct_i_node_a3d05303dffa59463621d99af3f928816}{size}}
+\item 
+bool \mbox{\hyperlink{struct_i_node_af70a3975b223b9dece7a561672a19594}{is\+Folder}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents an inode in the file system. 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_i_node_a1ba59c17c3a152cdf7f835df67d38986}\index{INode@{INode}!author@{author}}
+\index{author@{author}!INode@{INode}}
+\doxysubsubsection{\texorpdfstring{author}{author}}
+{\footnotesize\ttfamily \label{struct_i_node_a1ba59c17c3a152cdf7f835df67d38986} 
+string INode\+::author}
+
+Author of the file or folder \Hypertarget{struct_i_node_a106327c2598607ff16f30ca009197116}\index{INode@{INode}!blockList@{blockList}}
+\index{blockList@{blockList}!INode@{INode}}
+\doxysubsubsection{\texorpdfstring{blockList}{blockList}}
+{\footnotesize\ttfamily \label{struct_i_node_a106327c2598607ff16f30ca009197116} 
+vector$<$int$>$ INode\+::block\+List}
+
+List of blocks associated with the inode \Hypertarget{struct_i_node_a486c46921f9c3d842688119d9e12440e}\index{INode@{INode}!date@{date}}
+\index{date@{date}!INode@{INode}}
+\doxysubsubsection{\texorpdfstring{date}{date}}
+{\footnotesize\ttfamily \label{struct_i_node_a486c46921f9c3d842688119d9e12440e} 
+QDate\+Time INode\+::date}
+
+Date of creation or modification \Hypertarget{struct_i_node_a2d569a952d85a525a42a9d3d229b5eb9}\index{INode@{INode}!iNodeNum@{iNodeNum}}
+\index{iNodeNum@{iNodeNum}!INode@{INode}}
+\doxysubsubsection{\texorpdfstring{iNodeNum}{iNodeNum}}
+{\footnotesize\ttfamily \label{struct_i_node_a2d569a952d85a525a42a9d3d229b5eb9} 
+int INode\+::i\+Node\+Num}
+
+Inode number \Hypertarget{struct_i_node_af70a3975b223b9dece7a561672a19594}\index{INode@{INode}!isFolder@{isFolder}}
+\index{isFolder@{isFolder}!INode@{INode}}
+\doxysubsubsection{\texorpdfstring{isFolder}{isFolder}}
+{\footnotesize\ttfamily \label{struct_i_node_af70a3975b223b9dece7a561672a19594} 
+bool INode\+::is\+Folder}
+
+Flag indicating if the inode is a folder \Hypertarget{struct_i_node_a2b10fd26fb36b05cdda9b62f5412ee33}\index{INode@{INode}!name@{name}}
+\index{name@{name}!INode@{INode}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily \label{struct_i_node_a2b10fd26fb36b05cdda9b62f5412ee33} 
+string INode\+::name}
+
+Name of the file or folder \Hypertarget{struct_i_node_a3d05303dffa59463621d99af3f928816}\index{INode@{INode}!size@{size}}
+\index{size@{size}!INode@{INode}}
+\doxysubsubsection{\texorpdfstring{size}{size}}
+{\footnotesize\ttfamily \label{struct_i_node_a3d05303dffa59463621d99af3f928816} 
+int INode\+::size}
+
+Size of the file or folder 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rode/git/uni/\+Simple\+File\+System/inodesystem.\+h\end{DoxyCompactItemize}
