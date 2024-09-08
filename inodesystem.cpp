@@ -556,3 +556,111 @@ void INODESYSTEM::copyFile(string fileName, string folderName){
 
     }
 }
+
+float INODESYSTEM::getFragmentation() {
+    int fragmentedBlocks = 0;
+
+    for (int i = 0; i < blockStatus.size() - 1; i++) {
+        if (blockStatus[i] == BLOCK_OCCUPIED) {
+            if (blockStatus[i + 1] == BLOCK_FREE) {
+                fragmentedBlocks++;
+            } else if (blockStatus[i + 1] == BLOCK_OCCUPIED) {
+                int fileNum = 0;
+                for (int j = 0; j < nodes.size(); j++) {
+                    if (nodes[j] != nullptr) {
+                        vector<int> blocklist = nodes[j]->blockList;
+                        for (int k = 0; k < blocklist.size(); k++) {
+                            if (blocklist[k] == i) {
+                                fileNum = j;
+                                break;
+                            }
+                        }
+                    }
+                }
+                int nextFileNum = 0;
+                for (int j = 0; j < nodes.size(); j++) {
+                    if (nodes[j] != nullptr) {
+                        vector<int> blocklist = nodes[j]->blockList;
+                        for (int k = 0; k < blocklist.size(); k++) {
+                            if (blocklist[k] == i + 1) {
+                                nextFileNum = j;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (nextFileNum != fileNum) {
+                    fragmentedBlocks++;
+                }
+            }
+        } else if (blockStatus[i] == BLOCK_FREE) {
+            if (blockStatus[i + 1] == BLOCK_OCCUPIED) {
+                fragmentedBlocks++;
+            }
+        }
+    }
+
+    if ((blockStatus[totalBlocks - 2] == BLOCK_OCCUPIED && blockStatus[totalBlocks - 1] == BLOCK_FREE) ||
+        (blockStatus[totalBlocks - 1] == BLOCK_OCCUPIED && blockStatus[totalBlocks - 2] == BLOCK_FREE)) {
+        fragmentedBlocks++;
+    } else {
+        int fileNum = 0;
+        for (int j = 0; j < nodes.size(); j++) {
+            if (nodes[j] != nullptr) {
+                vector<int> blocklist = nodes[j]->blockList;
+                for (int k = 0; k < blocklist.size(); k++) {
+                    if (blocklist[k] == totalBlocks - 1) {
+                        fileNum = j;
+                        break;
+                    }
+                }
+            }
+        }
+        int nextFileNum = 0;
+        for (int j = 0; j < nodes.size(); j++) {
+            if (nodes[j] != nullptr) {
+                vector<int> blocklist = nodes[j]->blockList;
+                for (int k = 0; k < blocklist.size(); k++) {
+                    if (blocklist[k] == totalBlocks) {
+                        nextFileNum = j;
+                        break;
+                    }
+                }
+            }
+        }
+        if (nextFileNum != fileNum) {
+            fragmentedBlocks++;
+        }
+    }
+
+    return ((float)fragmentedBlocks / (float)totalBlocks) * 100.0f;
+}
+
+void INODESYSTEM::defragDisk() {
+    cout << "Starting defragmentation..." << endl;
+
+    for (int iteration = 0; iteration < totalBlocks; iteration++) {
+        int blockIndex = 0;
+        for (int fileIdx = 0; fileIdx < nodes.size(); fileIdx++) {
+            if (nodes[fileIdx] != nullptr) {
+                vector<int> blocklist = nodes[fileIdx]->blockList;
+
+                for(int i=0;i < blocklist.size();i++){
+                    // Find the first free block to move the cluster
+                    while (blockIndex < totalBlocks && blockStatus[blockIndex] != BLOCK_FREE) {
+                        blockIndex++;
+                    }
+
+                    if (blockIndex < totalBlocks) {
+                        blockStatus[blocklist[i]] = BLOCK_FREE; // Free the old block
+                        blocklist[i] = blockIndex; // Move to new block
+                        blockStatus[blockIndex] = BLOCK_OCCUPIED; // Occupy the new block
+                        blockIndex++;
+                    }
+                }
+            }
+        }
+    }
+
+    cout << "Defragmentation completed." << endl;
+}

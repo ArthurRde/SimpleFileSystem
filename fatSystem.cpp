@@ -672,33 +672,33 @@ void FATSYSTEM::deleteFolder(const char* fileName){
 }
 
 void FATSYSTEM::showFat() {
-    qDebug() << "showFat 1";
+    //qDebug() << "showFat 1";
     for (int i = 0; i < fat->totalBlocks; i++) {
-        qDebug() << "showFat 2";
+        //qDebug() << "showFat 2";
         if (fat->blockStatus.at(i) == BLOCK_RESERVED) {
 
-                cout << "R";
+            cout << "R";
         } else if (fat->blockStatus.at(i) == BLOCK_DEFECT){
 
-                cout << "D";
+            cout << "D";
 
         } else if(fat->blockStatus[i] == BLOCK_FREE){
-                cout << "F";
+            cout << "F";
 
         } else if(fat->blockStatus[i]== BLOCK_OCCUPIED){
-                cout << "O";
-               /* for (int j = 0; j < MAX_FILES; j++) {
-                    if (fat->files[j] != nullptr) {
-                        Cluster *cluster = fat->files[j]->clusterList;
-                        while (cluster != nullptr) {
-                            if (cluster->blockIndex == i) {
-                                cout << j;
-                                break;
-                            }
-                            cluster = cluster->next;
+            //cout << "O";
+            for (int j = 0; j < fat->files.size(); j++) {
+                if (fat->files[j] != nullptr) {
+                    Cluster *cluster = fat->files[j]->clusterList;
+                    while (cluster != nullptr) {
+                        if (cluster->blockIndex == i) {
+                            cout << j;
+                            break;
                         }
+                        cluster = cluster->next;
                     }
-                }*/
+                }
+            }
 
         }
         cout << " ";
@@ -707,23 +707,16 @@ void FATSYSTEM::showFat() {
 }
 
 float FATSYSTEM::getFragmentation() {
-    /**
-        Fragmentierung:
-            -Fileindex ändert sich +1
-            -Free auf occ / occ auf free +1
-            ignorieren von res/def
-    Bug:   free blöcke die von defekten oder res ummantelt werden, werden nicht berücksichtigt
- */
     int fragmentedBlocks = 0;
 
     for (int i = 0; i < fat->totalBlocks - 1; i++) {
-
-        if (fat->blockStatus[i] == BLOCK_OCCUPIED)
+        if (fat->blockStatus[i] == BLOCK_OCCUPIED){
             if (fat->blockStatus[i + 1] == BLOCK_FREE) {
                 fragmentedBlocks++;
             } else if (fat->blockStatus[i + 1] == BLOCK_OCCUPIED) {
+                //qDebug() << "getFrag(in for - Block Occupied - Next Occupied)" << "iteration: " << i <<"Current blockStatus: " << fat->blockStatus[i];
                 int fileNum = 0;
-                for (int j = 0; j < MAX_FILES; j++) {
+                for (int j = 0; j < fat->files.size() ; j++) {
                     if (fat->files[j] != nullptr) {
                         Cluster *cluster = fat->files[j]->clusterList;
                         while (cluster != nullptr) {
@@ -735,8 +728,9 @@ float FATSYSTEM::getFragmentation() {
                         }
                     }
                 }
+                //qDebug() << "getFrag(in for - Block Reserved/Defect)" << "iteration: " << i <<"Current blockStatus: " << fat->blockStatus[i];
                 int nextFileNum = 0;
-                for (int j = 0; j < MAX_FILES; j++) {
+                for (int j = 0; j < fat->files.size(); j++) {
                     if (fat->files[j] != nullptr) {
                         Cluster *cluster = fat->files[j]->clusterList;
                         while (cluster != nullptr) {
@@ -756,113 +750,85 @@ float FATSYSTEM::getFragmentation() {
             }
 
 
-        if (fat->blockStatus[i] == BLOCK_FREE) {
-            if (fat->blockStatus[i + 1] == BLOCK_OCCUPIED) {
-                fragmentedBlocks++;
-            }
-        }
-    }
-
-
-    if ((fat->blockStatus[fat->totalBlocks - 2] == BLOCK_OCCUPIED &&
-         fat->blockStatus[fat->totalBlocks - 1] == BLOCK_FREE) ||
-        (fat->blockStatus[fat->totalBlocks - 1] == BLOCK_OCCUPIED &&
-         fat->blockStatus[fat->totalBlocks - 2] == BLOCK_FREE)) {
-
-        fragmentedBlocks++;
-    } else {
-        int fileNum = 0;
-        for (int j = 0; j < MAX_FILES; j++) {
-            if (fat->files[j] != nullptr) {
-                Cluster *cluster = fat->files[j]->clusterList;
-                while (cluster != nullptr) {
-                    if (cluster->blockIndex == fat->totalBlocks - 1) {
-                        fileNum = j;
-                        break;
-                    }
-                    cluster = cluster->next;
+            if (fat->blockStatus[i] == BLOCK_FREE) {
+                if (fat->blockStatus[i + 1] == BLOCK_OCCUPIED) {
+                    fragmentedBlocks++;
                 }
             }
         }
-        int nextFileNum = 0;
-        for (int j = 0; j < MAX_FILES; j++) {
-            if (fat->files[j] != nullptr) {
-                Cluster *cluster = fat->files[j]->clusterList;
-                while (cluster != nullptr) {
-                    if (cluster->blockIndex == fat->totalBlocks) {
-                        nextFileNum = j;
-                        break;
-                    }
-                    cluster = cluster->next;
-                }
-            }
-        }
-        if (nextFileNum != fileNum) {
+
+
+        if ((fat->blockStatus[fat->totalBlocks - 2] == BLOCK_OCCUPIED &&
+             fat->blockStatus[fat->totalBlocks - 1] == BLOCK_FREE) ||
+            (fat->blockStatus[fat->totalBlocks - 1] == BLOCK_OCCUPIED &&
+             fat->blockStatus[fat->totalBlocks - 2] == BLOCK_FREE)) {
+
             fragmentedBlocks++;
+        } else {
+            int fileNum = 0;
+            for (int j = 0; j < fat->files.size(); j++) {
+                if (fat->files[j] != nullptr) {
+                    Cluster *cluster = fat->files[j]->clusterList;
+                    while (cluster != nullptr) {
+                        if (cluster->blockIndex == fat->totalBlocks - 1) {
+                            fileNum = j;
+                            break;
+                        }
+                        cluster = cluster->next;
+                    }
+                }
+            }
+            int nextFileNum = 0;
+            for (int j = 0; j < fat->files.size(); j++) {
+                if (fat->files[j] != nullptr) {
+                    Cluster *cluster = fat->files[j]->clusterList;
+                    while (cluster != nullptr) {
+                        if (cluster->blockIndex == fat->totalBlocks) {
+                            nextFileNum = j;
+                            break;
+                        }
+                        cluster = cluster->next;
+                    }
+                }
+            }
+            if (nextFileNum != fileNum) {
+                fragmentedBlocks++;
 
-        }
+            }
 
+        }}
 
-    }
     return ((float) fragmentedBlocks / (float) fat->totalBlocks) * 100.0f;
 }
-
 
 void FATSYSTEM::defragDisk() {
     cout << "Starting defragmentation..." << endl;
 
-    int blockIndex = 0; // Reset block index at the beginning
+    for (int iteration = 0; iteration < fat->totalBlocks; iteration++) {
+        int blockIndex = 0;
+        for (int fileIdx = 0; fileIdx < fat->files.size(); fileIdx++) {
+            if (fat->files[fileIdx] != nullptr) {
+                File *file = fat->files[fileIdx];
+                Cluster *cluster = file->clusterList;
 
-    for (int fileIdx = 0; fileIdx < MAX_FILES; fileIdx++) {
-        if (fat->files[fileIdx] != nullptr) {
-            File *file = fat->files[fileIdx];
-            Cluster *cluster = file->clusterList;
+                while (cluster != nullptr) {
+                    // Find the first free block to move the cluster
+                    while (blockIndex < fat->totalBlocks && fat->blockStatus[blockIndex] != BLOCK_FREE) {
+                        blockIndex++;
+                    }
 
-            while (cluster != nullptr) {
-                // Find the first free block to move the cluster
-                while (blockIndex < fat->totalBlocks && fat->blockStatus[blockIndex] != BLOCK_FREE) {
-                    blockIndex++;
+                    if (blockIndex < fat->totalBlocks) {
+                        fat->blockStatus[cluster->blockIndex] = BLOCK_FREE; // Free the old block
+                        cluster->blockIndex = blockIndex; // Move to new block
+                        fat->blockStatus[blockIndex] = BLOCK_OCCUPIED; // Occupy the new block
+                        blockIndex++;
+                    }
+
+                    cluster = cluster->next;
                 }
-
-                if (blockIndex < fat->totalBlocks) {
-                    fat->blockStatus[cluster->blockIndex] = BLOCK_FREE; // Free the old block
-                    cluster->blockIndex = blockIndex; // Move to new block
-                    fat->blockStatus[blockIndex] = BLOCK_OCCUPIED; // Occupy the new block
-                    blockIndex++;
-                }
-
-                cluster = cluster->next;
             }
         }
     }
 
     cout << "Defragmentation completed." << endl;
 }
-
-// INFO: Legacy code
-//
-//void defragDisk(Fat* pFat) {
-//    cout <<"Defrag" << endl;
-//    for (int fileIdx = 0; fileIdx < MAX_FILES; fileIdx++) {
-//
-//        if (pFat->files[fileIdx] != nullptr) {
-//            File* file = pFat->files[fileIdx];
-//            Cluster* cluster = file->clusterList;
-//            int blockIndex = 0;
-//            while (cluster != nullptr) {
-//
-//                while (blockIndex < pFat->totalBlocks && pFat->blockStatus[blockIndex] != BLOCK_FREE) {
-//                    blockIndex++;
-//                }
-//                pFat->blockStatus[cluster->blockIndex] = BLOCK_FREE;
-//                cluster->blockIndex = blockIndex;
-//                pFat->blockStatus[blockIndex] = BLOCK_OCCUPIED;
-//                cluster = cluster->next;
-//            }
-//        }
-//    }
-//    cout <<"Defrag fertig" << endl;
-//}
-
-
-

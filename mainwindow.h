@@ -82,6 +82,7 @@ public slots:
      void burnCD();
     void AddFilesToCD();
     void readCD();
+    void defragSystem();
 private
     slots:
             void on_treeWidget_DiskD_itemClicked(QTreeWidgetItem *item, int column);

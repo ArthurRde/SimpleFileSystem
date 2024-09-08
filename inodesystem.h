@@ -63,7 +63,8 @@ public:
     Disk *getDisk() const;
 
     void setDisk(Disk *newDisk);
-
+    float getFragmentation();
+    void defragDisk();
     int editData(int fileToBeEditedId, string data);
     string findFolderofFile(string fileName);
     QList<INode *> getFoldersInFolder(string folderName);

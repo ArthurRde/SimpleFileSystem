@@ -84,6 +84,8 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
 
+    ui->progressBar->setMaximum(100);
+    ui->progressBar->setMinimum(0);
 
     ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -98,6 +100,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionBurn_Cd, &QAction::triggered, this, &MainWindow::burnCD);
     connect(ui->actionAdd_Files, &QAction::triggered, this, &MainWindow::AddFilesToCD);
     connect(ui->actionRead, &QAction::triggered, this, &MainWindow::readCD);
+    connect(ui->actionDefragmentieren, &QAction::triggered, this, &MainWindow::defragSystem);
+
     // Setup
 
     ui->treeWidget_DiskD->setColumnCount(1);
@@ -245,22 +249,22 @@ void MainWindow::showPath(INODESYSTEM *sys, int rootId){
 
 QString MainWindow::findFolderPath(FATSYSTEM *sys, char* rootName, char* foldername) {
     QString path;
-    //qDebug() << "start show Path fat 1" << foldername;
-    QList < File * > children = sys->getFoldersInFolder( rootName);
-    //qDebug() << "start show Path fat 2" << children.size();
+    qDebug() << "start show Path fat 1" << foldername;
+    QList < File * > children = sys->getFoldersInFolder(rootName);
+    qDebug() << "start show Path fat 2" << children.size();
     if(children.contains(sys->findFile(foldername))){
         string str;
         str.assign(rootName);
-         //qDebug() << "start show Path fat ret";
+         qDebug() << "start show Path fat ret";
         return QString::fromStdString(str + "/" + foldername );
 
     }
     for (int i = 0; i < children.size(); i++) {
-        // qDebug() << "start show Path fat 3";
+         qDebug() << "start show Path fat 3";
         QList < File * > newChild = sys->getFoldersInFolder( children[i]->name);
 
         if (newChild.size() > 0) {
-          //   qDebug() << "start show Path fat 4";
+             qDebug() << "start show Path fat 4";
             QString returnValue = findFolderPath(sys,children[i]->name , foldername);
             if(returnValue != "notFound"){
                 string str;
@@ -282,7 +286,7 @@ void MainWindow::showPath(FATSYSTEM *sys, char* rootName){
     char c[currentFolder.length() + 1];
     char* c_folder = c;
     strcpy(c_folder, currentFolder.c_str());
-    //qDebug() << "start show Path fat" ;
+    qDebug() << "start show Path fat" ;
     QString val = findFolderPath(sys, rootName, c_folder);
     if(val == "notFound"){
         ui->label_3->setText("Path: ~/");
@@ -396,7 +400,9 @@ void MainWindow::showAllFolder(INODESYSTEM *sys, int rootId) {
     rootItem->setText(0, QString::fromStdString(sys->getNodes()[rootId]->name));
     qDebug() << "show all Folder " << "root";
     setTreeWidgetChildRec(sys, rootId, rootItem);
+    ui->progressBar->setValue(sys->getFragmentation());
 
+    ui->label_4->setText(QString().append("Frag. ").append(to_string(sys->getFragmentation()).append("%")));
 
     //liste mit folders
 
@@ -445,8 +451,8 @@ void MainWindow::showAllFolder(FATSYSTEM *sys, char* rootName) {
     rootItem->setText(0, QString::fromStdString(sys->findFile("root")->name));
     // qDebug() << "show all Folder " << "root";
     setTreeWidgetChildRec(sys, rootName, rootItem);
-
-
+    ui->progressBar->setValue(sys->getFragmentation());
+    ui->label_4->setText(QString().append("Frag. ").append(to_string(sys->getFragmentation()).append("%")));
     //liste mit folders
 
     //root
@@ -848,27 +854,53 @@ void MainWindow::createDemoFiles(){
     int rootId = stoi(diskD->getBlocks().at(0));
 
     Isys->createFile("documents", "user", " ", "root", true);
+    Isys->createFile("hello.txt", "sys", "data", "root");
+    Isys->createFile("photos.pdf", "sys", "1231", "documents");
+    Isys->deleteFile("hello.txt");
+    Isys->deleteFile("photos.pdf");
+    Isys->createFile("photos8.pdf", "sys", " ", "documents");
+    Isys->createFile("photosss9.pdf", "sys", "data", "documents");
+    Isys->deleteFile("photosss9.pdf");
+    Isys->createFile("photosss2s.txt", "sys", "Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit.Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit.Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit. ", "documents");
+    Isys->createFile("photossss3sss.txt", "sys", " Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit.Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit.Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit.", "documents");
+    Isys->createFile("photossss4s.txt", "sys", " ", "documents");
+    Isys->createFile("photossss6ss.txt", "sys", " ", "documents");
 
-    Isys->createFile("downloads", "system", " ", "root", true);
-
-    Isys->createFile("keyAccess.closed", "KeyCode.exe", "bearer237746643698892388734794378478979847942794279842978974821", "root");
-
-    Isys->createFile("poem.txt", "author", "Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit.", "documents");
-
-    Isys->createFile("examSolutions.pdf", "anonymus", "Frage: Erklären Sie das OSI-Modell und nennen Sie die sieben Schichten.solution: Das OSI-Modell (Open Systems Interconnection Model) ist ein Referenzmodell für die Kommunikation in Netzwerken. Es besteht aus sieben Schichten:Physikalische Schicht (Physical Layer)Sicherungsschicht (Data Link Layer)Netzwerkschicht (Network Layer)Transportschicht (Transport Layer)Sitzungsschicht (Session Layer)Darstellungsschicht (Presentation Layer)Anwendungsschicht (Application Layer)", "downloads");
-
-    Isys->createFile("photos", "system", " ", "documents", true);
-
-    Isys->createFile("summer.png", "apple", "A beautiful summer, A beautiful summer", "photos");
+    qDebug() << "!!!!!!________" << Isys->getFragmentation();
+    Isys->defragDisk();
+    qDebug() << "!!!!!!________" << Isys->getFragmentation();
 
     qDebug() << "demofiles created";
 
     showAllFolder(Isys, rootId);
     showFilesInFolder(Isys, "root");
 
+
     fSys->createFile("documents", "user", " ", "root", true);
     fSys->createFile("hello.txt", "sys", "data", "root");
-    fSys->createFile("photos", "sys", " ", "documents",true);
+    fSys->createFile("photos.pdf", "sys", "1231", "documents");
+    fSys->deleteFile("hello.txt");
+    fSys->deleteFile("photos.pdf");
+    fSys->createFile("photos8.pdf", "sys", " ", "documents");
+    fSys->createFile("photosss9.pdf", "sys", "data", "documents");
+    fSys->deleteFile("photosss9.pdf");
+    fSys->createFile("photosss2s.txt", "sys", "Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit.Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit.Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit. ", "documents");
+    fSys->createFile("photossss3sss.txt", "sys", " Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit.Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit.Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit.", "documents");
+    fSys->createFile("photossss4s.txt", "sys", " ", "documents");
+    fSys->createFile("photossss6ss.txt", "sys", " ", "documents");
+
+    cout<< endl;cout<< endl;
+    cout << "!!!!!!!!" <<fSys->getFragmentation();
+
+    cout<< endl; cout<< endl;
+    fSys->showFat();
+    fSys->defragDisk();
+    fSys->showFat();
+    cout<< endl; cout<< endl;
+
+    cout << "!!!!!!!!" <<fSys->getFragmentation();
+    cout<< endl; cout<< endl;
+
     showFilesInFolder(fSys, "root");
     showAllFolder(fSys,"root");
 
@@ -881,3 +913,14 @@ void MainWindow::on_treeWidget_DiskC_itemClicked(QTreeWidgetItem *item, int colu
     showFilesInFolder(fSys, item->text(column).toStdString());
 }
 
+void MainWindow::defragSystem(){
+    if(showedSystem == 1){
+        Isys->defragDisk();
+        ui->progressBar->setValue(Isys->getFragmentation());
+        ui->label_4->setText(QString().append("Frag. ").append(to_string(Isys->getFragmentation()).append("%")));
+    } else {
+        fSys->defragDisk();
+        ui->progressBar->setValue(fSys->getFragmentation());
+        ui->label_4->setText(QString().append("Frag. ").append(to_string(Isys->getFragmentation()).append("%")));
+    }
+}
