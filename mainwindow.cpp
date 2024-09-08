@@ -1,13 +1,20 @@
 #include "mainwindow.h"
+#include "cdsystem.h"
+#include "dialogwritecd.h"
 #include "ui_dialogcreatefile.h"
 #include "ui_mainwindow.h"
 
+
+#include <QRandomGenerator>
+#include "dialoginsert.h"
 using namespace std;
 Disk *diskD = new Disk(64, 512);
 Disk *diskC = new Disk(64, 512);
 INODESYSTEM *Isys = new INODESYSTEM(diskD->getSize(), diskD);
 FATSYSTEM *fSys = new FATSYSTEM(diskC->getSize(), diskC);
-
+CDSYSTEM *cSys = new CDSYSTEM(Isys,fSys);
+vector<string> producer = {"samsong","mapple","nokkia"};
+int cdport = 0;
 int MainWindow::getSlotSelected() const
 {
     return slotSelected;
@@ -38,6 +45,26 @@ void MainWindow::setClipboardNodeCopied(bool newClipboardNodeCopied)
     clipboardNodeCopied = newClipboardNodeCopied;
 }
 
+void MainWindow::ejectCD(){
+    DialogEject dlg(cSys);
+    dlg.setWindowTitle("Eject CDs");
+
+    for(int i = 0; i < cSys->getInsertedCds().size(); i++){
+        dlg.addCdToComboBox(cSys->getInsertedCds()[i]->portName);
+    }
+    dlg.exec();
+}
+
+void MainWindow::insertCD(){
+    DialogInsert dlg(cSys);
+    dlg.setWindowTitle("Insert CD");
+    for(int i = 0; i < cSys->getEjectedCds().size(); i++){
+        dlg.addCdToComboBox(cSys->getEjectedCds()[i]->portName);
+    }
+    dlg.exec();
+}
+
+
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
@@ -65,6 +92,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->pushButton_4->setEnabled(false);
     ui->pushButton->setEnabled(false);
     connect(ui->actionCreate_demofiles, &QAction::triggered, this, &MainWindow::createDemoFiles);
+    connect(ui->actionEject, &QAction::triggered, this, &MainWindow::ejectCD);
+    connect(ui->actionBuy_a_new_CD, &QAction::triggered, this, &MainWindow::buyNewCD);
+    connect(ui->actionInsert, &QAction::triggered, this, &MainWindow::insertCD);
+    connect(ui->actionBurn_Cd, &QAction::triggered, this, &MainWindow::burnCD);
+    connect(ui->actionAdd_Files, &QAction::triggered, this, &MainWindow::AddFilesToCD);
+    connect(ui->actionRead, &QAction::triggered, this, &MainWindow::readCD);
     // Setup
 
     ui->treeWidget_DiskD->setColumnCount(1);
@@ -74,6 +107,8 @@ MainWindow::MainWindow(QWidget *parent)
     showAllFolder(fSys,"root");
     showFilesInFolder(Isys, "root");
     showFilesInFolder(fSys,"root");
+    currentFolder = "root";
+    showedSystem = 2;
 
     //fSys->createFile("me.mp4", "tets", " ", " ");
     //fSys->createFile("file.pdf", "dud", "jkfjnjfsnjsjndsjnjnjndjndsjnd", " ");
@@ -113,9 +148,65 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
+
+void MainWindow::AddFilesToCD(){
+    if(ui->tableWidget->item(slotSelected,1) != NULL){
+    if(showedSystem == 1){
+        string file = ui->tableWidget->item(slotSelected,1)->text().toStdString();
+        cSys->nodes.push_back(Isys->getNodes()[Isys->findFile(file)]);
+
+    } else {
+        cSys->files.push_back(fSys->findFile(ui->tableWidget->item(slotSelected,1)->text().toStdString().c_str()));
+    }
+    }
+}
+
+
 MainWindow::~MainWindow() {
     delete ui;
 }
+
+void MainWindow::burnCD(){
+
+
+
+
+    cSys->burnCD();
+    if(showedSystem == 1){
+        showFilesInFolder(Isys, currentFolder);
+        showDataOfFile(Isys,  currentFolder);
+    } else {
+        showFilesInFolder(fSys, currentFolder);
+        showDataOfFile(fSys,const_cast<char*>( currentFolder.c_str()));
+
+    }
+
+
+
+
+}
+
+void MainWindow::readCD(){
+
+    cSys->readCD(cSys->insertedCds[0],showedSystem);
+    if(showedSystem == 1){
+        showFilesInFolder(Isys, currentFolder);
+        showDataOfFile(Isys,  currentFolder);
+    } else {
+        showFilesInFolder(fSys, currentFolder);
+        showDataOfFile(fSys,const_cast<char*>( currentFolder.c_str()));
+
+    }
+}
+
+void MainWindow::buyNewCD(){
+    int elem = producer.size();
+
+    string port = "Port " +to_string(cdport) + " ("+producer[QRandomGenerator::global()->bounded(elem)] + ")";
+    cSys->addEjectedCd(port);
+    cdport++;
+}
+
 QString MainWindow::findFolderPath(INODESYSTEM *sys, int rootId, string foldername) {
     QString path;
     QList < INode * > children = sys->getFoldersInFolder( sys->getNodes()[rootId]->name);
@@ -544,7 +635,7 @@ void MainWindow::on_pushButton_5_clicked()
                 if(dlg.getUi()->comboBox->currentText() != "custom"){
 
 
-                    char* c_name = stringToCharArray(fSys->createUniqueName(const_cast<char*>((dlg.getUi()->lineEdit->text().toStdString()+"."+dlg.getUi()->comboBox->currentText().toStdString()).c_str()),"-D"));
+                    string c_name = fSys->createUniqueName(const_cast<char*>((dlg.getUi()->lineEdit->text().toStdString()+"."+dlg.getUi()->comboBox->currentText().toStdString()).c_str()),"-D");
 
 
                     qDebug() << "name of file " << c_name;
@@ -559,21 +650,23 @@ void MainWindow::on_pushButton_5_clicked()
 
 
 
-                   fSys->createFile(c_name,c_author,dlg.getUi()->lineEdit_3->text().toStdString(),c_folder);
+                    fSys->createFile(const_cast<char*>(c_name.c_str()),c_author,dlg.getUi()->lineEdit_3->text().toStdString(),c_folder);
                 } else {
 
-                    char cN[currentFolder.length() + 1];
-                    char* c_name = cN;
-                    strcpy(c_name, dlg.getUi()->lineEdit->text().toStdString().c_str());
 
-                    char cA[currentFolder.length() + 1];
-                    char* c_author = cA;
-                    strcpy(c_name,dlg.getUi()->lineEdit_2->text().toStdString().c_str());
 
-                    char c[currentFolder.length() + 1];
-                    char* c_folder = c;
-                    strcpy(c_folder, currentFolder.c_str());
 
+                    char* c_name = stringToCharArray(dlg.getUi()->lineEdit->text().toStdString());
+
+
+
+                    char* c_author = stringToCharArray(dlg.getUi()->lineEdit_2->text().toStdString());
+
+
+                    char* c_folder = stringToCharArray(currentFolder);
+
+
+                    qDebug() << "FAT CREATE File" << c_name;
                     fSys->createFile(c_name,c_author,dlg.getUi()->lineEdit_3->text().toStdString(),c_folder);
                 }
             }
@@ -778,6 +871,8 @@ void MainWindow::createDemoFiles(){
     fSys->createFile("photos", "sys", " ", "documents",true);
     showFilesInFolder(fSys, "root");
     showAllFolder(fSys,"root");
+
+    //cSys->nodes.push_back(Isys->getNodes()[Isys->findFile("documents")]);
 
 }
 

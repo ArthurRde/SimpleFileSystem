@@ -23,59 +23,26 @@ DialogCreateFile::~DialogCreateFile()
 
 void DialogCreateFile::on_comboBox_currentTextChanged(const QString &arg1)
 {
-    if(arg1 == "Folder"){
-        ui->lineEdit_3->setEnabled(false);
-        isFolder = true;
-    } else {
-        ui->lineEdit_3->setEnabled(true);
-        isFolder = false;
-    }
+
     //qDebug() << " isFolder " << isFolder;
-    if(hasName && hasAuthor && (hasData || isFolder)){
-        QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::Ok);
-        okButton->setEnabled(true);
-    } else {
-        QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::Ok);
-        okButton->setEnabled(false);
-    }
+
 }
 
 
 void DialogCreateFile::on_lineEdit_textChanged(const QString &arg1)
 {
-    if(!arg1.trimmed().isEmpty()){
-    hasName = true;
-    } else {
-        hasName = false;
-    }
+
     //qDebug() << " has name" << hasName;
-    if(hasName && hasAuthor && (hasData || isFolder)){
-        QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::Ok);
-        okButton->setEnabled(true);
-    } else {
-        QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::Ok);
-        okButton->setEnabled(false);
-    }
+    checkIfComplete();
 }
 
 
 void DialogCreateFile::on_lineEdit_2_textChanged(const QString &arg1)
 {
-    if(!arg1.trimmed().isEmpty()){
-        hasAuthor = true;
-    } else {
-        hasAuthor = false;
-    }
 
     //qDebug() << " has author" << hasAuthor;
 
-    if(hasName && hasAuthor && (hasData || isFolder)){
-        QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::Ok);
-        okButton->setEnabled(true);
-    } else {
-        QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::Ok);
-        okButton->setEnabled(false);
-    }
+     checkIfComplete();
 }
 
 
@@ -84,13 +51,39 @@ void DialogCreateFile::on_lineEdit_2_textChanged(const QString &arg1)
 
 void DialogCreateFile::on_lineEdit_3_textChanged(const QString &arg1)
 {
-    if(!arg1.trimmed().isEmpty()){
+
+    checkIfComplete();
+}
+
+void DialogCreateFile::checkIfComplete(){
+    if(!ui->lineEdit_3->text().trimmed().isEmpty()){
         hasData = true;
     } else {
         hasData = false;
     }
 
+    qDebug() << "has Data" << hasData;
+    if(!ui->lineEdit_2->text().trimmed().isEmpty()){
+        hasAuthor = true;
+    } else {
+        hasAuthor = false;
+    }
+    qDebug() << "has Aut" << hasAuthor;
+    if(!ui->lineEdit->text().trimmed().isEmpty()){
+        hasName = true;
+    } else {
+        hasName = false;
+    }
+    qDebug() << "has Name" << hasName;
+    if(ui->comboBox->currentText() == "Folder"){
+        ui->lineEdit_3->setEnabled(false);
+        isFolder = true;
+    } else {
+        ui->lineEdit_3->setEnabled(true);
+        isFolder = false;
+    }
 
+    qDebug() << "isFol" << isFolder;
 
     if(hasName && hasAuthor && (hasData || isFolder)){
         QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::Ok);

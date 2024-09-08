@@ -11,9 +11,13 @@ CONFIG += c++17
 SOURCES += \
     blockstatus.cpp \
     cdrom.cpp \
+    cdsystem.cpp \
     dialogcreatefile.cpp \
+    dialogeject.cpp \
+    dialoginsert.cpp \
     dialogrename.cpp \
     dialogshowfile.cpp \
+    dialogwritecd.cpp \
     disk.cpp \
     fatSystem.cpp \
     inodesystem.cpp \
@@ -23,9 +27,13 @@ SOURCES += \
 HEADERS += \
     blockstatus.h \
     cdrom.h \
+    cdsystem.h \
     dialogcreatefile.h \
+    dialogeject.h \
+    dialoginsert.h \
     dialogrename.h \
     dialogshowfile.h \
+    dialogwritecd.h \
     disk.h \
     fatSystem.h \
     inodesystem.h \
@@ -33,8 +41,11 @@ HEADERS += \
 
 FORMS += \
     dialogcreatefile.ui \
+    dialogeject.ui \
+    dialoginsert.ui \
     dialogrename.ui \
     dialogshowfile.ui \
+    dialogwritecd.ui \
     mainwindow.ui
 
 # Default rules for deployment.

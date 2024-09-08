@@ -12,8 +12,8 @@
 #include "dialogcreatefile.h"
 #include "dialogshowfile.h"
 #include "dialogrename.h"
-
-
+#include "cdrom.h"
+#include "dialogeject.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
     class MainWindow;
@@ -71,8 +71,17 @@ public:
     void showDataOfFile(INODESYSTEM *sys, string fileName);
     void createAllFilesOfFolder(FATSYSTEM *srcSys, INODESYSTEM *desSys, string srcFolderName, string desFolderName);
     void createAllFilesOfFolder(INODESYSTEM *srcSys, FATSYSTEM *desSys, string srcFolderName, string desFolderName);
+
+    void buyNewCD();
+
+
 public slots:
     void createDemoFiles();
+    void ejectCD();
+    void insertCD();
+     void burnCD();
+    void AddFilesToCD();
+    void readCD();
 private
     slots:
             void on_treeWidget_DiskD_itemClicked(QTreeWidgetItem *item, int column);

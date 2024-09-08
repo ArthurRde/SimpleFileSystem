@@ -210,17 +210,21 @@ QList<File*> FATSYSTEM::getFilesInFolder(char* folderName) {
 
 string FATSYSTEM::createUniqueName(char* fileName, char* uniqueText){
    // qDebug() << "test 1" << fileName;
-    char* nameChar = NULL;
+    char* nameChar = fileName;
     bool ex = existFile(fileName);
     string str = "";
+    int pos = 0;
    // qDebug() << "test 1.1";
+    if(!ex){
+        str = fileName;
+    }
     while(ex){
 
-
+        pos++;
         stringstream ss(fileName);
         string token;
         vector <string> tokens;
-        //qDebug() << "test 1.2";
+        qDebug() << "test 1.2" << fileName;
         char delimiter = '.';
         if (str != " ") {
             while (getline(ss, token, delimiter)) {
@@ -233,26 +237,28 @@ string FATSYSTEM::createUniqueName(char* fileName, char* uniqueText){
             }
         }
        // qDebug() << "test 2";
+        for(int i = 0; i< pos; i++){
         tokens[0] = tokens[0]+uniqueText;
+        }
 
 
 
         str = "";
 
-        str = str + tokens[0].c_str();
+        str = str + tokens[0];
         for(int i = 1; i< tokens.size(); i++){
 
             str = str +"."+tokens[i];
         }
-       // qDebug() << "here" << str;
+       qDebug() << "here" << str;
 
         //qDebug() << "new Name " << nameChar <<fat->files.size() ;
 
 
         ex = existFile(const_cast<char*>(str.c_str()));
     }
-    //qDebug() << "test 3";
-    return str.c_str();
+    qDebug() << "test 3" << str;
+    return str;
 }
 
 void FATSYSTEM::copyFile(char* fileName, char* folderName){

@@ -18,6 +18,7 @@ public:
     Ui::DialogCreateFile *getUi() const;
     void setUi(Ui::DialogCreateFile *newUi);
 
+    void checkIfComplete();
 private slots:
     void on_comboBox_currentTextChanged(const QString &arg1);
 
