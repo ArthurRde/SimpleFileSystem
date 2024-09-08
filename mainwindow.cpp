@@ -68,11 +68,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableWidget->setColumnCount(4);
 
     // Set the header labels
-    ui->tableWidget->setHorizontalHeaderLabels(QStringList() << "Icon" << "Name" << "Size" << "Date");
+    ui->tableWidget->setHorizontalHeaderLabels(QStringList() << "Type" << "Name" << "Size" << "Date");
 
     // Set the first column to have a fixed width
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
-    ui->tableWidget->setColumnWidth(0, 50); // Set the fixed width for the first column
+    ui->tableWidget->setColumnWidth(0, 60); // Set the fixed width for the first column
 
     // Set the remaining columns to stretch
     for (int c = 1; c < ui->tableWidget->columnCount(); ++c) {
@@ -249,13 +249,18 @@ void MainWindow::createTableFileRows(QList<INode *> node) {
     ui->tableWidget->clear();
     ui->tableWidget->setRowCount(node.size());
     ui->tableWidget->setColumnCount(4);
-    ui->tableWidget->setHorizontalHeaderLabels(QStringList() << "Icon" << "Name" << "Size" << "Date");
+    ui->tableWidget->setHorizontalHeaderLabels(QStringList() << "Type" << "Name" << "Size" << "Date");
     for (int i = 0; i < node.size(); i++) {
         if (node.at(i) != NULL) {
-            QTableWidgetItem *iconItem = new QTableWidgetItem;
-            iconItem->setIcon(QIcon("path/to/icon.png"));
-            iconItem->setFlags(iconItem->flags() & ~Qt::ItemIsEditable);
-            ui->tableWidget->setItem(i, 0, iconItem);
+            QTableWidgetItem *typeItem = new QTableWidgetItem;
+            if(node.at(i)->isFolder == true){
+                typeItem->setText(QString::fromStdString("Folder"));
+            }else{
+                typeItem->setText(QString::fromStdString("File"));
+            }
+
+            typeItem->setFlags(typeItem->flags() & ~Qt::ItemIsEditable);
+            ui->tableWidget->setItem(i, 0, typeItem);
 
             QTableWidgetItem *nameItem = new QTableWidgetItem;
             nameItem->setText(QString::fromStdString(node.at(i)->name));
@@ -279,13 +284,17 @@ void MainWindow::createTableFileRows(QList<File *> files) {
     ui->tableWidget->clear();
     ui->tableWidget->setRowCount(files.size());
     ui->tableWidget->setColumnCount(4);
-    ui->tableWidget->setHorizontalHeaderLabels(QStringList() << "Icon" << "Name" << "Size" << "Date");
+    ui->tableWidget->setHorizontalHeaderLabels(QStringList() << "Type" << "Name" << "Size" << "Date");
     for (int i = 0; i < files.size(); i++) {
 
-        QTableWidgetItem *iconItem = new QTableWidgetItem;
-        iconItem->setIcon(QIcon("path/to/icon.png"));
-        iconItem->setFlags(iconItem->flags() & ~Qt::ItemIsEditable);
-        ui->tableWidget->setItem(i, 0, iconItem);
+        QTableWidgetItem *typeItem = new QTableWidgetItem;
+        if(files.at(i)->isFolder == true){
+            typeItem->setText(QString::fromStdString("Folder"));
+        }else{
+            typeItem->setText(QString::fromStdString("File"));
+        }
+        typeItem->setFlags(typeItem->flags() & ~Qt::ItemIsEditable);
+        ui->tableWidget->setItem(i, 0, typeItem);
 
         QTableWidgetItem *nameItem = new QTableWidgetItem;
         nameItem->setText(QString::fromStdString(files.at(i)->name));
