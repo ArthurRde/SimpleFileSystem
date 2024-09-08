@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>759</width>
-    <height>613</height>
+    <width>764</width>
+    <height>623</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,9 +31,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>0</y>
+      <y>10</y>
       <width>151</width>
-      <height>541</height>
+      <height>531</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -118,7 +118,7 @@
       <x>200</x>
       <y>510</y>
       <width>541</width>
-      <height>32</height>
+      <height>56</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -144,17 +144,22 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QProgressBar" name="progressBar">
+         <property name="value">
+          <number>24</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Frag.</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_4">
@@ -207,7 +212,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>759</width>
+     <width>764</width>
      <height>24</height>
     </rect>
    </property>

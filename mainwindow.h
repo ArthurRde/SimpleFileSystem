@@ -73,6 +73,7 @@ public:
     void createAllFilesOfFolder(INODESYSTEM *srcSys, FATSYSTEM *desSys, string srcFolderName, string desFolderName);
 public slots:
     void createDemoFiles();
+    void defragSystem();
 private
     slots:
             void on_treeWidget_DiskD_itemClicked(QTreeWidgetItem *item, int column);

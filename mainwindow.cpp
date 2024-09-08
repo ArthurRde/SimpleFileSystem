@@ -57,6 +57,8 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
 
+    ui->progressBar->setMaximum(100);
+    ui->progressBar->setMinimum(0);
 
     ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -65,6 +67,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->pushButton_4->setEnabled(false);
     ui->pushButton->setEnabled(false);
     connect(ui->actionCreate_demofiles, &QAction::triggered, this, &MainWindow::createDemoFiles);
+    connect(ui->actionDefragmentieren, &QAction::triggered, this, &MainWindow::defragSystem);
+
     // Setup
 
     ui->treeWidget_DiskD->setColumnCount(1);
@@ -305,7 +309,9 @@ void MainWindow::showAllFolder(INODESYSTEM *sys, int rootId) {
     rootItem->setText(0, QString::fromStdString(sys->getNodes()[rootId]->name));
     qDebug() << "show all Folder " << "root";
     setTreeWidgetChildRec(sys, rootId, rootItem);
+    ui->progressBar->setValue(sys->getFragmentation());
 
+    ui->label_4->setText(QString().append("Frag. ").append(to_string(sys->getFragmentation()).append("%")));
 
     //liste mit folders
 
@@ -354,8 +360,8 @@ void MainWindow::showAllFolder(FATSYSTEM *sys, char* rootName) {
     rootItem->setText(0, QString::fromStdString(sys->findFile("root")->name));
     // qDebug() << "show all Folder " << "root";
     setTreeWidgetChildRec(sys, rootName, rootItem);
-
-
+    ui->progressBar->setValue(sys->getFragmentation());
+    ui->label_4->setText(QString().append("Frag. ").append(to_string(sys->getFragmentation()).append("%")));
     //liste mit folders
 
     //root
@@ -811,3 +817,14 @@ void MainWindow::on_treeWidget_DiskC_itemClicked(QTreeWidgetItem *item, int colu
     showFilesInFolder(fSys, item->text(column).toStdString());
 }
 
+void MainWindow::defragSystem(){
+    if(showedSystem == 1){
+        Isys->defragDisk();
+        ui->progressBar->setValue(Isys->getFragmentation());
+        ui->label_4->setText(QString().append("Frag. ").append(to_string(Isys->getFragmentation()).append("%")));
+    } else {
+        fSys->defragDisk();
+        ui->progressBar->setValue(fSys->getFragmentation());
+        ui->label_4->setText(QString().append("Frag. ").append(to_string(Isys->getFragmentation()).append("%")));
+    }
+}
