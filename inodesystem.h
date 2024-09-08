@@ -63,6 +63,7 @@ public:
     Disk *getDisk() const;
 
     void setDisk(Disk *newDisk);
+    float getFragmentation();
 
     int editData(int fileToBeEditedId, string data);
     string findFolderofFile(string fileName);
