@@ -3,17 +3,21 @@
 
 
 #include "QtCore/qdatetime.h"
+
 #pragma once
+
 #include <iostream>
 #include <vector>
 #include <string>
 #include <ctime>
 #include <QDebug>
 #include "blockstatus.h"
+
 using namespace std;
 
 struct Base {
     virtual ~Base() = default;
+
     virtual void print() const = 0;
 };
 
@@ -27,17 +31,17 @@ struct FileEntry : Base {
     char dateTime[7]; //ist hier QDate besser? das ist aber so mehr bei der Byteanzahl
 
 
-    char* flags = new char[3] ;
+    char *flags = new char[3];
     uint8_t fileNameLength;
     string fileName;
     vector<uint8_t> padding;
 
-    FileEntry(const string& name, uint64_t size) : fileName(name) , fileSize(size) {
+    FileEntry(const string &name, uint64_t size) : fileName(name), fileSize(size) {
 
-       // uint64_t start
+        // uint64_t start
         extendedAttributeLength = 0;
         time_t t = time(NULL);
-        tm* now = gmtime(&t);
+        tm *now = gmtime(&t);
 
         dateTime[0] = now->tm_year % 100;
 
@@ -70,37 +74,38 @@ struct PrimaryVolumeDescriptor : Base {
     uint32_t volumeSpaceSize;
     char creationDate[17];
     char expirationDate[17];
-    FileEntry* rootDirectoryEntry;
+    FileEntry *rootDirectoryEntry;
 
     string summaryFileName;
     string copyrightFileName;
     string bibliographicFileName;
 
-    PrimaryVolumeDescriptor(FileEntry* root)
-        : logicalBlockSize(2352), volumeSpaceSize(0), rootDirectoryEntry(root),  summaryFileName("test"), copyrightFileName("test"), bibliographicFileName("test") {
+    PrimaryVolumeDescriptor(FileEntry *root)
+            : logicalBlockSize(2352), volumeSpaceSize(0), rootDirectoryEntry(root), summaryFileName("test"),
+              copyrightFileName("test"), bibliographicFileName("test") {
 
 
         time_t t = time(NULL);
-        tm* now = gmtime(&t);
+        tm *now = gmtime(&t);
         creationDate[0] = now->tm_year % 100;
 
         creationDate[1] = now->tm_mon + 1;
-       creationDate[2] = now->tm_mday;
+        creationDate[2] = now->tm_mday;
         creationDate[3] = now->tm_hour;
         creationDate[4] = now->tm_min;
 
-       creationDate[5] = now->tm_sec;
+        creationDate[5] = now->tm_sec;
         creationDate[6] = 0;
 
-       expirationDate[0] = now->tm_year % 100+10;
+        expirationDate[0] = now->tm_year % 100 + 10;
 
-       expirationDate[1] = now->tm_mon + 1;
-       expirationDate[2] = now->tm_mday;
-       expirationDate[3] = now->tm_hour;
-       expirationDate[4] = now->tm_min;
+        expirationDate[1] = now->tm_mon + 1;
+        expirationDate[2] = now->tm_mday;
+        expirationDate[3] = now->tm_hour;
+        expirationDate[4] = now->tm_min;
 
-     expirationDate[5] = now->tm_sec;
-       expirationDate[6] = 0;
+        expirationDate[5] = now->tm_sec;
+        expirationDate[6] = 0;
 
         fill(systemIdentifier, systemIdentifier + 32, ' ');
         fill(volumeIdentifier, volumeIdentifier + 32, ' ');
@@ -109,8 +114,8 @@ struct PrimaryVolumeDescriptor : Base {
 
         fill(preparerIdentifier, preparerIdentifier + 128, ' ');
 
-        time_t t = time(NULL);
-        tm* now = gmtime(&t);
+        t = time(NULL);
+        now = gmtime(&t);
         strftime(creationDate, 17, "%Y%m%d%H%M%S00", now);
         strftime(expirationDate, 17, "%Y%m%d%H%M%S00", now);
     }
@@ -121,36 +126,37 @@ struct PrimaryVolumeDescriptor : Base {
     }
 };
 
-struct DataBlock: Base{
+struct DataBlock : Base {
     string data;
 
-    DataBlock(string data_):data(data_) {
+    DataBlock(string data_) : data(data_) {
 
-        };
+    };
 
-    DataBlock* next = NULL;
+    DataBlock *next = NULL;
+
     void print() const override {
         qDebug() << "";
     }
 };
 
 
-class CDROM
-{
+class CDROM {
     bool isBurned = false;
 public:
     CDROM(string portName_);
+
     int blockSize = 2352;
     int blockPortion = 2048;
     int diskSize = 235200;
-    vector<Base*> baseBlocks;
+    vector<Base *> baseBlocks;
     vector<BlockStatus> baseStatus;
 
 
-
-
     string portName;
+
     bool getIsBurned() const;
+
     void setIsBurned(bool newIsBurned);
 };
 

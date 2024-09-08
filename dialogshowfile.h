@@ -5,18 +5,20 @@
 
 using namespace std;
 namespace Ui {
-class DialogShowFile;
+    class DialogShowFile;
 }
 
-class DialogShowFile : public QDialog
-{
+class DialogShowFile : public QDialog {
     Q_OBJECT
 
 public:
-    explicit DialogShowFile(string name, string author, QDateTime date, int size, string data, QWidget *parent = nullptr);
+    explicit DialogShowFile(string name, string author, QDateTime date, int size, string data,
+                            QWidget *parent = nullptr);
+
     ~DialogShowFile();
 
     string getDataText();
+
 private:
     Ui::DialogShowFile *ui;
 };

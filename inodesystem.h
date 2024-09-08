@@ -11,6 +11,7 @@
 #include <sstream>
 #include <QMessageBox>
 #include "blockstatus.h"
+
 using namespace std;
 
 #define BLOCKSIZE 512
@@ -31,16 +32,16 @@ struct INode {
 class INODESYSTEM {
     map<int, INode *> nodes;
     Disk *disk;
-    vector <BlockStatus> blockStatus;
+    vector<BlockStatus> blockStatus;
     int totalBlocks;
 
 public:
 
-    INODESYSTEM(int diskSize,Disk *disk_);
+    INODESYSTEM(int diskSize, Disk *disk_);
 
     void showFat();
 
-    void deleteFile(string fileName,bool deleteFolderInFolder = false,bool ignoreFolderTyp  =false);
+    void deleteFile(string fileName, bool deleteFolderInFolder = false, bool ignoreFolderTyp = false);
 
     int findFile(string fileName);
 
@@ -63,19 +64,31 @@ public:
     Disk *getDisk() const;
 
     void setDisk(Disk *newDisk);
+
     float getFragmentation();
+
     void defragDisk();
+
     int editData(int fileToBeEditedId, string data);
+
     string findFolderofFile(string fileName);
+
     QList<INode *> getFoldersInFolder(string folderName);
+
     QList<INode *> getFilesInFolder(string folderName);
+
     vector<int> splitStringIntoInts(string inputString);
+
     void deleteFolder(string fileName);
 
     bool existFileInFolder(string fileName, string folderName);
+
     string getDataOfFile(string fileName);
+
     string createUniqueName(string fileName, string uniqueText = "-C");
+
     void copyFile(string fileName, string folderName);
+
     bool existFile(string fileName);
 };
 

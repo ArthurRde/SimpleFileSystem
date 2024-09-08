@@ -1,12 +1,10 @@
 #include "cdrom.h"
 
-bool CDROM::getIsBurned() const
-{
+bool CDROM::getIsBurned() const {
     return isBurned;
 }
 
-void CDROM::setIsBurned(bool newIsBurned)
-{
+void CDROM::setIsBurned(bool newIsBurned) {
     isBurned = newIsBurned;
 }
 

@@ -3,18 +3,15 @@
 
 
 DialogRename::DialogRename(string name, QWidget *parent)
-    : QDialog(parent)
-    , ui(new Ui::DialogRename)
-{
+        : QDialog(parent), ui(new Ui::DialogRename) {
     ui->setupUi(this);
     ui->lineEdit->setText(QString::fromStdString(name));
 }
 
-DialogRename::~DialogRename()
-{
+DialogRename::~DialogRename() {
     delete ui;
 }
 
-string DialogRename::getName(){
+string DialogRename::getName() {
     return ui->lineEdit->text().toStdString();
 }

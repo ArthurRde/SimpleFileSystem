@@ -5,27 +5,34 @@
 
 #include "cdsystem.h"
 #include "string"
-using namespace std ;
+
+using namespace std;
 namespace Ui {
-class DialogInsert;
+    class DialogInsert;
 }
 
-class DialogInsert : public QDialog
-{
+class DialogInsert : public QDialog {
     Q_OBJECT
 
 public:
 
-    CDSYSTEM* sys;
+    CDSYSTEM *sys;
+
     explicit DialogInsert(CDSYSTEM *sys_, QWidget *parent = nullptr);
+
     ~DialogInsert();
 
     void clearCdFromComboBox();
+
     void removeCdFromComboBox(string name);
+
     void addCdToComboBox(string name);
+
     void on_pushButton_clicked();
-public slots:
-    void insert();
+
+public
+    slots:
+            void insert();
 private:
     Ui::DialogInsert *ui;
 };

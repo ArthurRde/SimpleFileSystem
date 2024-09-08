@@ -4,15 +4,15 @@
 #include <QDialog>
 
 namespace Ui {
-class DialogWriteCd;
+    class DialogWriteCd;
 }
 
-class DialogWriteCd : public QDialog
-{
+class DialogWriteCd : public QDialog {
     Q_OBJECT
 
 public:
     explicit DialogWriteCd(QWidget *parent = nullptr);
+
     ~DialogWriteCd();
 
 private:

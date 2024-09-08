@@ -2,13 +2,10 @@
 #include "ui_dialogwritecd.h"
 
 DialogWriteCd::DialogWriteCd(QWidget *parent)
-    : QDialog(parent)
-    , ui(new Ui::DialogWriteCd)
-{
+        : QDialog(parent), ui(new Ui::DialogWriteCd) {
     ui->setupUi(this);
 }
 
-DialogWriteCd::~DialogWriteCd()
-{
+DialogWriteCd::~DialogWriteCd() {
     delete ui;
 }
