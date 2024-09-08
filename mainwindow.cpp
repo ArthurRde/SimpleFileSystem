@@ -100,9 +100,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Setup
     ui->treeWidget_DiskD->setColumnCount(1);
-    ui->treeWidget_DiskD->setHeaderLabels(QStringList() << "Folders");
+    ui->treeWidget_DiskD->setHeaderLabels(QStringList() << "Disk D");
     ui->treeWidget_DiskC->setColumnCount(1);
-    ui->treeWidget_DiskC->setHeaderLabels(QStringList() << "Folders");
+    ui->treeWidget_DiskC->setHeaderLabels(QStringList() << "Disk C");
 
     int rootId = stoi(diskD->getBlocks().at(0));
     showAllFolder(Isys, rootId);
@@ -192,14 +192,9 @@ QString MainWindow::findFolderPath(INODESYSTEM *sys, int rootId, string folderna
 void MainWindow::showPath(INODESYSTEM *sys, int rootId) {
     QString val = findFolderPath(sys, rootId, currentFolder);
     if (val == "notFound") {
-        ui->label_3->setText("Path: ~/");
+        ui->label_3->setText("D: ~/");
     } else {
-        if (showedSystem == 1) {
-            ui->label_3->setText("C: " + val);
-
-        } else {
-            ui->label_3->setText("D: " + val);
-        }
+        ui->label_3->setText("D: " + val);
     }
 }
 
@@ -238,9 +233,9 @@ void MainWindow::showPath(FATSYSTEM *sys, char *rootName) {
     strcpy(c_folder, currentFolder.c_str());
     QString val = findFolderPath(sys, rootName, c_folder);
     if (val == "notFound") {
-        ui->label_3->setText("Path: ~/");
+        ui->label_3->setText("C: ~/");
     } else {
-        ui->label_3->setText("Path: " + val);
+        ui->label_3->setText("C: " + val);
     }
 }
 
@@ -353,7 +348,7 @@ void MainWindow::showAllFolder(INODESYSTEM *sys, int rootId) {
     setTreeWidgetChildRec(sys, rootId, rootItem);
     ui->progressBar->setValue(sys->getFragmentation());
 
-    ui->label_4->setText(QString().append("Frag. ").append(to_string(sys->getFragmentation()).append("%")));
+    ui->label_4->setText(QString().append("Frag. ").append(QString::number(sys->getFragmentation(), 'f', 2).append("%")));
 }
 
 
@@ -376,7 +371,7 @@ void MainWindow::showAllFolder(FATSYSTEM *sys, char *rootName) {
     rootItem->setText(0, QString::fromStdString(sys->findFile("root")->name));
     setTreeWidgetChildRec(sys, rootName, rootItem);
     ui->progressBar->setValue(sys->getFragmentation());
-    ui->label_4->setText(QString().append("Frag. ").append(to_string(sys->getFragmentation()).append("%")));
+    ui->label_4->setText(QString().append("Frag. ").append(QString::number(sys->getFragmentation(), 'f', 2).append("%")));
 }
 
 
