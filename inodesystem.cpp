@@ -636,3 +636,31 @@ float INODESYSTEM::getFragmentation() {
     return ((float)fragmentedBlocks / (float)totalBlocks) * 100.0f;
 }
 
+void INODESYSTEM::defragDisk() {
+    cout << "Starting defragmentation..." << endl;
+
+    for (int iteration = 0; iteration < totalBlocks; iteration++) {
+        int blockIndex = 0;
+        for (int fileIdx = 0; fileIdx < nodes.size(); fileIdx++) {
+            if (nodes[fileIdx] != nullptr) {
+                vector<int> blocklist = nodes[fileIdx]->blockList;
+
+                for(int i=0;i < blocklist.size();i++){
+                    // Find the first free block to move the cluster
+                    while (blockIndex < totalBlocks && blockStatus[blockIndex] != BLOCK_FREE) {
+                        blockIndex++;
+                    }
+
+                    if (blockIndex < totalBlocks) {
+                        blockStatus[blocklist[i]] = BLOCK_FREE; // Free the old block
+                        blocklist[i] = blockIndex; // Move to new block
+                        blockStatus[blockIndex] = BLOCK_OCCUPIED; // Occupy the new block
+                        blockIndex++;
+                    }
+                }
+            }
+        }
+    }
+
+    cout << "Defragmentation completed." << endl;
+}
