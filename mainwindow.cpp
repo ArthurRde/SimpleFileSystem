@@ -657,10 +657,25 @@ MainWindow::createAllFilesOfFolder(INODESYSTEM *srcSys, FATSYSTEM *desSys, strin
 void MainWindow::createDemoFiles() {
     int rootId = stoi(diskD->getBlocks().at(0));
     Isys->createFile("documents", "user", " ", "root", true);
+    Isys->createFile("downloads", "system", " ", "root", true);
+    Isys->createFile("keyAccess.closed", "KeyCode.exe", "bearer237746643698892388734794378478979847942794279842978974821", "root");
+    Isys->createFile("poem.txt", "author", "Betriebssysteme, still und leise,Lenken uns auf ihre Weise.Windows, Linux, macOS,Jedes hat sein eigenes SOS.Sie starten Programme, verwalten Dateien,Lassen uns in digitale Welten eintauchen und verweilen.Mit Klicks und Tasten, so flink und schnell,Machen sie unser Leben digital und hell.Doch manchmal, oh, da gibt’s Probleme,Ein Absturz, ein Fehler, das sind die Themen.Doch wir wissen, sie sind stets bereit,Für uns zu arbeiten, Tag und Nacht, jederzeit.", "documents");
+    Isys->createFile("examSolutions.pdf", "anonymus", "Frage: Erklären Sie das OSI-Modell und nennen Sie die sieben Schichten.solution: Das OSI-Modell (Open Systems Interconnection Model) ist ein Referenzmodell für die Kommunikation in Netzwerken. Es besteht aus sieben Schichten:Physikalische Schicht (Physical Layer)Sicherungsschicht (Data Link Layer)Netzwerkschicht (Network Layer)Transportschicht (Transport Layer)Sitzungsschicht (Session Layer)Darstellungsschicht (Presentation Layer)Anwendungsschicht (Application Layer)", "downloads");
+    Isys->createFile("photos", "system", " ", "documents", true);
+    Isys->createFile("summer.png", "apple", "A beautiful summer, A beautiful summer", "photos");
+
     Isys->defragDisk();
     showAllFolder(Isys, rootId);
     showFilesInFolder(Isys, "root");
     fSys->createFile("documents", "user", " ", "root", true);
+    fSys->createFile("downloads", "system", " ", "root", true);
+    fSys->createFile("Homework", "user", " ","documents", true);
+
+    fSys->createFile("Sheet-1.txt","author", "1+1 = 2, 2+2 = 3, 4+4 = 8, 6+6 = 11, 9+9 = 98","Homework");
+    fSys->createFile("Sheet-2.txt", "author", "f(x)=x+3 NS: x = 0", "Homework");
+
+    fSys->createFile("beach.png", "excalidraw", "A nice warm day at the beach with some dolphins jumping out of the water", "downloads");
+
     fSys->showFat();
     fSys->defragDisk();
     showFilesInFolder(fSys, "root");
